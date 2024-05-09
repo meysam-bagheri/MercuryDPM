@@ -143,17 +143,17 @@ int main() {
     // Set up a problem of type MarbleRun
     MarbleRun dpm;
     // Set name of output files
-    dpm.setName("MarbleRun");
+    dpm.setName("MarbleRunConcept");
     // Set name of output files
     dpm.loadSTLFile("MarbleRun_Concept_STL_DwarshuisScholten.STL");
     // Set physical particle properties
-    dpm.setParticlePosition(Vec3D(0.03,1,0.4)); //0.03,1,0.9
+    dpm.setParticlePosition(Vec3D(0.03,1,0.4)); // (0.03,1,0.9)
     dpm.setParticleRadius(0.01);
     // Set material particle properties
     dpm.setParticleDensity(1000);
     // Set contact properties
     dpm.setSlidingFrictionCoefficient(0.5);
-    dpm.setRollingFrictionCoefficient(1e-2); //1e-4
+    dpm.setRollingFrictionCoefficient(1e-2); // (1e-4)
     dpm.setTorsionFrictionCoefficient(0.0);
     dpm.setRestitutionCoefficient(0.5);
     // set gravity direction

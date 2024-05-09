@@ -75,7 +75,7 @@ int main(int argc, char* argv[])
 
 //! [T2:speciesProp]
     // The normal spring stiffness and normal dissipation is computed and set as
-    // For collision time tc=0.005 and restitution coefficeint rc=1.0,
+    // For collision time tc=0.005 and restitution coefficient rc=1.0,
     LinearViscoelasticSpecies species;
     species.setDensity(2500.0); //sets the species type_0 density
     species.setStiffness(258.5);//sets the spring stiffness.

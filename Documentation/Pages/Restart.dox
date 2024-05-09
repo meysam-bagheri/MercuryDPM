@@ -4,7 +4,7 @@ Restart your code in three steps:
 
 - Replace the simple solve command in the main function by solve(argc, argv), so you can read in command-line arguments.
 - All DPMBase variables can be read from the restart file, but your Driver code might have new variables defined; so you have to set these variables yourself. For this there is the function DPMBase::actionsOnRestart, where you can reset your own variables in case of a restart.
-- Run your code with the  command-line argument "-r" to force a restart; "-t [time]" can be used to reset final time.
+- Run your code with the  command-line argument "-r" to force a restart; "-tmax [time]" can be used to reset final time.
 
 Below is a simple case of how to modify your code to be restart-ready:
 

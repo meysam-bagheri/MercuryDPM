@@ -1215,6 +1215,7 @@ protected:
 
     /*!
      * \brief A virtual function for deciding whether to continue the simulation, based on a user-specified criterion.
+     * \details Alternatively, the discontinueSolve function can be used as well, which can be called directly from any place in the code.
      */
     virtual bool continueSolve() const;
 
@@ -1257,6 +1258,19 @@ protected:
      */
     void performGhostVelocityUpdate();
 
+    /*!
+     * \brief This prevents the initialisation of the soft stop feature.
+     */
+    void disableSoftStop() { disableSoftStop_ = true; }
+
+    /*!
+     * \brief This discontinues the solve loop after the current time step is finished.
+     * \details Use this to gracefully exit the simulation early, i.e. write the output files etc., by calling it from
+     * any place in the code. It is an alternative to overriding the continueSolve function.
+     */
+    void discontinueSolve() { continueFlag_ = false; }
+
+private:
 
     /*!
     * \brief signal handler function.
@@ -1268,12 +1282,15 @@ protected:
     */
     void setSoftStop();
 
-private:
-
     /**
-     * Stores whether code should be stopped
+     * Stores whether code should continue solving, see #discontinueSolve.
      */
     static volatile sig_atomic_t continueFlag_;
+
+    /**
+     * Stores whether the soft stop should not be initialised.
+     */
+    bool disableSoftStop_ = false;
 
     /*The number of openmp (symmetric multiprocessing threads)*/
     int numberOfOMPThreads_;

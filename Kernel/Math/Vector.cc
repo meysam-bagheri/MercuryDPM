@@ -268,7 +268,7 @@ Vec3D Vec3D::getSphericalCoordinates() const
         }
         else
         {
-            -constants::pi / 2.0;
+            sphericalCoord.Z = -constants::pi / 2.0;
         }
     }
     else

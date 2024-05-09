@@ -43,6 +43,7 @@ end
 end
 
 function data = getVariables(data,raw,names,dim)
+contains = @(str, pattern) ~cellfun('isempty', strfind(str, pattern));
 isVariable = contains(names,':');
 for i=1:length(names)
     if (isVariable(i))

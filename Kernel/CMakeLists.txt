@@ -42,6 +42,7 @@ file(GLOB MercuryDPM_SRC
         FMM/*.cc
         Math/*.cc
         Math/*/*.cc
+        Mixins/*.cc
         Particles/*.cc
         Strings/*.cc
         VTKWriter/*.cc

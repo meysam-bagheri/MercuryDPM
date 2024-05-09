@@ -152,7 +152,7 @@ private:
     Mdouble distributionCoefficient_;
     
     /*! 
-     * \brief contact angle between particle and liquid bridge surface
+     * \brief contact angle between particle and liquid bridge surface (in radians)
      */
     Mdouble contactAngle_;
     

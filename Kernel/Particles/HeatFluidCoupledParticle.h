@@ -42,7 +42,7 @@
  *          This class implements evaporation model.
  */
 template<class Particle>
-class HeatFluidCoupled final : public Thermal<LiquidFilm<Particle>>
+class HeatFluidCoupled : public Thermal<LiquidFilm<Particle>>
 {
 public:
     /*!

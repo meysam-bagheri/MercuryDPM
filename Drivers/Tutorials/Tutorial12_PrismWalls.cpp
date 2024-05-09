@@ -34,10 +34,10 @@
 */
 
 //! [T12:headers]
-#include <Species/LinearViscoelasticSpecies.h>
 #include <Mercury3D.h>
 #include <Walls/InfiniteWall.h>
 #include <Walls/IntersectionOfWalls.h>
+#include <Species/LinearViscoelasticSpecies.h>
 //! [T12:headers]
 
 //! [T12:class]
@@ -113,6 +113,7 @@ public:
 };
 //! [T12:class]
 
+//! [T12:main]
 int main(int argc, char* argv[])
 {
     //! [T12: constructor]
@@ -128,7 +129,7 @@ int main(int argc, char* argv[])
 
     //! [T12:speciesProp]
     // The normal spring stiffness and normal dissipation is computed and set as
-    // For collision time tc=0.005 and restitution coefficeint rc=1.0,
+    // For collision time tc=0.005 and restitution coefficient rc=1.0,
     LinearViscoelasticSpecies species;
     species.setDensity(2500.0); //sets the species type_0 density
     species.setStiffness(258.5);//sets the spring stiffness.
@@ -154,3 +155,4 @@ int main(int argc, char* argv[])
     
     return 0;
 }
+//! [T12:main]

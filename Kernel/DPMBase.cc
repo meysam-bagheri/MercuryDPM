@@ -207,8 +207,6 @@ constructor();
 */
 void DPMBase::constructor()
 {
-    // sofStop function
-    setSoftStop();
     //constructor();
     dataFile.getFstream().precision(10);
     fStatFile.getFstream().precision(10);
@@ -1969,13 +1967,13 @@ void DPMBase::printTime() const
 {
 #ifdef MERCURYDPM_USE_MPI
     MPIContainer& communicator = MPIContainer::Instance();
-    if (communicator.getProcessorID() == 0)
+    if (communicator.getProcessorID() != 0)
     {
-#endif
-    logger(INFO, "t=%3.6, tmax=%3.6", getTime(), getTimeMax());
-#ifdef MERCURYDPM_USE_MPI
+        return;
     }
+
 #endif
+  logger(INFO, "t=%3.6, tmax=%3.6", getTime(), getTimeMax());
 }
 
 /*!
@@ -1987,7 +1985,7 @@ void DPMBase::printTime() const
  */
 bool DPMBase::continueSolve() const
 {
-    return continueFlag_ != 0;
+    return true;
 }
 
 /*!
@@ -2015,7 +2013,7 @@ void DPMBase::writeEneHeader(std::ostream& os) const
     if (getAppend())
         return;
 
-    /// \todo JMFT: Get rid of aligned columns. They make things too wide. (changed back) 
+    /// \todo JMFT: Get rid of aligned columns. They make things too wide. (changed back)
     /// \todo {Why is there a +6 here? TW: to get the numbers and title aligned}
     /// \todo Add number of particles to this file (change from Jonny to be added later)
     long width = os.precision() + 6;
@@ -2739,7 +2737,7 @@ bool DPMBase::readNextDataFile(unsigned int format)
         positionHistory[i] = p->getPosition();
         //store from reading the restart file which particles are fixed and which species each particle has
     }
-    
+
     BaseParticle* p;
     if (particleHandler.getSize() == 0) {
         logger.assert_always(speciesHandler.getSize()>0,"readData: species needs to be set first");
@@ -3409,7 +3407,7 @@ void DPMBase::computeAllForces()
         }
     }
     logger(DEBUG,"All forces set to zero");
-    
+
     // for omp simulations, reset the newObjects_ variable (used for reduction)
     interactionHandler.resetNewObjectsOMP();
 
@@ -3493,7 +3491,7 @@ void DPMBase::computeAllForces()
         Curr=Curr->getNext();
     }
 #endif
-    
+
     // Check wall forces
     #pragma omp for schedule(dynamic)
     for (int k = 0; k < wallHandler.getNumberOfObjects(); k++) {
@@ -3521,7 +3519,7 @@ void DPMBase::computeAllForces()
         } //end reset forces loop
     }
     #endif
-    
+
     //end outer loop over contacts.
 }
 
@@ -4279,11 +4277,12 @@ void DPMBase::initialiseSolve() {
 void DPMBase::solve()
 {
     initialiseSolve();
+    setSoftStop();
 
     // Can be used to measure simulation time
     clock_.tic();
     // This is the main loop over advancing time
-    while (getTime() < getTimeMax() && continueSolve())
+    while (getTime() < getTimeMax() && continueSolve() && continueFlag_)
     {
         computeOneTimeStep();
     }
@@ -4459,6 +4458,7 @@ void DPMBase::removeOldFiles() const
         {
             if (k<3) logger(INFO,"  File % successfully deleted",filename.str());
             filename.clear();
+            filename.str("");
             filename << getName() << j << '.' << ++k;
         }
         // remove files with given extension for FileType::MULTIPLE_FILES_PADDED
@@ -4469,6 +4469,7 @@ void DPMBase::removeOldFiles() const
         {
             if (k<3) logger(INFO,"  File % successfully deleted",filename.str());
             filename.clear();
+            filename.str("");
             filename << getName() << j << '.' << to_string_padded(++k);
         }
     }
@@ -5149,23 +5150,26 @@ void DPMBase::performGhostVelocityUpdate()
 /*!
 * \brief signal handler function.
 */
-void DPMBase::signalHandler(int signal) {
-    switch (signal) {
+void DPMBase::signalHandler(int signal)
+{
+    switch (signal)
+    {
         case SIGINT:
-            logger(INFO, "SIGINT has been captured!\nMercuryDPM is writing the files, then it will stop!");
-            // continue Flag must be set to false here!
+            if (!continueFlag_)
+            {
+                logger(INFO, "SIGINT has been captured for the second time!\nMercuryDPM will forcefully exit!");
+                std::exit(SIGINT);
+            }
+
+            logger(INFO, "SIGINT has been captured!\nMercuryDPM will finish the current time step, then it will stop!\nHit Ctrl+C again to forcefully exit.");
             continueFlag_ = false;
-            //exit(SIGTERM); // this will interrupt the simulation
             return;
+
         case SIGTERM:
-            logger(INFO, "\nSIGTERM has been captured!\nMercuryDPM is writing the files, then it will stop!");
-            // continue Flag must be set to false here!
+            logger(INFO, "\nSIGTERM has been captured!\nMercuryDPM will finish the current time step, then it will stop!");
             continueFlag_ = false;
             return;
-        case SIGKILL:
-            logger(INFO, "\nSIGKILL has been captured!\nMercuryDPM is writing the files, then it will stop!");
-            continueFlag_ = false;
-            return;
+
         default:
             logger(INFO, "No Signal to Capture!");
     }
@@ -5175,8 +5179,14 @@ void DPMBase::signalHandler(int signal) {
 /*!
 * \brief function for setting sigaction constructor.
 */
-void DPMBase::setSoftStop() {
-    logger(INFO,"Initiated soft stop");
+void DPMBase::setSoftStop()
+{
+    if (disableSoftStop_)
+    {
+        logger(INFO, "Soft stop disabled.");
+        return;
+    }
+
     struct sigaction act{};
     memset(&act, 0, sizeof(act));
 
@@ -5184,7 +5194,8 @@ void DPMBase::setSoftStop() {
 
     sigaction(SIGINT, &act, nullptr);
     sigaction(SIGTERM, &act, nullptr);
-    sigaction(SIGKILL, &act, nullptr);
+
+    logger(VERBOSE, "Soft stop enabled.");
 }
 
 /*!

@@ -141,14 +141,14 @@ The class \ref InfiniteWall is included in the inherited class Tutorial3:
 
 Where the object "w0" is an instance of the class \b InfiniteWall. Then, the function "copyAndAddObject" copy and add the object to its corresponding handler. The above set of statements, create and place the wall at \f$ Z_{min} \f$.\n
 
-Note: Don’t forget to include the InfiniteWall.h header, as shown in the header section. In some sense, creation and addition of a wall is similar to creation and addition of a particle.\n\n
+* **Note:** Don’t forget to include the InfiniteWall.h header, as shown in the header section. In some sense, creation and addition of a wall is similar to creation and addition of a particle.\n\n
 
 #### Exercise:
 Change  species.setDissipation from (0.0) to (0.1) to get a less perfect bouncing effect.
 \code
 vi ~/MercuryDPM/MercurySource/Drivers/Tutorials/./Tutorial3_BouncingBallElastic.cpp
 make; ./Tutorial3_BouncingBallElastic
-./Tutorial3.xballs
+./Tutorial3.xballs -p 50  # (-p 50 is to pause between the steps for better viewing.)
 \endcode
 
 \n
@@ -161,9 +161,9 @@ In \b Tutorial4_BouncingBallInelastic.cpp, the difference between an elastic and
 See \ref T4code for more details.
 
 #### Exercise:
-In the .cpp file change problem.eneFile.setFileType from NO to ONE_FILE to get the .ene file, recompile using make and start the code again.
+In the .cpp file change 'problem.eneFile.setFileType' from NO_FILE to ONE_FILE to create the .ene file, recompile using make and start the code again.
 Now we can show the energy graph in gnuplot using\n
-\code gnuplot> p 'Tutorial4.ene' u 1:8 \endcode
+\code  gnuplot -e "p 'Tutorial4.ene' u 1:8; pause 10" \endcode
 
 \n
 \section T5 T5: Elastic collision (2 particles)
@@ -176,7 +176,9 @@ So far, in the above tutorials, we have seen how a particle and a wall interact 
 \snippet Drivers/Tutorials/Tutorial5_ElasticCollision.cpp T5:class
 On comparison between the above class and class Tutorial1, we see how an additional particle is added. Two particles are created, and positioned oppositely apart at a certain distance between them. Both the particles, have a certain velocity directing them towards each other.
 
-\n
+#### Exercise:
+Try changing the size of the 1st ball from 0.05 to 0.07 and see the difference using xballs (use xballs parameter -p 10 to slow down 10ms each step)
+
 \section T6 T6: Elastic collisions with periodic boundaries
 \image html Tutorials/T6/Tutorial6.jpg (a) Illustrates the idea behind periodic boundaries, particle exiting boundary b2 re-enters through boundary b1 <br> (b) Illustrates the problem setup.
 
@@ -206,6 +208,7 @@ The same idea was introduced in \ref Tutorial3_BouncingBallElastic.cpp.
 ### Before the main function:
 \snippet Drivers/Tutorials/Tutorial7_ParticleIn2DBox.cpp T7:class
 In this class, we setup a 2D square shaped box or a polygon by adding more walls as shown above. In total, we have 4 walls forming our box within which the particle will traverse.
+\n
 * **Note:** As we simulate in 2D, no walls are set in z-direction.
 
 ### Main function:
@@ -263,7 +266,7 @@ The main function of \ref Tutorial9_InclinedPlane.cpp presents how the elastic f
 \n
 \section T10 T10: How to load restart and data files
 #### Problem description:
-Sometimes if your computer crashes or you want to start over with some changes you want to restart.
+Sometimes if your computer crashes or you want to start over with minor changes in the data, you like to restart.
 
 ### Headers:
 
@@ -317,6 +320,7 @@ This overrides function moves the flat surface to the base domain. It happens at
 The main function of this tutorial includes the setup parameters and the tests for a valid collision time and restitution coefficient.
 
 \snippet Drivers/Tutorials/Tutorial11_AxisymmetricWalls.cpp T11:main
+* **note:** to produce the pictures as shown you can use Paraview.
 
 \n
 \section T12 T12: Creating objects by using Prisms
@@ -372,10 +376,10 @@ At the end of the main function we call the solve function
 After solving the problem you can visualize the results and see the effect of the motion of the object on the trajectory of the particle.
 
 \n 
+Click \subpage AdvancedTutorials "here" to go to the Advanced tutorials.
 
 
-
-\page Tcodes Codes for tutorials
+\page Tutorials Codes for tutorials
 
 \section T1code Particle motion in outer space (code)
 Return to tutorial \ref T1

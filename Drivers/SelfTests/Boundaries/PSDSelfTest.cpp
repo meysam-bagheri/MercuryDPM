@@ -33,7 +33,7 @@
 
 
 /**
- * An example code on how to add particles of a given particle size distribution and flow rate. I have added some documentation to it today, so please use svn up first.
+ * An example code on how to add particles of a given particle size distribution and flow rate.
  */
 
 class PSDSelfTest : public Mercury3D

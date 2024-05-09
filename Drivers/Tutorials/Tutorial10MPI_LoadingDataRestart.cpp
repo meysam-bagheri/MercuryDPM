@@ -23,10 +23,20 @@
 //(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 //SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+/*
+** This file is annotated with DoxyFile comments in order to show the code on
+** the documentation - This is not needed for your real drivers.
+** Please ignore these comments.
+**
+** For full documentation of this code, go to http://docs.mercurydpm.org/Alpha/d0/db0/BeginnerTutorials.html#T10
+*/
+
 // Tutorial 10: This tutorial shows how to load restart and data files
 
+//! [T10:headers]
 #include <Mercury3D.h>
 #include <Math/Helpers.h>
+//! [T10:headers]
 
 class DPM : public Mercury3D {
     void setupInitialConditions () override {
@@ -36,6 +46,7 @@ class DPM : public Mercury3D {
 };
 
 
+//! [T10:main]
 int main(int argc, char* argv[])
 {
     //writeToFile is used here to create a restart and a data file, which will be loaded below.
@@ -76,4 +87,4 @@ int main(int argc, char* argv[])
 
     return 0;
 }
-
+//! [T10:main]

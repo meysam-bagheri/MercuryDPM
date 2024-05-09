@@ -1,34 +1,34 @@
 /**
-\page SVNCOMMIT Committing your code to SVN
+\page GITCOMMIT Committing your code to GIT
 
 If you want to commit new code to MercuryDPM, follow these steps.
 
--# <b>Update</b> your svn repository to the latest version of Mercury. This ensures that you have no conflicts with the changes other people have made since you last checked out.
+-# <b>Update</b> your git repository to the latest version of Mercury. This ensures that you have no conflicts with the changes other people have made since you last checked out.
 \code{.sh}
 $ cd MercurySource
-$ svn up
+$ git pull
 Updating '.':
 U    Drivers/MercurySimpleDemos/CMakeLists.txt
 A    Documentation/Pages/DoxygenDocumentationForDummies.dox
 Updated to revision 1556.
 \endcode
-If you do get conflicted files, read the <a href="https://ariejan.net/2007/07/04/how-to-resolve-subversion-conflicts/">svn manual</a> to find out how to resolve these conflicts.
+If you do get conflicted files,  find out how to resolve these conflicts.
 
 
 
--# <b>Check</b> your changes; you can use *svn status* to see which files have changed,
+-# <b>Check</b> your changes; you can use *git status* to see which files have changed,
 \code{.sh}
-$ svn status
+$ git status
 M       Documentation/Pages/DevelopersGuide.dox
 \endcode
-Use *svn diff* to see which changes you have made to each file and review them. A full list of svn commands can be found using *svn help*.
+Use *git diff* to see which changes you have made to each file and review them. A full list of git commands can be found using *git help*.
 \code{.sh}
-$ svn diff Documentation/Pages/DevelopersGuide.dox
-Index: Documentation/Pages/DevelopersGuide.dox
-===================================================================
-@@ -236,36 +236,62 @@
--## Submitting your code to SVN
-+# Committing your code to SVN
+$ git diff head Documentation/Pages/DevelopersGuide.dox
+diff --git a/Documentation/Pages/DevelopersGuide.dox b/Documentation/Pages/DevelopersGuide.dox
+index 1ec3f2b5..9ab4c207 100644
+--- a/Documentation/Pages/DevelopersGuide.dox
++++ b/Documentation/Pages/DevelopersGuide.dox
+@@ -156,7 +156,7 @@ Other boundaries are possible; see the documentation of BoundaryHandler for more
 \endcode
 
 -# <b>Test</b> have to be run before any new feature is committed, and return a positive result. Any commit that breaks one or more tests is a violation of the MercuryDPM coding standard, and is punishable by a round of beers to all other developers. To execute all test, run the following command before committing:
@@ -44,16 +44,16 @@ Feature finished: Mercury Logger
 -I have adapted the logger such that it works now fully as it should
 -Asserts will be handled by the logger using logger.assert_debug(..) and logger.assert_always(..)
 -Only ExtendedMath MatrixSymmetric and NumericalVector contained asserts, they have been rewritten to the logger.assert
-$ svn commit -F file
+$ git commit -F file
 \endcode
 Alternatively, use a simple message string,
 \code{.sh}
-$ svn commit -m 'MDPM-116 #resolve #comment Updating instructions on how to submit to MercuryDPM to the Code Developer Guidelines'
+$ git commit -m 'MDPM-116 #resolve #comment Updating instructions on how to submit to MercuryDPM to the Code Developer Guidelines'
 \endcode
 
 -# <b>Jira markups</b>: If the change concerns a specific <a href="http://jira.mercurydpm.org">jira job</a>, mention the job number in the message; you can also pass commands like \#resolve to jira, so the job is automatically closed. Examples:
 \code{.sh}
-$ svn commit -m 'MDPM-116 #resolve #comment Updating instructions on how to submit to MercuryDPM to the Code Developer Guidelines'
-$ svn commit -m 'Updating instructions on how to submit to MercuryDPM to the Code Developer Guidelines #MDPM-43'
+$ git commit -m 'MDPM-116 #resolve #comment Updating instructions on how to submit to MercuryDPM to the Code Developer Guidelines'
+$ git commit -m 'Updating instructions on how to submit to MercuryDPM to the Code Developer Guidelines #MDPM-43'
 \endcode
 */

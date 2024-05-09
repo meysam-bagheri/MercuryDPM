@@ -19,305 +19,265 @@
 #include <cmath>
 #include <map>
 
+#include "muICal3DParameters.h"
+#include "Mixins/PrintWallTimeMixin.h"
+
 #define MAX_STRLEN 1024
-#define DEGREES (M_PI / 180.)
 
 
-class muICal3D : public Mercury3D
-{
-    public:
-        muICal3D(std::string parsfile, double thetaInDegrees)
-        {
-            std::ifstream file(parsfile);
-            std::string name;
-            double var;
-            while (file >> name >> var)
-            {
-                pars[name] = var;
-            }
+class muICal3D : public Mercury3D, public PrintWallTimeMixin {
+public:
+    muICal3D(std::string paramsFileName, std::string thetaInDegreesStr) {
+      params = muICal3DParameters::read(paramsFileName);
+      float thetaInDegrees = std::stof(thetaInDegreesStr);
+      theta = thetaInDegrees * DEGREES;
+      params->theta = theta;
 
-            theta = thetaInDegrees * DEGREES;
-            setName(parsfile.erase(parsfile.find_last_of('.')) + "-" + std::to_string(thetaInDegrees));
+      setName(paramsFileName.erase(paramsFileName.find_last_of('.')) + "-" + thetaInDegreesStr);
 
-            std::cout << theta << std::endl;
+      std::cout << theta << std::endl;
 
-            double betaslide        = pars.at("betaslide") * DEGREES;
-            double betaroll         = pars.at("betaroll") * DEGREES;
-            double betators         = pars.at("betators") * DEGREES;
-            double base_betaslide   = pars.at("base_betaslide") * DEGREES;
-            double base_betaroll    = pars.at("base_betaroll") * DEGREES;
-            double base_betators    = pars.at("base_betators") * DEGREES;
+      double betaslide = params->betaslide;
+      double betaroll = params->betaroll;
+      double betators = params->betators;
 
-            g = pars.at("g");
+      g = params->g;
 
-            particleRadius = pars.at("particleRadius");
-            baseRadius = pars.at("baseRadius");
-            double rho = pars.at("rho");
+      particleRadius = params->particleRadius;
+      baseRadius = params->baseRadius;
+      double rho = params->rho;
 
-            setTimeMax(pars.at("timeMax"));
-            setTimeStep(pars.at("timeStep"));
-            setSaveCount(pars.at("saveCount"));
+      setTimeMax(params->timeMax);
+      setTimeStep(params->timeStep);
+      setSaveCount(params->saveEvery);
 
-            setXMin(0);
-            setXMax(pars.at("length"));
-            setYMin(0);
-            setYMax(pars.at("width"));
-            setZMin(0);
-            setZMax(pars.at("height"));
+      setXMin(-params->length / 2);
+      setXMax(params->length / 2);
+      setYMin(-params->width / 2);
+      setYMax(params->width / 2);
+      setZMin(0);
+      setZMax(params->height);
 
-            dataFile.setFileType(FileType::NO_FILE);
-            fStatFile.setFileType(FileType::NO_FILE);
+      setNumberOfDomains({4, 1, 1});
 
-            /* Define species */
-            speciesP = new LinearViscoelasticFrictionSpecies();
-            speciesP->setDensity(rho);
-            speciesP->setCollisionTimeAndRestitutionCoefficient(
-                    pars.at("collisionTime"),
-                    pars.at("restitutionCoefficient"),
-                    constants::pi*pow(particleRadius, 2) * rho
-            );
-            speciesP->setSlidingFrictionCoefficient(tan(betaslide));
-            speciesP->setSlidingStiffness(2.0/7.0 * speciesP->getStiffness());
-            speciesP->setSlidingDissipation(2.0/7.0 * speciesP->getDissipation());
-            speciesP->setRollingFrictionCoefficient(tan(betaroll));
-            speciesP->setRollingStiffness(2.0/5.0 * speciesP->getStiffness());
-            speciesP->setRollingDissipation(2.0/5.0 * speciesP->getDissipation());
-            speciesP->setTorsionFrictionCoefficient(tan(betators));
-            speciesP->setTorsionStiffness(2.0/5.0 * speciesP->getStiffness());
-            speciesP->setTorsionDissipation(2.0/5.0 * speciesP->getDissipation());
-            speciesP = speciesHandler.copyAndAddObject(speciesP);
+      dataFile.setFileType(FileType::NO_FILE);
+      fStatFile.setFileType(FileType::NO_FILE);
 
-            speciesB = new LinearViscoelasticFrictionSpecies();
-            speciesB->setDensity(rho);
-            speciesB->setCollisionTimeAndRestitutionCoefficient(
-                    pars.at("collisionTime"),
-                    pars.at("restitutionCoefficient"),
-                    constants::pi*pow(baseRadius, 2) * rho
-            );
-            speciesB->setSlidingFrictionCoefficient(tan(base_betaslide));
-            speciesB->setSlidingStiffness(2.0/7.0 * speciesB->getStiffness());
-            speciesB->setSlidingDissipation(2.0/7.0 * speciesB->getDissipation());
-            speciesB->setRollingFrictionCoefficient(tan(base_betaroll));
-            speciesB->setRollingStiffness(2.0/5.0 * speciesB->getStiffness());
-            speciesB->setRollingDissipation(2.0/5.0 * speciesB->getDissipation());
-            speciesB->setTorsionFrictionCoefficient(tan(base_betators));
-            speciesB->setTorsionStiffness(2.0/5.0 * speciesB->getStiffness());
-            speciesB->setTorsionDissipation(2.0/5.0 * speciesB->getDissipation());
-            speciesB = speciesHandler.copyAndAddObject(speciesB);
+      /* Define species */
+      species = speciesHandler.copyAndAddObject(new LinearViscoelasticFrictionSpecies());
+      species->setDensity(rho);
+      species->setCollisionTimeAndRestitutionCoefficient(
+        params->collisionTime,
+        params->restitutionCoefficient,
+        (4. / 3.) * constants::pi * pow(particleRadius, 3) * rho
+      );
+      species->setSlidingFrictionCoefficient(tan(betaslide));
+      species->setSlidingStiffness(2.0 / 7.0 * species->getStiffness());
+      species->setSlidingDissipation(2.0 / 7.0 * species->getDissipation());
+      species->setRollingFrictionCoefficient(tan(betaroll));
+      species->setRollingStiffness(2.0 / 5.0 * species->getStiffness());
+      species->setRollingDissipation(2.0 / 5.0 * species->getDissipation());
+      species->setTorsionFrictionCoefficient(tan(betators));
+      species->setTorsionStiffness(2.0 / 5.0 * species->getStiffness());
+      species->setTorsionDissipation(2.0 / 5.0 * species->getDissipation());
 
-            /* Walls */
-            InfiniteWall bottomwall;
-            bottomwall.setSpecies(speciesB);
-            bottomwall.set(Vec3D(0 ,0, -1), Vec3D(0, 0, 0));
-            wallHandler.copyAndAddObject(bottomwall);
+      logger(INFO, "Maximum collision velocity is %", species->getMaximumVelocity(
+        params->particleRadius,
+        species->getMassFromRadius(params->particleRadius)
+      ));
 
-            /* Periodic boundaries */
-            PeriodicBoundary xbounds, ybounds;
-            xbounds.set(Vec3D(1, 0, 0), getXMin(), getXMax());
-            ybounds.set(Vec3D(0, 1, 0), getYMin(), getYMax());
-            boundaryHandler.copyAndAddObject(xbounds);
-            boundaryHandler.copyAndAddObject(ybounds);
+      /* Walls */
+      InfiniteWall bottomwall;
+      bottomwall.setSpecies(species);
+      bottomwall.set(Vec3D(0, 0, -1), Vec3D(0, 0, 0));
+      wallHandler.copyAndAddObject(bottomwall);
 
-            /* Rough base */
-            if (pars.at("baseConc") > 0)
-                for (double xpos = getXMin();
-                    xpos <= getXMax();
-                    xpos += 4*baseRadius / sqrt(pars.at("baseConc"))
-                ) {
-                    for (double ypos = getYMin();
-                            ypos <= getYMax();
-                            ypos += 4*baseRadius / sqrt(pars.at("baseConc")))
-                    {
-                        double zpos = 0;
+      /* Periodic boundaries */
+      PeriodicBoundary *xbounds = boundaryHandler.copyAndAddObject(new PeriodicBoundary);
+      xbounds->set(Vec3D(1, 0, 0), getXMin(), getXMax());
+      PeriodicBoundary *ybounds = boundaryHandler.copyAndAddObject(new PeriodicBoundary);
+      ybounds->set(Vec3D(0, 1, 0), getYMin(), getYMax());
 
-                        SphericalParticle rbParticle;
-                        rbParticle.setSpecies(speciesB);
-                        rbParticle.setRadius(baseRadius *
-                                (1 + pars.at("baseDispersity") * generator.getRandomNumber(-1,1)));
-                        rbParticle.setPosition(Vec3D(xpos, ypos, zpos));
-                        rbParticle.fixParticle();
-                        particleHandler.copyAndAddObject(rbParticle);
-                    }
-                }
+      /* Rough base */
+      createSpacedGridRoughBase();
+    }
+
+    void createSpacedGridRoughBase() {
+      if (params->baseConc <= 0) return;
+      double spacing = 4 * baseRadius / sqrt(params->baseConc);
+      for (double xpos = getXMin(); xpos <= getXMax(); xpos += spacing) {
+        for (double ypos = getYMin(); ypos <= getYMax(); ypos += spacing) {
+          double zpos = 0;
+
+          SphericalParticle basalParticle;
+          basalParticle.setSpecies(species);
+          basalParticle.setRadius(baseRadius *
+                                  (1 + params->baseDispersity * generator.getRandomNumber(-1, 1)));
+          basalParticle.setPosition(Vec3D(xpos, ypos, zpos));
+          basalParticle.fixParticle();
+          particleHandler.copyAndAddObject(basalParticle);
         }
+      }
+    }
 
-        void setupInitialConditions() override
-        {
-            /* Start writing to the .muI file. */
-            char muICal3D_fn[MAX_STRLEN];
-            snprintf(muICal3D_fn, MAX_STRLEN, "%s.muI", getName().c_str());
-            muICal3D_f = fopen(muICal3D_fn, "w");
-            setbuf(muICal3D_f, nullptr);
-            fprintf(muICal3D_f, "time theta n depth mass xmom ke basfx basfy basfz\n");
-            fprintf(stderr, "Started writing to .muI file\n");
-    
-            /* Gravity initially points downwards */
-            setGravity(Vec3D(0, 0, -g));
-    
-            /* A CubeInsertionBoundary for introducing the particles. We will
-             * remove this after a few (arbitrary number of) timesteps. If the
-             * InsertionBoundary is doing its job properly then it will stop
-             * introducing particles after a while anyway. */
-            BaseParticle* p0 = new SphericalParticle;
-            p0->setSpecies(speciesP);
-            insb = new CubeInsertionBoundary;
-            insb->set(p0, 6,
-                      Vec3D(-pars.at("length") / 2 + 1 * pars.at("particleRadius"),
-                            -pars.at("width") / 2 + 1 * pars.at("particleRadius"),
-                            0 * pars.at("particleRadius")
-                      ),
-                      Vec3D(+pars.at("length") / 2 - 2 * pars.at("particleRadius"),
-                            +pars.at("width") / 2 - 1 * pars.at("particleRadius"),
-                            pars.at("height") + 0 * pars.at("particleRadius")
-                      ),
-                      Vec3D(0, 0, 0), Vec3D(0, 0, 0));
+    void createRandomisedGridRoughBase() {
+      if (params->baseConc <= 0) return;
+      double spacing = 4 * baseRadius / sqrt(params->baseConc);
+      for (double xpos = getXMin(); xpos <= getXMax(); xpos += spacing) {
+        for (double ypos = getYMin(); ypos <= getYMax(); ypos += spacing) {
+          double zpos = 0;
 
-            PSD myPSD;
-            myPSD.setDistributionUniform(1-pars.at("dispersity"),1+pars.at("dispersity"),100);
+          double actualXpos = xpos + spacing * generator.getRandomNumber(-0.5, 0.5);
+          double actualYpos = ypos + spacing * generator.getRandomNumber(-0.5, 0.5);
 
-
-            insb->set(p0, 1,
-                      Vec3D(
-                              getXMin() + particleRadius,
-                              getYMin() + particleRadius,
-                              getZMin()
-                      ),
-                      Vec3D(
-                              getXMax() - 2 * particleRadius,
-                              getYMax() - particleRadius,
-                              getZMax()
-                    ),
-                    Vec3D(0,0,0), Vec3D(0,0,0)
-                    );
-            insb->setPSD(myPSD);
-            insb = boundaryHandler.copyAndAddObject(insb);
-            insb->insertParticles(this);
-    
-    
-            lid = new InfiniteWall;
-            lid->setSpecies(speciesB);
-            lid->set(Vec3D(0, 0, 1), Vec3D(0, 0, getZMax()));
-            lid->set(Vec3D(0, 0, 1), Vec3D(0, 0, pars.at("height")));
-            lid = wallHandler.copyAndAddObject(lid);
-    
-            notYetRemovedInsb = true;
+          SphericalParticle basalParticle;
+          basalParticle.setSpecies(species);
+          basalParticle.setRadius(baseRadius *
+                                  (1 + params->baseDispersity * generator.getRandomNumber(-1, 1)));
+          basalParticle.setPosition(Vec3D(actualXpos, actualYpos, zpos));
+          basalParticle.fixParticle();
+          particleHandler.copyAndAddObject(basalParticle);
         }
+      }
+    }
 
-        void actionsOnRestart() override
-        {
-            if (boundaryHandler.getNumberOfObjects() == 1)
-            {
-                notYetRemovedInsb = false;
+    void createRandomRoughBase() {
+      if (params->baseConc <= 0) return;
 
-                /* Continue writing to the .muI file. */
-                char muICal3D_fn[MAX_STRLEN];
-                snprintf(muICal3D_fn, MAX_STRLEN, "%s.muI", getName().c_str());
-                muICal3D_f = fopen(muICal3D_fn, "a");
-                setbuf(muICal3D_f, nullptr);
-                logger(INFO, "Continuing writing to .muI file\n");
-            }
+      Mdouble domainArea = (getXMax() - getXMin()) * (getYMax() - getYMin());
+      Mdouble areaPerParticle = M_PI * std::pow(params->baseRadius, 2);
+      int numberOfBasalParticles = params->baseConc * domainArea / areaPerParticle;
+
+      for (int i = 0; i < numberOfBasalParticles; i++) {
+        double xpos = generator.getRandomNumber(getXMin(), getXMax());
+        double ypos = generator.getRandomNumber(getYMin(), getYMax());
+        double zpos = 0;
+
+        SphericalParticle basalParticle;
+        basalParticle.setSpecies(species);
+        basalParticle.setRadius(baseRadius *
+                                (1 + params->baseDispersity * generator.getRandomNumber(-1, 1)));
+        basalParticle.setPosition(Vec3D(xpos, ypos, zpos));
+        basalParticle.fixParticle();
+        particleHandler.copyAndAddObject(basalParticle);
+      }
+    }
+
+    void setupInitialConditions() override {
+      /* Start writing to the .muI file. */
+      char muICal3D_fn[MAX_STRLEN];
+      snprintf(muICal3D_fn, MAX_STRLEN, "%s.muI", getName().c_str());
+      muICal3D_f = fopen(muICal3D_fn, "w");
+      setbuf(muICal3D_f, nullptr);
+      fprintf(muICal3D_f, "time theta n depth mass xmom ke basfx basfy basfz\n");
+      fprintf(stderr, "Started writing to .muI file\n");
+
+      setGravity(Vec3D(g * sin(theta), 0, -g * cos(theta)));
+
+      Mdouble maxRadius = particleRadius * (1 + params->dispersity);
+      Mdouble maxBaseRadius = baseRadius * (1 + params->baseDispersity);
+
+      SphericalParticle particle;
+      particle.setSpecies(species);
+      particle.setVelocity(Vec3D(0, 0, 0));
+
+      double zpos = maxRadius + maxBaseRadius;
+      while (particleHandler.getVolume() < getTotalVolume()) {
+        zpos += 2 * maxRadius;
+        for (double xpos = getXMin() + 1 * maxRadius; xpos <= getXMax() - maxRadius; xpos += 2 * maxRadius) {
+          for (double ypos = getYMin() + 1 * maxRadius; ypos <= getYMax() - maxRadius; ypos += 2 * maxRadius) {
+            particle.setRadius(particleRadius *
+                               (1 + params->dispersity * generator.getRandomNumber(-1, 1)));
+            particle.setPosition(Vec3D(xpos, ypos, zpos));
+            particleHandler.copyAndAddObject(particle);
+          }
         }
-        
-        Vec3D calculateBasalForce()
-        {
-            /* Calculate the forces on the basal particles
-             * and the basal wall. */
-            Vec3D basalForce;
-            for (auto p : particleHandler)
-            {
-                if (p->isFixed())
-                {
-                    basalForce += p->getForce();
-                }
-            }
-            basalForce += wallHandler.getObject(0)->getForce();
-            
-            return basalForce;
+      }
+
+      logger(INFO, "Particle volume is %, domain volume is %",
+             particleHandler.getVolume(), getTotalVolume());
+    }
+
+    void actionsOnRestart() override {
+      /* Continue writing to the .muI file. */
+      char muICal3D_fn[MAX_STRLEN];
+      snprintf(muICal3D_fn, MAX_STRLEN, "%s.muI", getName().c_str());
+      muICal3D_f = fopen(muICal3D_fn, "a");
+      setbuf(muICal3D_f, nullptr);
+      logger(INFO, "Continuing writing to .muI file\n");
+    }
+
+    Vec3D calculateBasalForce() {
+      /* Calculate the forces on the basal particles
+       * and the basal wall. */
+      Vec3D basalForce;
+      for (auto p: particleHandler) {
+        if (p->isFixed()) {
+          basalForce += p->getForce();
         }
-        
-        void actionsAfterTimeStep() override
-        {
-            if (!notYetRemovedInsb)
-                return;
-            
-            /* We remove the CubeInsertionBoundary so that it doesn't keep
-             * giving new particles. After a few timesteps, it should have
-             * saturated the system. */
-            if (getNumberOfTimeSteps() >= dataFile.getSaveCount() / 2
-                && particleHandler.getVolume() > getTotalVolume() * 0.5 )
-            {
-                boundaryHandler.removeObject(insb->getIndex());
-                wallHandler.removeObject(lid->getIndex());
-                
-                setGravity(Vec3D(g*sin(theta), 0, -g*cos(theta)));
-                notYetRemovedInsb = false;
-                logger(INFO, "time %, removed insb and lid", getTime());
-                
-                /* Start writing to output files. */
-                setTime(0);
-                forceWriteOutputFiles();
-            }
-        }
+      }
+      basalForce += wallHandler.getObject(0)->getForce();
 
-        void writeOutputFiles() override
-        {
-            Mercury3D::writeOutputFiles();
+      return basalForce;
+    }
 
-            if (notYetRemovedInsb)
-                return;
+    void writeOutputFiles() override {
+      Mercury3D::writeOutputFiles();
 
-            if (getNumberOfTimeSteps() % dataFile.getSaveCount() != 0)
-                return;
+      if (eneFile.getLastSavedTimeStep() != getNumberOfTimeSteps()) {
+        return;
+      }
 
-            // Calculate the forces on the basal particles and wall.
-            Vec3D basalForce = calculateBasalForce();
+      // Calculate the forces on the basal particles and wall.
+      Vec3D basalForce = calculateBasalForce();
 
-            // Write all these details to the .muI file.
-            fprintf(
-                muICal3D_f, "%g %g %d %g %g %g %g %g %g %g\n",
-                getTime(),
-                theta / DEGREES,
-                particleHandler.getNumberOfObjects(),
-                2*getCentreOfMass().Z,
-                getTotalMass(),
-                getTotalMomentum().X,
-                getKineticEnergy(),
-                basalForce.X,
-                basalForce.Y,
-                basalForce.Z
-            );
-        }
+      // Write all these details to the .muI file.
+      fprintf(
+        muICal3D_f,
+        "%g %g %d %g %g %g %g %g %g %g\n",
+        getTime(),
+        theta / DEGREES,
+        particleHandler.getNumberOfObjects(),
+        2 * getCentreOfMass().Z,
+        getTotalMass(),
+        getTotalMomentum().X,
+        getKineticEnergy(),
+        basalForce.X,
+        basalForce.Y,
+        basalForce.Z
+      );
+    }
 
-        void actionsAfterSolve() override
-        {
-            dataFile.setFileType(FileType::MULTIPLE_FILES);
-            writeDataFile();
-            fStatFile.setFileType(FileType::MULTIPLE_FILES);
-            writeFStatFile();
-        }
+    void actionsAfterSolve() override {
+      dataFile.setFileType(FileType::MULTIPLE_FILES);
+      writeDataFile();
+      fStatFile.setFileType(FileType::MULTIPLE_FILES);
+      writeFStatFile();
+    }
 
-    private:
-        std::map<std::string, double> pars;
-        RNG generator;
-        LinearViscoelasticFrictionSpecies* speciesP;
-        LinearViscoelasticFrictionSpecies* speciesB;
-        CubeInsertionBoundary* insb;
-        InfiniteWall*          lid;
-        bool notYetRemovedInsb;
-        FILE * muICal3D_f;
+private:
+    muICal3DParameters *params;
+    RNG generator;
+    LinearViscoelasticFrictionSpecies *species;
+    CubeInsertionBoundary *insb;
+    FILE *muICal3D_f;
 
-        double g;
-        double theta;  // slope angle in radians
-        double particleRadius;
-        double baseRadius;
+    double g;
+    double theta;  // slope angle in radians
+    double particleRadius;
+    double baseRadius;
 };
 
 
-int main(int argc, char ** argv)
-{
-    auto problem = new muICal3D(argv[1], atof(argv[2]));
-    argv[2] = argv[0];
-    problem->solve(argc-2, argv+2);
-    delete problem;
-    return 0;
+int main(int argc, char **argv) {
+  if (argc < 3) {
+    std::cerr << "Example: " << argv[0] << " params.txt 18" << std::endl;
+    return 1;
+  }
+
+  auto problem = new muICal3D(argv[1], argv[2]);
+  argv[2] = argv[0];
+  problem->solve(argc - 2, argv + 2);
+  delete problem;
+  return 0;
 }

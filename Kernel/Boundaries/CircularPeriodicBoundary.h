@@ -116,7 +116,7 @@ private:
     //Particles can only apply forces to real particles
     
     //If a particle crosses a straight wall it should simply be shifted
-    //If a particle crosses its inner Radius it should be coppied
+    //If a particle crosses its inner Radius it should be copied
     //If a particle crosses its outer Radius it may need to be deleted
     
 };

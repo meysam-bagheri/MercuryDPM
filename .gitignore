@@ -5,6 +5,8 @@ build
 Scripts/fpdiff.py
 Tools/MClump/clumps/*.vtu
 
+Deployment/hosts
+
 # formerly deleted big file (added here to not accidentally commit them again)
 stl_seq.zip
 stl_seq2.zip

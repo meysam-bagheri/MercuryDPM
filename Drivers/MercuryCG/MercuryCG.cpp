@@ -238,11 +238,14 @@ void commandLineCG(Mercury3D &dpm, int argc, char **argv)
             logger.assert_always(i+1<argc,"% requires argument",argv[i]);
             cg->setWidth(atof(argv[i + 1]));
             logger(INFO, "Set cg width to %", cg->getWidth());
-//        } else if (!strcmp(argv[i], "-wt") || !strcmp(argv[i], "-widthTime")) {
-//            logger.assert_always(i+1<argc,"% requires argument",argv[i]);
-//            auto cgs = dynamic_cast<TimeSmoothedCG>(cg);
-//            cgs->setWidthTime(atof(argv[i + 1]));
-//            logger(INFO, "Set cg width to %", cg->getWidth());
+        } else if (!strcmp(argv[i], "-wt") || !strcmp(argv[i], "-widthTime")) {
+            logger.assert_always(i+1<argc,"% requires argument",argv[i]);
+            cg->setWidthTime(atof(argv[i + 1]));
+            logger(INFO, "Set cg time width to %", cg->getWidthTime());
+        } else if (!strcmp(argv[i], "-dt") || !strcmp(argv[i], "-timeStep")) {
+            logger.assert_always(i+1<argc,"% requires argument",argv[i]);
+            cg->setTimeStep(atof(argv[i + 1]));
+            logger(INFO, "Set timestep to %", cg->getTimeStep());
         } else if (!strcmp(argv[i], "-std")) {
             logger.assert_always(i+1<argc,"% requires argument",argv[i]);
             cg->setStandardDeviation(atof(argv[i + 1]));

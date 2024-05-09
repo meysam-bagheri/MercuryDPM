@@ -2,7 +2,7 @@
 # run a parameter study based on materialA
 rm -rf study
 mkdir -p study
-echo '(cd ~/Code/Calibration/ && svn up)' >> study/run.sh
+echo '(cd ~/Code/Calibration/ && git update)' >> study/run.sh
 echo '(cd ~/Code/Calibration/build && cmake .)' >> study/run.sh
 echo '(cd ~/Code/Calibration/build/Drivers/Calibration && make -j)' >> study/run.sh
 chmod +x study/run.sh

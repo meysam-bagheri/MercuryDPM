@@ -138,10 +138,19 @@ public:
     /**
      * used in OomphMercuryCoupling::computeOneTimeStepForV/SCoupling to do a oomph timestep (V/SCoupling)
      */
-    void solveOomph()
+    void solveOomph(int max_adapt = 0)
     {
         O::actionsBeforeOomphTimeStep();
-        this->unsteady_newton_solve(this->time_pt()->dt());
+        // the coupled codes seem to not work if newton_solve is used
+        //this->newton_solve(this->time_pt()->dt());
+        if(max_adapt <= 0)
+        {
+            this->unsteady_newton_solve(this->time_pt()->dt());
+        }
+        else
+        {
+            this->unsteady_newton_solve(this->time_pt()->dt(), max_adapt, false);
+        }
     }
     
     /**

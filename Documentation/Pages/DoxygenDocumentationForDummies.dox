@@ -21,9 +21,10 @@ To make a new page (such as this), you need to create a ".dox" file.
 
 The safest way to do this in Mercury is to copy an existing file using the following command:
 
-<CODE> svn cp oldFile.dox newFile.dox </CODE>
+<CODE> cp oldFile.dox newFile.dox 
+ git add .</CODE>
 
-This creates a new file which is simply a copy of the old. By adding &quot;<CODE>svn</CODE>&quot;, we ensure that the new file is added to the repository.
+This creates a new file which is simply a copy of the old. By adding &quot;<CODE>git</CODE>&quot;, we ensure that the new file is added to the repository.
 
 The new file can then be edited at will.
 

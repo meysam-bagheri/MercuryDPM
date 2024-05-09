@@ -1,0 +1,4 @@
+source_dir: "/home/{{ ansible_user }}/MercuryDPM/MercurySource"
+build_dir: "/home/{{ ansible_user }}/MercuryDPM/MercuryBuild"
+repository: "https://bitbucket.org/mercurydpm/mercurydpm.git"
+version: "HEAD"

@@ -1,0 +1,36 @@
+- name: Clone repository and checkout desired version
+  git:
+    repo: "{{ repository }}"
+    dest: "{{ source_dir }}"
+    clone: yes
+    update: yes
+    version: "{{ version }}"
+
+- name: Run cmake
+  shell: "
+    cmake \
+      -D CMAKE_BUILD_TYPE=Release \
+      -D Mercury_BUILD_USER_DIR=False \
+      -D Mercury_Include_Xballs_Support=False \
+      -D Mercury_USE_MPI=False \
+      {{ source_dir }}
+    "
+  args:
+    chdir: "{{ build_dir }}"
+
+- name: Set make argv
+  set_fact:
+    make_args:
+      - make
+      - "{{ target }}"
+    extra_make_args:
+      - "-j1"
+
+- name: Append extra argv
+  set_fact:
+    argv: "{{ make_args + extra_make_args }}"
+
+- name: Build
+  command:
+    argv: "{{ argv }}"
+    chdir: "{{ build_dir }}"

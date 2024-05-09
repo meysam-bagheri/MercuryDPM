@@ -72,14 +72,20 @@ if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     add_definitions(-DMERCURYDPM_DEBUG)
 endif (CMAKE_BUILD_TYPE STREQUAL "Debug")
 
-option(MercuryDPM_TRIANGLE_WALL_CORRECTION "Smooth transition between triangle walls" ON)
-if(MercuryDPM_TRIANGLE_WALL_CORRECTION)
-	add_definitions( -DMERCURYDPM_TRIANGLE_WALL_CORRECTION )
-endif()
-
 include(CMakeModules/MercuryDPM_MPI.cmake)
 
 include(CMakeModules/MercuryDPM_OMP.cmake)
+
+option(MercuryDPM_TRIANGLE_WALL_CORRECTION "Smooth transition between triangle walls" ON)
+message(STATUS "MercuryDPM_TRIANGLE_WALL_CORRECTION" ${MercuryDPM_TRIANGLE_WALL_CORRECTION})
+message(STATUS "MercuryDPM_USE_OpenMP" ${MercuryDPM_USE_OpenMP})
+if(MercuryDPM_TRIANGLE_WALL_CORRECTION)
+	if(MercuryDPM_USE_OpenMP)
+		message(STATUS "You are using MercuryDPM_USE_OpenMP; this is incompatible with MercuryDPM_TRIANGLE_WALL_CORRECTION. Therefore MercuryDPM_TRIANGLE_WALL_CORRECTION will be disabled")
+	else ()
+		add_definitions( -DMERCURYDPM_TRIANGLE_WALL_CORRECTION )
+	endif ()
+endif()
 
 include(CMakeModules/MercuryDPM_Logger.cmake)
 

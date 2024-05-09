@@ -333,6 +333,7 @@ private:
                 }
             }
         }
+        logger(VERBOSE, "Apply nodal_coupling_residual element %", this);
     }
     
     void output(std::ostream& outfile, const unsigned& n_plot)

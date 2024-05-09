@@ -1,0 +1,26 @@
+- name: install dependencies
+  become: yes
+  apt: 
+    update_cache: yes
+    name:
+      - build-essential 
+      - g++ 
+      - gfortran 
+      - git 
+      - cmake 
+      - python3
+
+    state: present
+
+- name: Create parent of source directory
+  file:
+    path: "{{ source_dir | dirname }}"
+    state: directory
+    recurse: yes
+
+- name: Create build directory
+  file:
+    path: "{{ build_dir }}"
+    state: directory
+    recurse: yes
+

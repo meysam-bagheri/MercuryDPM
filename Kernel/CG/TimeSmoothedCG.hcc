@@ -92,7 +92,7 @@ void TimeSmoothedCG<Coordinates, BaseFunction, Fields>::setTimeStep(Mdouble time
 template<class Coordinates, template<class> class BaseFunction, class Fields>
 Mdouble TimeSmoothedCG<Coordinates, BaseFunction, Fields>::getTimeStep() const
 {
-    return widthTime_;
+    return timeStep_;
 }
 
 template<class Coordinates, template<class> class BaseFunction, class Fields>
@@ -136,6 +136,13 @@ void TimeSmoothedCG<Coordinates, BaseFunction, Fields>::evaluate()
     
     const DPMBase* dpm = CG<Coordinates, BaseFunction, Fields>::getHandler()->getDPMBase();
     const Mdouble currentTime = dpm->getTime();
+    
+    if (timeStep_ < dpm->getTimeStep()*dpm->dataFile.getSaveCount())
+    {
+        logger(ERROR, "timeStep_ % should be greater than or equal to the saved simulation timesteps "
+                      "(timeStep*saveCount) %.6", timeStep_, dpm->getTimeStep()*dpm->dataFile.getSaveCount());
+    }
+    
     
     if (std::isinf(nextTime_)) nextTime_ = currentTime;
 

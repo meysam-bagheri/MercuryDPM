@@ -29,26 +29,17 @@
 ** the documentation - This is not needed for your real drivers.
 ** Please ignore these comments.
 **
-** For full documentation of this code, go to http://docs.mercurydpm.org/Alpha/d0/db0/BeginnerTutorials.html#T9
+** For full documentation of this code, go to http://docs.mercurydpm.org/Alpha/d0/db0/BeginnerTutorials.html#T10
 */
 
 //! [T10:headers]
 #include "Mercury3D.h"
+#include <Math/Helpers.h>
 #include "Walls/IntersectionOfWalls.h"
 #include "Walls/AxisymmetricIntersectionOfWalls.h"
 #include "Species/LinearViscoelasticSpecies.h"
 //! [T10:headers]
 
-/*
-** This file is annotated with DoxyFile comments in order to show the code on
-** the documentation - This is not needed for your real drivers.
-** Please ignore these comments.
-**
-** For full documentation of this code, go to http://docs.mercurydpm.org/Alpha/d0/db0/BeginnerTutorials.html#T10
-*/
-
-#include <Mercury3D.h>
-#include <Math/Helpers.h>
 
 //! [T10:main]
 int main(int argc, char* argv[])

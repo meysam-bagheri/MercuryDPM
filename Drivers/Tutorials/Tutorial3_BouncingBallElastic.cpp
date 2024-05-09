@@ -69,6 +69,7 @@ public:
 };
 //! [T3:class]
 
+//! [T3:main]
 int main(int argc, char* argv[])
 {
     
@@ -87,12 +88,12 @@ int main(int argc, char* argv[])
     problem.setZMax(0.5);
     problem.setTimeMax(2.0);
 
-    // Sets a linear spring-damper contact law.
-    // The spring stiffness and normal dissipation is computed such that collision time tc = 0.005
-    // and restitution coefficient r=1.0 for a pair of particles of 1cm diameter
     //! [T3:speciesProp]
+    // Sets a linear spring-damper contact law.
+    // The normal spring stiffness and normal dissipation is computed and set as
+    // For collision time tc=0.005 and restitution coefficient rc=1.0,
     LinearViscoelasticSpecies s;
-    s.setDensity(2500.0); //sets the density
+    s.setDensity(2500.0); //sets the species type_0 density
     s.setStiffness(258.5);//sets the spring stiffness.
     s.setDissipation(0.0); //sets the dissipation.
     auto species = problem.speciesHandler.copyAndAddObject(s);
@@ -132,3 +133,4 @@ int main(int argc, char* argv[])
 //! [T3:solve]
     return 0;
 }
+//! [T3:main]

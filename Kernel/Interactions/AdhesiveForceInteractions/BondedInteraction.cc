@@ -40,6 +40,7 @@ BondedInteraction::BondedInteraction(BaseInteractable* P, BaseInteractable* I, u
         : BaseInteraction(P, I, timeStamp)
 {
     bonded_ = false;
+    bondForce_ = 0;
 #ifdef DEBUG_CONSTRUCTOR
     std::cout<<"BondedInteraction::BondedInteraction() finished"<<std::endl;
 #endif
@@ -53,6 +54,7 @@ BondedInteraction::BondedInteraction(const BondedInteraction& p)
 {
     ///\todo tw check if the parameters are valid when inserting the species into the handler
     bonded_ = p.bonded_;
+    bondForce_ = p.bondForce_;
 #ifdef DEBUG_CONSTRUCTOR
     std::cout<<"BondedInteraction::BondedInteraction(const BondedInteraction &p finished"<<std::endl;
 #endif
@@ -81,6 +83,7 @@ BondedInteraction::~BondedInteraction()
 void BondedInteraction::write(std::ostream& os) const
 {
     os << " bonded " << bonded_;
+    os << " bondForce " << bondForce_;
 }
 
 /*!
@@ -90,6 +93,7 @@ void BondedInteraction::read(std::istream& is)
 {
     std::string dummy;
     is >> dummy >> bonded_;
+    is >> dummy >> bondForce_;
 }
 
 /*!
@@ -97,9 +101,9 @@ void BondedInteraction::read(std::istream& is)
  */
 void BondedInteraction::computeAdhesionForce()
 {
-    const BondedSpecies* species = getSpecies();
     if (bonded_ && getOverlap() >= 0)
     {
+        const BondedSpecies* species = getSpecies();
         addForce(getNormal() * (-getBondForce()
                                 - species->getBondDissipation() * getNormalRelativeVelocity()));
     }
@@ -132,7 +136,7 @@ Mdouble BondedInteraction::getElasticEnergy() const
     if (!bonded_)
         return 0.0;
     else
-        return -getSpecies()->getBondForceMax() * getOverlap();
+        return -getBondForce() * getOverlap();
 }
 
 bool BondedInteraction::getBonded() const

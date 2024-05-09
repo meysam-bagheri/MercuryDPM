@@ -279,7 +279,15 @@ public:
     void setVerbose(const bool verbose) {verbose_=verbose;}
     
     bool getVerbose() const {return verbose_;}
-
+    
+    virtual void setWidthTime(Mdouble widthTime);
+    
+    virtual Mdouble getWidthTime() const;
+    
+    virtual void setTimeStep(Mdouble timeStep);
+    
+    virtual Mdouble getTimeStep() const;
+    
     /*
      * Sets width such that the CG function has a fixed standard deviation
      * See CGStandardDeviationUnitTest.

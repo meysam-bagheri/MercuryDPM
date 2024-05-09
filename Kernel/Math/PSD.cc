@@ -664,10 +664,9 @@ void PSD::convertCumulativeToProbabilityDensity()
 }
 
 /*!
- * \details converts any of the PDFTypes to a PROBABILITYDENSITY_NUMBER_DISTRIBUTION based on their TYPE. This is a helper function
+ * \details Converts any of the PDFTypes to a PROBABILITYDENSITY_NUMBER_DISTRIBUTION based on their TYPE. This is a helper function
  * which enables the convertProbabilityDensityToCumulative function to convert the psd into the default TYPE (CUMULATIVE_NUMBER_DISTRIBUTION).
- * \param[in] PDFType                            Type of the PDF: PROBABILITYDENSITY_LENGTH_DISTRIBUTION, PROBABILITYDENSITY_AREA_DISTRIBUTION or PROBABILITYDENSITY_VOLUME_DISTRIBUTION,
- *                                               Where L = Length, A = Area and V = Volume.
+ * \param[in] PDFType Type of the PDF: PROBABILITYDENSITY_LENGTH_DISTRIBUTION, PROBABILITYDENSITY_AREA_DISTRIBUTION or PROBABILITYDENSITY_VOLUME_DISTRIBUTION.
  */
 void PSD::convertProbabilityDensityToProbabilityDensityNumberDistribution(TYPE PDFType)
 {
@@ -721,7 +720,7 @@ void PSD::convertProbabilityDensityToProbabilityDensityNumberDistribution(TYPE P
 }
 
 /*!
- * \details This is a helper function to have full flexibility in converting from the default
+ * \details This is a helper function to have full flexibility in converting from a
  * PROBABILITYDENSITY_NUMBER_DISTRIBUTION type to any other PDF type. This can be useful e.g. when wanting to output the
  * PSD with a certain type.
  * @param PDFType The PDF type to convert to.
@@ -788,75 +787,64 @@ void PSD::convertProbabilityDensityNumberDistributionToProbabilityDensityVolumeD
 }
 
 /*!
- * \details converts any of the CDFTypes to a the default CUMULATIVE_NUMBER_DISTRIBUTION based on their TYPE.
- * \param[in] PDFType                            Type of the PDF: PROBABILITYDENSITY_LENGTH_DISTRIBUTION, PROBABILITYDENSITY_AREA_DISTRIBUTION or PROBABILITYDENSITY_VOLUME_DISTRIBUTION,
- *                                               Where L = Length, A = Area and V = Volume.
+ * \details Converts any of the CDFTypes to a the default CUMULATIVE_NUMBER_DISTRIBUTION based on their TYPE.
+ * \param[in] CDFType Type of the PDF: CUMULATIVE_LENGTH_DISTRIBUTION, CUMULATIVE_AREA_DISTRIBUTION or CUMULATIVE_VOLUME_DISTRIBUTION.
  */
-/// \todo TP: NOT WORKING! If anyone knows how to do it feel free to add
 void PSD::convertCumulativeToCumulativeNumberDistribution(TYPE CDFType)
 {
-    logger(ERROR, "This function is not fully implemented yet!");
+    // Ignore the default case.
+    if (CDFType == TYPE::CUMULATIVE_NUMBER_DISTRIBUTION)
+        return;
 
-    Mdouble sum = 0;
-    switch (CDFType)
-    {
-        default:
-            logger(ERROR, "Wrong CDFType");
-            break;
-        case TYPE::CUMULATIVE_LENGTH_DISTRIBUTION:
-            for (auto it = particleSizeDistribution_.begin() + 1; it != particleSizeDistribution_.end(); ++it)
-            {
-                // add conversion here
+    convertCumulativeToProbabilityDensity();
 
-                // sum up probabilities
-                sum += it->probability;
-            }
-            // normalize
-            for (auto& p : particleSizeDistribution_)
-            {
-                p.probability /= sum;
-            }
-            break;
-        case TYPE::CUMULATIVE_AREA_DISTRIBUTION:
-            for (auto it = particleSizeDistribution_.begin() + 1; it != particleSizeDistribution_.end(); ++it)
-            {
-                // add conversion here
+    if (CDFType == TYPE::CUMULATIVE_LENGTH_DISTRIBUTION)
+        convertProbabilityDensityToProbabilityDensityNumberDistribution(TYPE::PROBABILITYDENSITY_LENGTH_DISTRIBUTION);
+    else if (CDFType == TYPE::CUMULATIVE_AREA_DISTRIBUTION)
+        convertProbabilityDensityToProbabilityDensityNumberDistribution(TYPE::PROBABILITYDENSITY_AREA_DISTRIBUTION);
+    else if (CDFType == TYPE::CUMULATIVE_VOLUME_DISTRIBUTION)
+        convertProbabilityDensityToProbabilityDensityNumberDistribution(TYPE::PROBABILITYDENSITY_VOLUME_DISTRIBUTION);
+    else
+        logger(ERROR, "Wrong CDFType");
 
-                // sum up probabilities
-                sum += it->probability;
-            }
-            // normalize
-            for (auto& p : particleSizeDistribution_)
-            {
-                p.probability /= sum;
-            }
-            break;
-        case TYPE::CUMULATIVE_VOLUME_DISTRIBUTION:
-            for (auto it = particleSizeDistribution_.begin() + 1; it != particleSizeDistribution_.end(); ++it)
-            {
-                // add conversion here
-
-                // sum up probabilities
-                sum += it->probability;
-            }
-            // normalize
-            for (auto& p : particleSizeDistribution_)
-            {
-                p.probability /= sum;
-            }
-            break;
-    }
+    convertProbabilityDensityToCumulative();
 }
 
+/*!
+ * @param CDFType The CDF type to convert to.
+ */
+void PSD::convertCumulativeNumberDistributionToCumulative(TYPE CDFType)
+{
+    // Ignore the default case.
+    if (CDFType == TYPE::CUMULATIVE_NUMBER_DISTRIBUTION)
+        return;
+
+    convertCumulativeToProbabilityDensity();
+
+    if (CDFType == TYPE::CUMULATIVE_LENGTH_DISTRIBUTION)
+        convertProbabilityDensityNumberDistributionToProbabilityDensity(TYPE::PROBABILITYDENSITY_LENGTH_DISTRIBUTION);
+    else if (CDFType == TYPE::CUMULATIVE_AREA_DISTRIBUTION)
+        convertProbabilityDensityNumberDistributionToProbabilityDensity(TYPE::PROBABILITYDENSITY_AREA_DISTRIBUTION);
+    else if (CDFType == TYPE::CUMULATIVE_VOLUME_DISTRIBUTION)
+        convertProbabilityDensityNumberDistributionToProbabilityDensity(TYPE::PROBABILITYDENSITY_VOLUME_DISTRIBUTION);
+    else
+        logger(ERROR, "Wrong CDFType");
+
+    convertProbabilityDensityToCumulative();
+}
 
 /*!
  * \details Cuts off the CDF at given minimum and maximum quantiles and applies a minimum polydispersity at the base.
- * \param[in] quantileMin                       undersize quantile to cut off the lower part of the CDF.
- * \param[in] quantileMax                       oversize quantile to cut off the upper part of the CDF.
- * \param[in] minPolydispersity                 Applies a minimum of polydispersity ([0,1]) at the base of the CDF.
+ * \param[in] CDFType                           The CDF form the PSD should have when applying the cut off.
+ * \param[in] quantileMin                       Undersize quantile to cut off the lower part of the CDF.
+ * \param[in] quantileMax                       Oversize quantile to cut off the upper part of the CDF.
+ * \param[in] minPolydispersity                 Applies a minimum polydispersity ([0,1]) at the base of the CDF.
  */
-void PSD::cutoffCumulativeNumber(Mdouble quantileMin, Mdouble quantileMax, Mdouble minPolydispersity)
+void PSD::cutoffCumulativeDistribution(PSD::TYPE CDFType, Mdouble quantileMin, Mdouble quantileMax, Mdouble minPolydispersity)
 {
+    // Convert the default CUMULATIVE_NUMBER_DISTRIBUTION to the provided CDF type.
+    convertCumulativeNumberDistributionToCumulative(CDFType);
+
     Mdouble radiusMin = getRadiusByQuantile(quantileMin);
     Mdouble radiusMax = getRadiusByQuantile(quantileMax);
     // to get a minimum polydispersity at the base
@@ -877,24 +865,40 @@ void PSD::cutoffCumulativeNumber(Mdouble quantileMin, Mdouble quantileMax, Mdoub
             .internalVariable), radiusMin);
     particleSizeDistribution_.push_back({radiusMaxCut, quantileMax});
     particleSizeDistribution_.push_back({radiusMax, 1});
+
+    // Convert the provided CDF type back to the default CUMULATIVE_NUMBER_DISTRIBUTION.
+    convertCumulativeToCumulativeNumberDistribution(CDFType);
+
     logger(INFO, "PSD was cut successfully and now has a size ratio of %", getSizeRatio());
 }
 
 /*!
  * \details Cuts off the CDF at given minimum and maximum quantiles, applies a minimum polydispersity at the base and
  * squeezes the distribution to make it less polydisperse.
- * \param[in] quantileMin                       undersize quantile to cut off the lower part of the CDF.
- * \param[in] quantileMax                       oversize quantile to cut off the upper part of the CDF.
- * \param[in] squeeze                           applies a squeezing factor ([0,1]) which determines the degree the
+ * \param[in] CDFType                           The CDF form the PSD should have when applying the cut off and squeeze.
+ * \param[in] quantileMin                       Undersize quantile to cut off the lower part of the CDF.
+ * \param[in] quantileMax                       Oversize quantile to cut off the upper part of the CDF.
+ * \param[in] squeeze                           Applies a squeezing factor ([0,1]) which determines the degree the
  *                                              PDF gets squeezed.
- * \param[in] minPolydispersity                 applies a minimum of polydispersity ([0,1]) at the base of the CDF.
+ * \param[in] minPolydispersity                 Applies a minimum polydispersity ([0,1]) at the base of the CDF.
  */
-void PSD::cutoffAndSqueezeCumulative(Mdouble quantileMin, Mdouble quantileMax, Mdouble squeeze, Mdouble
-minPolydispersity)
+void PSD::cutoffAndSqueezeCumulativeDistribution(PSD::TYPE CDFType, Mdouble quantileMin, Mdouble quantileMax,
+                                                 Mdouble squeeze, Mdouble minPolydispersity)
 {
-    Mdouble r50 = 0.5 * PSD::getNumberDx(50);
+    Mdouble r50;
+    if (CDFType == TYPE::CUMULATIVE_NUMBER_DISTRIBUTION)
+        r50 = 0.5 * PSD::getNumberDx(50);
+    else if (CDFType == TYPE::CUMULATIVE_LENGTH_DISTRIBUTION)
+        r50 = 0.5 * PSD::getLengthDx(50);
+    else if (CDFType == TYPE::CUMULATIVE_AREA_DISTRIBUTION)
+        r50 = 0.5 * PSD::getAreaDx(50);
+    else if (CDFType == TYPE::CUMULATIVE_VOLUME_DISTRIBUTION)
+        r50 = 0.5 * PSD::getVolumeDx(50);
+    else
+        logger(ERROR, "Wrong CDFType");
+
     // cut off
-    cutoffCumulativeNumber(quantileMin, quantileMax, minPolydispersity);
+    cutoffCumulativeDistribution(CDFType, quantileMin, quantileMax, minPolydispersity);
     // squeeze psd
     for (auto& p: particleSizeDistribution_)
     {
@@ -902,29 +906,53 @@ minPolydispersity)
     }
 }
 
-
-
 /*!
  * \details Gets the diameter from a certain percentile of the number based PSD.
  * \return A double which is the diameter corresponding to a certain percentile.
- * \param[in] x                 double which determines the obtained diameter as a percentile of the PSD.
+ * \param[in] x double [0, 100] which determines the obtained diameter as a percentile of the PSD.
  */
 Mdouble PSD::getNumberDx(Mdouble x) const
 {
+    logger.assert_always(x >= 0 && x <= 100, "Percentile % is not between 0 and 100.", x);
     return 2.0 * getRadiusByQuantile(x / 100);
+}
+
+/*!
+ * \details Gets the diameter from a certain percentile of the length based PSD.
+ * \return A double which is the diameter corresponding to a certain percentile.
+ * \param[in] x double [0, 100] which determines the obtained diameter as a percentile of the PSD.
+ */
+Mdouble PSD::getLengthDx(Mdouble x) const
+{
+    logger.assert_always(x >= 0 && x <= 100, "Percentile % is not between 0 and 100.", x);
+    PSD psd = *this;
+    psd.convertCumulativeNumberDistributionToCumulative(TYPE::CUMULATIVE_LENGTH_DISTRIBUTION);
+    return 2.0 * psd.getRadiusByQuantile(x / 100);
+}
+
+/*!
+ * \details Gets the diameter from a certain percentile of the area based PSD.
+ * \return A double which is the diameter corresponding to a certain percentile.
+ * \param[in] x double [0, 100] which determines the obtained diameter as a percentile of the PSD.
+ */
+Mdouble PSD::getAreaDx(Mdouble x) const
+{
+    logger.assert_always(x >= 0 && x <= 100, "Percentile % is not between 0 and 100.", x);
+    PSD psd = *this;
+    psd.convertCumulativeNumberDistributionToCumulative(TYPE::CUMULATIVE_AREA_DISTRIBUTION);
+    return 2.0 * psd.getRadiusByQuantile(x / 100);
 }
 
 /*!
  * \details Gets the diameter from a certain percentile of the volume based PSD.
  * \return A double which is the diameter corresponding to a certain percentile.
- * \param[in] x                 double which determines the obtained diameter as a percentile of the PSD.
+ * \param[in] x double [0, 100] which determines the obtained diameter as a percentile of the PSD.
  */
 Mdouble PSD::getVolumeDx(Mdouble x) const
 {
+    logger.assert_always(x >= 0 && x <= 100, "Percentile % is not between 0 and 100.", x);
     PSD psd = *this;
-    psd.convertCumulativeToProbabilityDensity();
-    psd.convertProbabilityDensityNumberDistributionToProbabilityDensity(TYPE::PROBABILITYDENSITY_VOLUME_DISTRIBUTION);
-    psd.convertProbabilityDensityToCumulative();
+    psd.convertCumulativeNumberDistributionToCumulative(TYPE::CUMULATIVE_VOLUME_DISTRIBUTION);
     return 2.0 * psd.getRadiusByQuantile(x / 100);
 }
 
@@ -1020,7 +1048,7 @@ void PSD::cutHighSizeRatio()
     if (SR > 100)
     {
         logger(WARN, "Size ratio > 100; Cutting the PSD to avoid inaccurate results");
-        cutoffCumulativeNumber(0.1, 0.9, 0.5);
+        cutoffCumulativeDistribution(TYPE::CUMULATIVE_NUMBER_DISTRIBUTION, 0.1, 0.9, 0.5);
     }
 }
 
@@ -1120,6 +1148,60 @@ void PSD::scaleParticleSize(double scale)
     for (auto& p : particleSizeDistribution_) {
         p.internalVariable *= scale;
     }
+}
+
+double PSD::scaleParticleSizeAuto(int numberOfParticles, double targetVolume, bool allowScaleDown)
+{
+    // Calculate the mean particle volume, using the Mean Value Theorem for Integrals. I.e. the mean particle volume
+    // over an infinite number of particles.
+    double meanParticleVolume = 0.0;
+    for (auto it = particleSizeDistribution_.begin(); it < particleSizeDistribution_.end() - 1; it++)
+    {
+        double radiusLeft = it->internalVariable;
+        double radiusRight = (it+1)->internalVariable;
+        double probabilityLeft = it->probability;
+        double probabilityRight = (it+1)->probability;
+
+        double meanVolume;
+        if (radiusLeft != radiusRight)
+        {
+            // The CDF is assumed piecewise linear, so the radius is linearly interpolated.
+            // Integrate the volume from radius left to right, i.e. integral of 4/3 pi r^3 gives 1/3 pi (r_r^4 - r_l^4).
+            double volumeIntegral = (std::pow(radiusRight, 4) - std::pow(radiusLeft, 4)) * constants::pi / 3.0;
+            // Calculate the mean volume that represents this bin.
+            meanVolume = volumeIntegral / (radiusRight - radiusLeft);
+        }
+        else
+        {
+            meanVolume = std::pow(radiusLeft, 3) * constants::pi * 4.0 / 3.0;
+        }
+
+        // Calculate the volume that this bin accounts for, and add to total.
+        meanParticleVolume += meanVolume * (probabilityRight - probabilityLeft);
+    }
+
+    // The volume that the number of particles currently fills, and the scale factor to make it match the target volume.
+    double totalParticleVolume = numberOfParticles * meanParticleVolume;
+    double scale = std::cbrt(targetVolume / totalParticleVolume);
+
+    // The number of (unscaled) particles needed to fill the target volume.
+    unsigned long long numberOfParticlesExpected = std::pow(scale, 3) * numberOfParticles;
+    logger(INFO, "Rescaling the particle size based on number of particles %, and target volume %.", numberOfParticles, targetVolume);
+    logger(INFO, "Expected number of particles %, scale factor %.", numberOfParticlesExpected, scale);
+
+    // Always scale up, only scale down when requested.
+    if (scale > 1.0 || allowScaleDown)
+    {
+        scaleParticleSize(scale);
+        logger(INFO, "Rescaling applied.");
+    }
+    else
+    {
+        logger(INFO, "Rescaling not applied, since scale factor is less than or equal to 1.");
+        scale = 1.0; // Reassign so that the returned value is correct.
+    }
+
+    return scale;
 }
 
 /*!

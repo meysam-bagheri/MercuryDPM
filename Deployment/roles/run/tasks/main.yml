@@ -1,0 +1,11 @@
+- name: Create directory for running the driver
+  file:
+    path: "{{ rundir }}"
+    state: directory
+    recurse: yes
+
+- name: Run driver in background
+  shell: |
+    (nohup {{ build_dir }}/Drivers/{{ driver }} </dev/null >/dev/null 2>&1 &)
+  args:
+    chdir: "{{ rundir }}"

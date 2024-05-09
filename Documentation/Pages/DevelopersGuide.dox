@@ -195,9 +195,10 @@ While the above example works, we advise you to avoid the number of explicitly u
 You can start a new driver code by creating your own user directory. 
 First, chose a \c UserName, then add a folder to the user directory and create a new source file, e.g. \c Example.cpp, which for convenience is copied here from the file \c Tutorial1_ParticleInOuterSpace.cpp.
 cd ~/MercurySource/Drivers/USER
-svn mkdir UserName
+mkdir UserName
 cd UserName
-svn cp ../../Tutorials/Tutorial1_ParticleInOuterSpace.cpp Example.cpp
+cp ../../Tutorials/Tutorial1_ParticleInOuterSpace.cpp Example.cpp
+git add Example.cpp
 
 Now write your code in the Example.cpp file. Note, you cannot yet execute your code, as the Makefiles in your build directory doesn't know about the new file. To update your Makefiles, use cmake. Note, the file name of your source file has to be unique, otherwise you get error messages.
 cd ~/MercuryBuild
@@ -234,8 +235,8 @@ The \ref IntroductionToTheCode is a useful document to gain insight into the exi
 
 See \subpage TESTING.
 
-# Committing your code to SVN
-See \subpage SVNCOMMIT.
+# Committing your code to GIT
+See \subpage GITCOMMIT.
 
 # Logging
 See \subpage LoggerGuide.
@@ -297,28 +298,30 @@ See \subpage UserDir
 
 \page UserDir How do I create a directory for my codes?
 When you start developing MercuryDPM applications ("Drivers"), you need a directory in which to store them.
-All MercuryDPM developers can should create a directory to store their applications, and use svn for version control. Here is how you do it:
- -# Open a terminal, enter the sub-folder Drivers/USER in the source directory, and svn-copy the template USER directory into a directory named after you, e.g.
+All MercuryDPM developers can create a directory to store their applications, and use git for version control. Here is how you do it:
+ -# Open a terminal, enter the sub-folder Drivers/USER in the source directory, and copy the template USER directory into a directory named after you, e.g.
 \code{.cpp}
-MercurySource/Drivers/USER$ svn cp Template Marlin
+MercurySource/Drivers/USER$ cp Template Marlin  # There is a template folder with a TemplateDriver.cpp, CMakeLists.txt files and a Scripts folder with a README file
+git add Marlin  # This command stages the new folder Marlin and all the files within it for commit.
 \endcode
- -# Enter your directory. If you have already written a driver code, svn-remove the template driver, copy your driver into your folder and svn-add the driver.
+ -# Enter your directory. If you have already written a driver code, replace the template driver with your driver  and use 'git add .' to add the driver.
 \code{.cpp}
 MercurySource/Drivers/USER$ cd Marlin
 MercurySource/Drivers/USER/Marlin$ cp $DIRECTORY/MyFirstDriver.cpp .
-MercurySource/Drivers/USER/Marlin$ svn add MyFirstDriver.cpp
-MercurySource/Drivers/USER/Marlin$ svn rm TemplateDriver.cpp
+MercurySource/Drivers/USER/Marlin$ rm TemplateDriver.cpp
+MercurySource/Drivers/USER/Marlin$ git add .
 \endcode
- If you are just starting to develop a driver, and svn-rename the template driver to the name you want to give your driver, e.g.
+ If you are just starting to develop a driver,  just rename the template driver to the name you want to give your driver, e.g.
 \code{.cpp}
 MercurySource/Drivers/USER$ cd Marlin
-MercurySource/Drivers/USER/Marlin$ svn mv TemplateDriver.cpp MyFirstDriver.cpp
+MercurySource/Drivers/USER/Marlin$ mv TemplateDriver.cpp MyFirstDriver.cpp
+MercurySource/Drivers/USER/Marlin$ git add .
 \endcode
  -# return to your build directory and update cmake.
 \code{.cpp}
 MercurySource/Drivers/USER/Marlin$ cd ../../../../MercuryBuild
 MercuryBuild$ cmake .
--- Build files have been written to: /Users/weinhartt/Mercury/Trunk/cmake-build-debug
+-- Build files have been written to: /Users/Marlin/Mercury/Trunk/cmake-build-debug
 \endcode
 Updating cmake made a make command for your driver, you can test this:
 \code{.cpp}
@@ -330,11 +333,11 @@ MercuryBuild$ make MyFirstDriver
 \code{.cpp}
 MercuryBuild$ make fullTest
 MercuryBuild$ cd ../MercurySource
-MercurySource$ svn st
+MercurySource$ git st
 A  +    Drivers/USER/Marlin
 A  +    Drivers/USER/Marlin/MyFirstDriver.cpp
 D  +    Drivers/USER/Marlin/TemplateDriver.cpp
-MercurySource$ svn ci -m "added a USER directory named Marlin"
+MercurySource$ git commit -m "added a USER directory named Marlin"
 \endcode
 Now you can modify the driver code to your specific application.
 */

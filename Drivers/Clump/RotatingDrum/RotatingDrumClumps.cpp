@@ -67,7 +67,7 @@ public:
         setMin({f_min,f_min,f_min});
         setMax({f_max,f_max,f_max});
         // Output files: wall-vtu
-        setWallsWriteVTK(true);
+
         LoadClumps(data);
         setClumpIndex(2);
         clump_mass = data.mass[clump_index];
@@ -143,8 +143,8 @@ public:
         Mdouble wallScaleFactor = 1e-3; // Scale used in the stl file (mm)
         Vec3D shift = {0,0,0};
         Vec3D velocity = {0,0,0};
-        rotatingWallID = wallHandler.readTriangleWall(getMercuryDPMSourceDir() + "/Drivers/Clump/RotatingDrum.stl",speciesHandler.getObject(0), wallScaleFactor,shift,velocity,Vec3D(0,0,0));
-
+        rotatingWallID = wallHandler.readTriangleWall(getMercuryDPMSourceDir() + "/Drivers/Clump/RotatingDrum/RotatingDrum.stl",speciesHandler.getObject(0), wallScaleFactor,shift,velocity,Vec3D(0,0,0));
+        wallHandler.setWriteVTK(true);
 
     }
 
@@ -182,9 +182,9 @@ int main(int argc, char* argv[])
     problem.setClumpDamping(0);
     problem.setTimeStep(collisionTime / 50.0);
     problem.setSaveCount(SAVECOUNT);
-    //problem.setHGridMaxLevels(1);
+    problem.setHGridMaxLevels(1);
     //problem.setTimeMax(48.0);
-    problem.setTimeMax(0.1);
+    problem.setTimeMax(0.08);
 
     problem.removeOldFiles();
     problem.solve();

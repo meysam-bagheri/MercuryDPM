@@ -33,7 +33,7 @@ The directory contains a full scripts that are used by the selftest suite of Mer
 
 \subsection SUBSECTION_DriverDir Creating your own DRIVERS directory for your code
 
-It you look in the DRIVERS directory you will see several subdirectories. These subdirectories contain collections of similar codes and, as a new user, you probably want to create a new directory for your own driver codes. To do this copy the TEMPLATE direction to you YOUR_DIR_NAME (if your are a developer and have access to svn repository it is advisable to svn copy to create your new DRIVERS directory)
+It you look in the DRIVERS directory you will see several subdirectories. These subdirectories contain collections of similar codes and, as a new user, you probably want to create a new directory for your own driver codes. To do this copy the TEMPLATE direction to you YOUR_DIR_NAME (if your are a developer and have access to git repository it is advisable to use git to create your new DRIVERS directory see \subpage DevelopersGuide)
 
 
 \section Variables Variables and Equations

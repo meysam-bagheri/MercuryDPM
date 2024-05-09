@@ -274,3 +274,26 @@ void BaseCG::setHZ(Mdouble h)
     logger.assert_always(getNZ() > 0, "setHZ(%) generated nZ=% for %<z<%", h, getNZ(), min_.Z, max_.Z);
 }
 
+void BaseCG::setWidthTime(Mdouble widthTime)
+{
+    logger(ERROR, "setWidthTime() should not be used, it is a dummy function for templating");
+}
+
+void BaseCG::setTimeStep(Mdouble timeStep)
+{
+    logger(ERROR, "setTimeStep() should not be used, it is a dummy function for templating");
+}
+
+Mdouble BaseCG::getWidthTime() const
+{
+    logger(ERROR, "getWidthTime() should not be used, it is a dummy function for templating");
+    return 0;
+}
+
+Mdouble BaseCG::getTimeStep() const
+{
+    logger(ERROR, "getTimeStep() should not be used, it is a dummy function for templating");
+    return 0;
+}
+
+

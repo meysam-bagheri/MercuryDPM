@@ -26,6 +26,25 @@
 #include "Helpers/CommandLineHelpers.h"
 
 /*!
+ * \brief Counts the leading dash ('-') characters in a string.
+ * \param[in] s String constaining dash ('-') characters.
+ * \returns Number of leading dashes ('-')
+ */
+std::size_t helpers::countLeadingDashes(const std::string & s){
+    std::size_t counter = 0;
+
+    for(char c : s){
+        if(c == '-'){
+            ++counter;
+        } else {
+            break;
+        }
+    }
+
+    return counter;
+}
+
+/*!
  * \param[in] argc
  * \param[in] argv
  * \param[in] varName The name of the commandline argument to be removed
@@ -40,30 +59,27 @@
  * If used in comination with readFromCommandLine(...), this function allows handling
  * of arguments that are not seen by solve(), even if commandline arguments are passed.
  */
-bool helpers::removeFromCommandline(int& argc, char* argv[], std::string varName, int nArgs)
+bool helpers::removeFromCommandline(int& argc, char* argv[], const std::string & varName, int nArgs)
 {
-    int i, j;
-    
-    for (i=0; i<argc; ++i) {
+    for (int i = 0; i < argc; ++i) {
         if (varName == argv[i]) 
         {
-            char *tmp[nArgs+1];
+            char *tmp[nArgs + 1];
             
-            for (j=i; j<argc-1-nArgs; j++)
+            for (int j = i; j < argc - 1 - nArgs; j++)
             {
                 // Store the pointers of the handled argument
-                if ( j < i + 1 + nArgs)
+                if (j < i + 1 + nArgs)
                 {
                     tmp[j-i] = argv[j];
                 }
                 
                 // Move the pointers after the argument to the front
                 argv[j] = argv[j + nArgs + 1];
-                
             }
             
             // Move the stored argument to the end
-            for (j=argc-1-nArgs; j< argc; j++)
+            for (int j = argc - 1 - nArgs; j < argc; j++)
             {
                 argv[j] = tmp[j + 1 + nArgs - argc];
             }
@@ -77,17 +93,18 @@ bool helpers::removeFromCommandline(int& argc, char* argv[], std::string varName
 }
 
 template<>
-std::string helpers::readFromCommandLine<std::string>(int argc, char *argv[], std::string varName, std::string value)
+std::string helpers::readFromCommandLine<std::string>(int argc, char *argv[], const std::string & varName, std::string value)
 {
+    const size_t nDashes = countLeadingDashes(varName);
     for (int i = 0; i < argc - 1; ++i) {
         if (varName == argv[i]) {
             value = argv[i+1];
-            logger(INFO, "readFromCommandLine: % set to % ", varName.substr(1), value);
+            logger(INFO, "readFromCommandLine: % set to % ", varName.substr(nDashes), value);
             return value;
         }
     }
     //if the variable is not found
-    logger(INFO, "readFromCommandLine: % set to default value % ", varName.substr(1), value);
+    logger(INFO, "readFromCommandLine: % set to default value % ", varName.substr(nDashes), value);
     return value;
 }
 
@@ -100,15 +117,16 @@ std::string helpers::readFromCommandLine<std::string>(int argc, char *argv[], st
  * @param varName name of command line arguments that is required to return true
  * @return true or false
  */
-bool helpers::readFromCommandLine(int argc, char *argv[], std::string varName)
+bool helpers::readFromCommandLine(int argc, char *argv[], const std::string & varName)
 {
-    for (unsigned i=0; i<argc; ++i) {
+    const size_t nDashes = countLeadingDashes(varName);
+    for (int i = 0; i < argc; ++i) {
         if (varName == argv[i]) {
-            logger(INFO, "readFromCommandLine: % set to true",varName.substr(1));
+            logger(INFO, "readFromCommandLine: % set to true", varName.substr(nDashes));
             return true;
         }
     }
     //if the variable is not found
-    logger(INFO, "readFromCommandLine: % set to default value false",varName.substr(1));
+    logger(INFO, "readFromCommandLine: % set to default value false", varName.substr(nDashes));
     return false;
 }

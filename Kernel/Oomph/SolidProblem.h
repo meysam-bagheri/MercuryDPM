@@ -929,7 +929,7 @@ public:
 
     /// See PVDEquationsBase<DIM>::get_energy
     void getMassMomentumEnergy(double& mass, Vector<double>& com, Vector<double>& linearMomentum, Vector<double>& angularMomentum, double& elasticEnergy,
-                               double& kineticEnergy) {
+                               double& kineticEnergy) const {
         // Initialise mass
         mass = 0;
         // Initialise center of mass

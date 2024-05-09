@@ -9,25 +9,25 @@ You can run the test suite by calling *make fullTest* in your build directory. T
 
 There are 3 types of tests, which are recognizable by the ending of the *.cpp* file name:
 -# <b>UnitTest</b>:
-  All codes whose file name ends with *UnitTest.cpp* are recognised by the test suite as self tests.
+  All codes whose file name ends with *UnitTest.cpp* are recognised by the test suite as unit tests.
   Most of these tests reside in Drivers/UnitTests.
   Those tests should run in 1 second or less and have internal checks if the output is valid (for example, they might check if the position or velocity of a particle at a given time is correct; see for example UnitTests/AdhesiveForceUnitTest.cpp).
   To keep those tests efficient, the check should not require comparison with data files).
 -# <b>SelfTest</b>:
-  All codes whose file name ends with *SelfTest.cpp* are recognised by the test suite as unit tests.
+  All codes whose file name ends with *SelfTest.cpp* are recognised by the test suite as self tests.
   Those tests should run in 10 seconds or less and create output files that are checked against *gold data*.
 
   <b>To create your own self test</b>: Let's assume you developed a new Driver, for example *Compression.cpp* in *MercurySource/Drivers/USER/JohnDoe*, and you want to create a test to ensure that any new Kernel features won't affect the results of your code. To do so,
   - Create a new code *CompressionSelfTest.cpp* in the same directory that runs in 10 seconds or less and creates an output file (e.g. *CompressionSelfTest.restart*) you would like to test against. Please keep the size of this output file as small as possible.
   - Compile and execute your new self test and copy the *CompressionSelfTest.restart* to the directory MercurySource/Drivers/USER/JohnDoe/SelfTestData (create the directory if it doesn't exist yet).
   - Now use *cmake .* in the MercuryBuild directory to update the Makefiles and *make fullTest*  to check that all tests (including the newly created one compiles)
-  - Use *svn add* to add the new files to the repository and commit (see \ref SVNCOMMIT).
+  - Use *svn add* to add the new files to the repository and commit (see \ref GITCOMMIT).
 -# <b>Demo</b>:
   All codes whose file name ends with *Demo.cpp* are recognised by the test suite as demos.
   Most of these tests reside in Drivers/MercurySimpleDemos.
   These are codes that run in 5 minutes or less, that illustrate a code feature. No special checks are done for Demo codes.
 
-Before any new feature is committed, all tests have to be run and return a positive result (see \ref SVNCOMMIT). Any commit that breaks one or more tests is a violation of the MercuryDPM coding standard, and is punishable by a round of beers to all other developers. To execute all test, run the following command before committing:
+Before any new feature is committed, all tests have to be run and return a positive result (see \ref GITCOMMIT). Any commit that breaks one or more tests is a violation of the MercuryDPM coding standard, and is punishable by a round of beers to all other developers. To execute all test, run the following command before committing:
 \code{.cpp}
 cd MercuryBuild
 make fullTest

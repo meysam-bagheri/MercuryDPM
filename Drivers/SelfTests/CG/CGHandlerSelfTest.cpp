@@ -137,7 +137,7 @@ int main(int argc, char *argv[])
 
     TimeSmoothedCG<CGCoordinates::O> cg1;
     cg1.setWidthTime(0.01);
-    cg1.setTimeStep(0.001);
+    cg1.setTimeStep(problem.getTimeStep()*problem.dataFile.getSaveCount());
     cg1.setTimeMax(0.2);
     cg1.statFile.setSaveCount(5);
     cg1.statFile.setName(problem.getName() + ".LucyO.TS.stat");

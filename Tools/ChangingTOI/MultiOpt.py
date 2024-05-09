@@ -1,4 +1,4 @@
-#Copyright (c) 2013-2022, The MercuryDPM Developers Team. All rights reserved.
+#Copyright (c) 2013-2024, The MercuryDPM Developers Team. All rights reserved.
 #For the list of developers, see <http://www.MercuryDPM.org/Team>.
 #
 #Redistribution and use in source and binary forms, with or without
@@ -37,15 +37,17 @@ from noisyopt import minimizeSPSA
 from noisyopt import minimizeCompass
 
 
-# Global parameters
-SourceDir = "/home/iostanin/Desktop/MercuryGit/MercurySource"				# Mercury source dir
-BuildDir = "/home/iostanin/Desktop/MercuryGit/MercuryBuild"					# Mercury Build dir
+# Hardcoded C++ code parameters - needed for syncronization
+SourceDir = "/home/iostanin/Desktop/MercuryGit/mercurydpm"				# Mercury source dir
+BuildDir = "/home/iostanin/Desktop/MercuryGit/MercuryBuild"				# Mercury Build dir
+Timestep = 5.56833e-05 * 50								# Simulation timestep
 
+# Global parameters
 N = 5						# Number of maneuver reference points
 TEST_MODE = False			# True for self-test on toy functional, False for real simulation-guided optimization
 TEST_OPTIONS = {'xtol':1e-3, 'ftol':1e-4, 'maxiter':3} 	# Optimizer options (test mode)
-REAL_OPTIONS = {'xtol':1e-3, 'ftol':1e-3, 'maxiter':100}	# Optimizer options (real mode)
-QMin = 0.5					# Minimum allowed value of principal moment of inertia
+REAL_OPTIONS = {'xtol':1e-3, 'ftol':1e-3, 'maxiter':20}	# Optimizer options (real mode)
+QMin = 0.5				# Minimum allowed value of principal moment of inertia
 QMax = 1.5					# Maximum allowed value of principal moment of inertia
 I0 = 10 					# Initial (spherical) moment of inertia
 
@@ -53,9 +55,9 @@ ProgDuration = 100 					# Maneuver duration (absolute time)
 SymDuration = 105 					# Maneuver duration (absolute time)
 BaseAngvel = 5					# Initial angular velocity of the rotation
 
-Timestep = 5.56833e-05 * 50
 
-NTimesteps = ProgDuration / Timestep				# Number of timesteps in <duration> - should be sync W number of program timesteps!
+
+NTimesteps = ProgDuration / Timestep	# Number of timesteps in <duration> - should be sync W number of program timesteps!
 
 QInitValues = np.array([1, 1])  # Initial/final conditions for control parameters
 QFinalValues = np.array([1, 1])
@@ -64,60 +66,59 @@ x0 = np.ones(2*N) #Initial guess for control vector sequence
 print(x0)
 xc = np.random.rand(3*N) # Known solution (for toy functional only)
 
-
-"""
-# Transition 1-2
-initial_theta = np.pi/2 	  # Initial orientation is along z axis
-initial_phi = np.pi/4
-
-final_theta = np.pi/4 	  # Final orientation is along x axis
-final_phi = np.pi/2
-
-# Transition 2-3
-initial_theta = np.pi/4 	  # Initial orientation is along z axis
-initial_phi = np.pi/2
-
-final_theta = np.pi/4 	  # Final orientation is along x axis
-final_phi = 0
-
-# Transition 3-1
-initial_theta = np.pi/4 	  # Initial orientation is along z axis
-initial_phi = 0
-
-final_theta = np.pi/2 	  # Final orientation is along x axis
-final_phi = np.pi/4
-
-# Transition 1-4
-initial_theta = np.pi/2 	  # Initial orientation is along z axis
-initial_phi = np.pi/4
-
-final_theta = np.arccos(1/3**0.5) 	  # Final orientation is along y axis
-final_phi = np.pi/4
-
-# Transition 5-8
-delta = np.pi/1000.
-initial_theta = delta 	  # Initial orientation is along z axis
-initial_phi = 0
-
-final_theta = np.pi 	  # Final orientation is along x axis
-final_phi = 0
-
-# Transition 5-7
-delta = np.pi/1000.
-initial_theta = delta 	  # Initial orientation is along z axis
-initial_phi = 0
-
-final_theta = np.pi/2 	  # Final orientation is along x axis
-final_phi = np.pi/2
-"""
-
-# Transition 4-5
-Delta = np.pi / 1000.
-InitialTheta = np.arccos(1 / 3 ** 0.5)	  # Initial orientation is along x=y=z
+'''
+# Transition 1-2 (Maneuver 1)
+InitialTheta  = np.pi/2 	  # Initial orientation is along z axis
 InitialPhi = np.pi/4
+FinalTheta = np.pi/4 	  # Final orientation is along x axis
+FinalPhi = np.pi/2
 
-FinalTheta = Delta 	  # Final orientation is along z axis
+# Transition 2-3 (Maneuver 2)
+InitialTheta = np.pi/4 	  # Initial orientation is along z axis
+InitialPhi = np.pi/2
+FinalTheta = np.pi/4 	  # Final orientation is along x axis
 FinalPhi = 0
+
+# Transition 3-1 (Maneuver 3)
+InitialTheta = np.pi/4 	  # Initial orientation is along z axis
+InitialPhi = 0
+FinalTheta = np.pi/2 	  # Final orientation is along x axis
+FinalPhi = np.pi/4
+
+# Transition 1-4 (Maneuver 4)
+InitialTheta = np.pi/2 	  # Initial orientation is along z axis
+InitialPhi = np.pi/4
+FinalTheta = np.arccos(1/3**0.5) 	  # Final orientation is along y axis
+FinalPhi = np.pi/4
+
+# Transition 5-8 (Maneuver 6)
+delta = np.pi/1000.
+InitialTheta = delta 	  # Initial orientation is along z axis
+InitialPhi = 0
+FinalTheta = np.pi 	  # Final orientation is along x axis
+FinalPhi = 0
+
+# Transition 5-6 (Maneuver 7)
+delta = np.pi/1000.
+InitialTheta = delta 	  # Initial orientation is along z axis
+InitialPhi = 0
+FinalTheta = np.pi/2 	  # Final orientation is along x axis
+FinalPhi = 0
+
+# Transition 5-7 (Maneuver 8)
+delta = np.pi/1000.
+InitialTheta = delta 	  # Initial orientation is along z axis
+InitialPhi = 0
+FinalTheta = np.pi/2 	  # Final orientation is along x axis
+FinalPhi = np.pi/2
+
+'''
+# Transition 4-5 (Maneuver 9)
+delta = np.pi/1000.
+InitialTheta = np.arccos(1/3**0.5) 	  # Initial orientation is along z axis
+InitialPhi = np.pi/4
+FinalTheta = delta 	  # Final orientation is along x axis
+FinalPhi = delta
 
 def ComputeInertiaProfiles(nodal_values, duration, N_t):
 	# pre-computes time evolution of tensor of inertia for MercuryDPM driver file
@@ -135,7 +136,6 @@ def ComputeInertiaProfiles(nodal_values, duration, N_t):
 	I2 = cs2(xc); dI2 = cs2(xc, 1)
 	I3 = cs3(xc); dI3 = cs3(xc, 1)
 	return x, n_I1, n_I2, n_I3, xc, I1, dI1, I2, dI2, I3, dI3
-
 
 FunCount = 0
 FunBatch = False
@@ -157,9 +157,9 @@ def RealFun(x):
 	q_ext_2 = np.hstack((QInitValues[1], q[N:], QFinalValues[1]))
 
 	# Compute principal components of inertia
-	I_1 = q_ext_2 * I0
-	I_2 = q_ext_1 * I0
-	I_3 = q_ext_1 * q_ext_2 * I0
+	I_1 = 0.5 * I0 * (1 + q_ext_2*q_ext_2)
+	I_2 = 0.5 * I0 * (1 + q_ext_1*q_ext_1)
+	I_3 = 0.5 * I0 * (q_ext_1*q_ext_1 + q_ext_2*q_ext_2)
 	nodal_values = np.hstack((I_1, I_2, I_3))
 	print("Nodal values of principal moments of inertia:", nodal_values)
 
@@ -200,7 +200,7 @@ def RealFun(x):
 	f = open(BuildDir + '/Drivers/Clump/ChangingTOI/opt/functional.txt', "r")
 	ret = float(f.read())
 
-	# Save the functional value in the in the hystory batch
+	# Save the functional value in the history batch
 	if (FunCount == 0):
 		FunBatch = ret
 	else:
@@ -255,6 +255,7 @@ def main():
 		res = minimize(ToyFun, x0, method='Powell', options = TEST_OPTIONS)
 	else:
 		res = minimize(RealFun, x0, method='Powell', options = REAL_OPTIONS)
+
 		# Alternative optimization tools
 		#res = minimizeSPSA(real_fun, x0=x0, niter=1000, paired=False)
 		#res = minimizeCompass(real_fun, x0=x0, deltatol=0.01, paired=False)

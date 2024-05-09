@@ -55,28 +55,32 @@ There are more than 30 different contact laws available in MercuryDPM, each desc
 
 \section new Creating a new contact law
 
-To create a new contact law, it's easiest to start by modifying an existing one. For example, the Mindlin contact law for friction (see MindlinSpecies) was created by modifying the linear sliding friction force (see SlidingFrictionSpecies). You can see the full history of these modifications in the svn log, just type `svn log -v -r1588`.
+To create a new contact law, it's easiest to start by modifying an existing one. For example, the Mindlin contact law for friction (see MindlinSpecies) was created by modifying the linear sliding friction force (see SlidingFrictionSpecies).
 
 In the following, I will describe how MindlinSpecies was created, so developers can follow the same steps to create new contact laws. I will assume that you have installed the Trunk version of MercuryDPM in `MercurySource` and your build directory is `MercuryBuild`.
 
 -# The first step is to create a new Species and Interaction class for your new contact force. You can do this by copying an existing one:
 \code{.sh}
 $ cd MercurySource/Kernel/Interactions/FrictionForceInteractions/
-$ svn cp SlidingFrictionInteraction.h MindlinInteraction.h
-$ svn cp SlidingFrictionInteraction.cc MindlinInteraction.cc
+$ cp SlidingFrictionInteraction.h MindlinInteraction.h
+$ cp SlidingFrictionInteraction.cc MindlinInteraction.cc
+$ git add .
 $ cd ../../Species/FrictionalForceSpecies/
-$ svn cp SlidingFrictionSpecies.h MindlinSpecies.h
-$ svn cp SlidingFrictionSpecies.cc MindlinSpecies.cc
+$ cp SlidingFrictionSpecies.h MindlinSpecies.h
+$ cp SlidingFrictionSpecies.cc MindlinSpecies.cc
+$ git add .
 \endcode
 Note in the above example we copied a frictional species; however, if you want a normal only species e.g. create the SPH species you should replace the septs with the following
 \code{.sh}
-$cd MercurySource/Kernel/Interactions/NormalForceInteractions
-$svn cp LinearViscoelasticInteraction.h SPHInteraction.h
-$svn cp LinearViscoelasticInteraction.cc SPHInteraction.cc
-$cd ../../Species/NormalForceSpecies
-$svn cp 
-$svn cp LinearViscoelasticNormalSpecies.cc SPHSpecies.cc
-$svn cp LinearViscoelasticNormalSpecies.h SPHSpecies.h 
+$ cd MercurySource/Kernel/Interactions/NormalForceInteractions
+$ cp LinearViscoelasticInteraction.h SPHInteraction.h
+$ cp LinearViscoelasticInteraction.cc SPHInteraction.cc
+$ git add .
+$ cd ../../Species/NormalForceSpecies
+$ cp LinearViscoelasticNormalSpecies.cc SPHSpecies.cc
+$ cp LinearViscoelasticNormalSpecies.h SPHSpecies.h 
+$ git add .
+\endcode
 
 -# Rename the class SlidingFrictionInteraction and SlidingFrictionSpecies to MindlinInteraction and MindlinSpecies, respectively. This requires also changes to the header inclusion guards and typedefs. You can see the changes to the header files below:
 <br>`MercurySource/Kernel/Interactions/FrictionForceInteractions/SlidingFrictionInteraction.h`
@@ -159,14 +163,14 @@ typedef Species<HertzianViscoelasticNormalSpecies,MindlinSpecies> HertzianViscoe
 typedef MixedSpecies<HertzianViscoelasticNormalSpecies,MindlinSpecies> HertzianViscoelasticMindlinMixedSpecies;
 #endif
 \endcode
-and add it to the svn repository
+and add it to the git repository
 \code{.cpp}
-$ svn add MercurySource/Kernel/Species/HertzianViscoelasticMindlinSpecies.h
+$ git add MercurySource/Kernel/Species/HertzianViscoelasticMindlinSpecies.h
 \endcode
 
 -# Add the new species to the SpeciesHandler::readAndAddObject and SpeciesHandler::readMixedObject, so restart files can read in the new species information
 \code{.sh}
-$ svn diff -r1587:1588 MercurySource/Kernel/SpeciesHandler.cc
+$ git diff -r1587:1588 MercurySource/Kernel/SpeciesHandler.cc
 @@ -33,6 +33,7 @@
 +#include "Species/HertzianViscoelasticMindlinSpecies.h"
 

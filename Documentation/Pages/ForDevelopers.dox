@@ -12,16 +12,16 @@ The sections below contain advice for developers of MercuryDPM Kernel features.
 Read this section if you want to develop a new MercuryDPM Kernel feature.
 
 - Before you can develop a new MercuryDPM Kernel feature, you need access to the development version of the code. Please contact one of the MercuryDPM <a href="http://mercurydpm.org/about-the-code/team">'managers'</a> to get access.
-- You now should have read access to the Trunk/ and read-write access to the Branches/ directory of the repository. You can check that that you have access using svn list:
-\code svn list https://svn.mercurydpm.org/SourceCode/Trunk \endcode
+- You now should have read access to the Trunk/ and read-write access to the Branches/ directory of the repository. You can check that that you have access using git fetch:
+\code git fetch https://bitbucket.org/mercurydpm/mercurydpm.git \endcode
 - All new Kernel features should be developed in a branch, i.e. in a subdirectory of Branches/. For example, say you want to develop a new wall type called StarShapedWall. The first step is to create your own branch using the following command:
-\code svn copy https://svn.mercurydpm.org/SourceCode/Trunk https://svn.mercurydpm.org/SourceCode/Branches/StarShapedWall -m '' \endcode
+\code git git checkout -b new-branch  \endcode
 - Checkout your new branch.
-\code svn checkout https://svn.mercurydpm.org/SourceCode/Branches/StarShapedWall\endcode
+\code git checkout new-branch \endcode
 - Now start working in your branch. This branch is only for you, so you can commit as often as you like, even if your code does not compile. I fact, we urge you to commit regularly.
 
 Once your feature is developed fully, you are ready to merge the feature back to the Trunk:
-- Make sure all your changes are committed to your Branch. Executing "svn status" in the source directory should not return any output.
+- Make sure all your changes are committed to your Branch. Executing "git status" in the source directory should not return any output.
 - Make sure all your code compile correctly. Executing "make fullTest" in the build directory should return "100% tests passed".
 - Make your Branch up-to-date with the Trunk. See \ref MergingFD.
 - The final step is to merge your Branch back into the Trunk, and remove the Branch. Updating the Trunk is a sensitive issue, so only the 'managers' are allowed to do it. So please ask one of the managers (see http://mercurydpm.org/about-the-code/team) to merge your changes.
@@ -37,14 +37,14 @@ Read this sections if you want to merge changes made to the Trunk into your bran
 Your Branch does not automatically update when changes are made to the Trunk.
 To get changes made to the Trunk into your branch, follow the following steps:
 
--# Make sure all your changes are committed to your Branch. Executing "svn status" in the source directory should not return any output.
--# You can update your branch using the command "svn merge ^/Trunk" in your source directory
--# Merging doesn't always go smoothly. You might get conflicts when you edited a file that we edited as well. 'svn merge' will ask you to accept the changes, or postpone the decision. When in doubt, postpone and fix the issue later.
+-# Make sure all your changes are committed to your Branch. Executing "git status" in the source directory should not return any output.
+-# You can update your branch using the command "git merge ^/Trunk" in your source directory
+-# Merging doesn't always go smoothly. You might get conflicts when you edited a file that we edited as well. 'git merge' will ask you to accept the changes, or postpone the decision. When in doubt, postpone and fix the issue later.
 -# Make sure all your code compile correctly. Executing "make fullTest" in the build directory should return "100% tests passed".
 -# If some codes don't compile, you have to look into your code and find the issues (That's teh difficult part. Ask one of the other <a href="http://mercurydpm.org/about-the-code/team">developers</a> for help if necessary.)
--# If you cannot resolve the issues, you can undo the merge using 'svn revert . -R' in your source directory.
--# If you could resolve all issues (i.e. "make fullTest" returns "100% tests passed"), then commit your changes:
-\code svn commit -m "Merged Trunk changes into my local branch" \endcode
+-# If you cannot resolve the issues, you can undo the merge using 'git checkout -- fileToRevert' in your source directory.
+-# If you could resolve all issues (i.e. "make fullTest" returns "100% tests passed") and also your code compiles okay, then commit your changes:
+\code git commit -m "Merged Trunk changes into my local branch" \endcode
 
 \page ParallelFD Running simulations in parallel
 

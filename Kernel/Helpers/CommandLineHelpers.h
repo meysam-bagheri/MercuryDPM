@@ -31,78 +31,86 @@
 namespace helpers
 {
     /*!
+     * \brief Counts the leading dash ('-') characters in a string.
+     */
+    std::size_t countLeadingDashes(const std::string & s);
+
+    /*!
      * \brief May be used to hide arguments from argc and argv.
      */
-    bool removeFromCommandline(int& argc, char* argv[], std::string varName, int nArgs);
+    bool removeFromCommandline(int& argc, char* argv[], const std::string & varName, int nArgs);
 
     /*!
      * \brief Returns true if command line arguments contain varName, false else
      */
-    bool readFromCommandLine(int argc, char *argv[], std::string varName);
+    bool readFromCommandLine(int argc, char *argv[], const std::string & varName);
 
     template<typename T>
-    T readFromCommandLine(int argc, char *argv[], std::string varName, T value)
+    T readFromCommandLine(int argc, char *argv[], const std::string & varName, T value)
     {
+        const size_t nDashes = countLeadingDashes(varName);
         for (int i = 0; i < argc-1; ++i) {
             if (varName == argv[i]) {
                 value = atof(argv[i+1]);
-                logger(INFO, "readFromCommandLine: % set to % ", varName.substr(1), value);
+                logger(INFO, "readFromCommandLine: % set to % ", varName.substr(nDashes), value);
                 return value;
             }
         }
         //if the variable is not found
-        logger(INFO, "readFromCommandLine: % set to default value % ", varName.substr(1), value);
+        logger(INFO, "readFromCommandLine: % set to default value % ", varName.substr(nDashes), value);
         return value;
     }
 
     template<typename T, size_t n>
-    std::array<T,n> readArrayFromCommandLine(int argc, char *argv[], std::string varName, std::array<T,n> value)
+    std::array<T,n> readArrayFromCommandLine(int argc, char *argv[], const std::string & varName, std::array<T,n> value)
     {
+        const size_t nDashes = countLeadingDashes(varName);
         for (int i = 0; i < argc-1; ++i) {
             if (varName == argv[i]) {
-                unsigned j = i+1;
+                int j = i + 1;
                 std::stringstream out;
                 for (auto& v : value) {
                     v = atof(argv[j]);
                     out << v << ' ';
                     ++j;
                 }
-                logger(INFO, "readArrayFromCommandLine: % set to % ", varName.substr(1), out.str());
+                logger(INFO, "readArrayFromCommandLine: % set to % ", varName.substr(nDashes), out.str());
                 return value;
             }
         }
         //if the variable is not found
         std::stringstream out;
         for (auto& v : value) out << v << ' ';
-        logger(INFO, "readArrayFromCommandLine: % set to default value % ", varName.substr(1), out.str());
+        logger(INFO, "readArrayFromCommandLine: % set to default value % ", varName.substr(nDashes), out.str());
         return value;
     }
 
     template<typename T>
-    std::vector<T> readVectorFromCommandLine(int argc, char *argv[], std::string varName, size_t n, std::vector<T> values)
+    std::vector<T> readVectorFromCommandLine(int argc, char *argv[], const std::string & varName, size_t n, std::vector<T> values)
     {
+        const size_t nDashes = countLeadingDashes(varName);
         for (int i = 0; i < argc-1; ++i) {
             if (varName == argv[i]) {
                 // read until the next argument starts
                 values.resize(0);
                 std::stringstream out;
-                for (int j = i+1; j<argc and argv[j][0]!='-'; ++j) {
+                for (int j = i+1; j < argc && argv[j][0] != '-'; ++j) {
                     values.push_back(atof(argv[j]));
                     out << values.back() << ' ';
                 }
-                logger(INFO, "readVectorFromCommandLine: % set to % ", varName.substr(1), out.str());
+                logger(INFO, "readVectorFromCommandLine: % set to % ", varName.substr(nDashes), out.str());
                 return values;
             }
         }
         //if the variable is not found
         std::stringstream out;
         for (auto& v: values) out << v << ' ';
-        logger(INFO, "readVectorFromCommandLine: % set to default value % ", varName.substr(1), out.str());
+        logger(INFO, "readVectorFromCommandLine: % set to default value % ", varName.substr(nDashes), out.str());
         return values;
     }
 
     template<>
-    std::string readFromCommandLine<std::string>(int argc, char* argv[], std::string varName, std::string value);
+    std::string readFromCommandLine<std::string>(int argc, char* argv[], const std::string & varName, std::string value);
 }
 
 #endif // MERCURYDPM_COMMANDLINE_HELPERS_H

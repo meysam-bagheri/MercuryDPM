@@ -113,13 +113,13 @@ public:
      */
     void finish() override;
     
-    void setWidthTime(Mdouble widthTime);
+    void setWidthTime(Mdouble widthTime) final;
     
-    Mdouble getWidthTime() const;
+    Mdouble getWidthTime() const final;
     
-    void setTimeStep(Mdouble timeStep);
+    void setTimeStep(Mdouble timeStep) final;
     
-    Mdouble getTimeStep() const;
+    Mdouble getTimeStep() const final;
 
 protected:
     

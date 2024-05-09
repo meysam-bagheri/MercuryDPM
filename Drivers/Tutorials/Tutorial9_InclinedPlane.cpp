@@ -94,10 +94,10 @@ int main(int argc, char* argv[])
     problem.setXMax(0.3);
     problem.setYMax(0.3);
     problem.setZMax(0.05);
-    problem.setTimeMax(0.5);
+    problem.setTimeMax(0.4);
 
     // The normal spring stiffness and normal dissipation is computed and set as
-    // For collision time tc=0.005 and restitution coefficeint rc=0.88,
+    // For collision time tc=0.005 and restitution coefficient rc=0.88,
 
     //Properties index 0
     LinearViscoelasticFrictionSpecies species0;

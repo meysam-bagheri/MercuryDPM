@@ -96,8 +96,13 @@ public:
     
     /*!
      * \brief Get function.
+     * \todo replace by isBonded
      */
     bool getBonded() const;
+
+    bool isBonded() const override {
+        return bonded_;
+    };
     
     /*!
      * \brief Set function.
@@ -121,8 +126,9 @@ public:
     /*!
      * \brief Simple access function to return the force of the bond
      */
-    Mdouble getBondForce()
-    {return bondForce_;}
+    Mdouble getBondForce() const {
+        return bondForce_;
+    }
 
 private:
     /*!

@@ -97,7 +97,7 @@ bool helpers::compare(std::istream& is, std::string s)
     if (dummy != s)
     {
         is.seekg(len, std::ios_base::beg);
-        logger(INFO, "helpers::compare: Next stream value (%) is not %", dummy, s);
+        logger(VERBOSE, "helpers::compare: Next stream value (%) is not %", dummy, s);
         return false;
     }
     return true;

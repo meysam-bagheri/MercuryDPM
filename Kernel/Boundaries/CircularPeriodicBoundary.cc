@@ -172,7 +172,7 @@ bool CircularPeriodicBoundary::checkBoundaryAfterParticleMoved(BaseParticle* P, 
         //else
         //std::cout<<"and nothing happens"<<std::endl;
     }
-    else if (i >= 0 && i < oldI) //Particle moves inward so it has to be coppied
+    else if (i >= 0 && i < oldI) //Particle moves inward so it has to be copied
     {
         //std::cout<<"Particle="<<P->getIndex()<<" moving inward and is thus coppied with alpha="<<alpha<<" and pieSize="<<pieSize<<std::endl;
         //std::cout<<"i="<<i<<" oldI="<<oldI<<" R="<<R<<" oldR="<<oldR<<std::endl;

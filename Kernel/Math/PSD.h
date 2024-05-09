@@ -184,12 +184,12 @@ public:
     void convertCumulativeToProbabilityDensity();
 
     /*!
-     * \brief convert any PDF to a PROBABILITYDENSITY_NUMBER_DISTRIBUTION.
+     * \brief Convert any PDF to a PROBABILITYDENSITY_NUMBER_DISTRIBUTION.
      */
     void convertProbabilityDensityToProbabilityDensityNumberDistribution(TYPE PDFType);
 
     /*!
-     * \brief Convert the default PROBABILITYDENSITY_NUMBER_DISTRIBUTION to any PDF.
+     * \brief Convert a PROBABILITYDENSITY_NUMBER_DISTRIBUTION to any PDF.
      */
     void convertProbabilityDensityNumberDistributionToProbabilityDensity(TYPE PDFType);
 
@@ -201,20 +201,45 @@ public:
     void convertProbabilityDensityNumberDistributionToProbabilityDensityVolumeDistribution();
 
     /*!
-     * \brief convert any other CDF to a CUMULATIVE_NUMBER_DISTRIBUTION.
+     * \brief Convert any CDF to a CUMULATIVE_NUMBER_DISTRIBUTION.
      */
     void convertCumulativeToCumulativeNumberDistribution(TYPE CDFType);
 
     /*!
-     * \brief cutoff the PSD at given quantiles.
+     * \brief Convert a CUMULATIVE_NUMBER_DISTRIBUTION to any CDF.
      */
-    void cutoffCumulativeNumber(Mdouble quantileMin, Mdouble quantileMax, Mdouble minPolydispersity = 0.1);
+    void convertCumulativeNumberDistributionToCumulative(TYPE CDFType);
+
+    /*!
+     * \brief cutoff the PSD at given quantiles.
+     * \deprecated Instead use cutoffCumulativeDistribution(PSD::TYPE::CUMULATIVE_NUMBER_DISTRIBUTION, quantileMin, quantileMax, minPolydispersity)
+     */
+    MERCURYDPM_DEPRECATED
+    void cutoffCumulativeNumber(Mdouble quantileMin, Mdouble quantileMax, Mdouble minPolydispersity = 0.1)
+     {
+         cutoffCumulativeDistribution(TYPE::CUMULATIVE_NUMBER_DISTRIBUTION, quantileMin, quantileMax, minPolydispersity);
+     }
+
+    /*!
+     * \brief Cut off the PSD at the given quantiles, with the PSD in the provided CDF form.
+     */
+    void cutoffCumulativeDistribution(TYPE CDFType, Mdouble quantileMin, Mdouble quantileMax, Mdouble minPolydispersity = 0.1);
 
     /*!
      * \brief cutoff the PSD at given quantiles and make it less polydisperse by squeezing it.
+     * \deprecated Instead use cutoffAndSqueezeCumulativeDistribution(TYPE::CUMULATIVE_NUMBER_DISTRIBUTION, quantileMin, quantileMax, squeeze, minPolydispersity)
      */
+    MERCURYDPM_DEPRECATED
     void cutoffAndSqueezeCumulative(Mdouble quantileMin, Mdouble quantileMax, Mdouble squeeze,
-                                    Mdouble minPolydispersity = 0.1);
+                                    Mdouble minPolydispersity = 0.1)
+    {
+        cutoffAndSqueezeCumulativeDistribution(TYPE::CUMULATIVE_NUMBER_DISTRIBUTION, quantileMin, quantileMax, squeeze, minPolydispersity);
+    }
+
+    /*!
+     * \brief Cut off the PSD at the given quantiles, with the PSD in the provided CDF form, and make it less polydisperese by squeezing it.
+     */
+    void cutoffAndSqueezeCumulativeDistribution(TYPE CDFType, Mdouble quantileMin, Mdouble quantileMax, Mdouble squeeze, Mdouble minPolydispersity = 0.1);
 
     /*!
      * \brief Get smallest radius of the PSD.
@@ -249,6 +274,15 @@ public:
     void scaleParticleSize(double scale);
 
     /*!
+     * \brief Scales all particle sizes, such that the total volume of N particles approximately equals the target volume.
+     * @param numberOfParticles The number of particles N.
+     * @param targetVolume The volume to match.
+     * @param allowScaleDown Whether or not to scale down the particle sizes when the scale factor is smaller than 1.
+     * @return The scale factor used.
+     */
+    double scaleParticleSizeAuto(int numberOfParticles, double targetVolume, bool allowScaleDown = false);
+
+    /*!
      * \brief Get the number of particles already inserted into the simulation.
      */
     int getInsertedParticleNumber() const;
@@ -272,6 +306,16 @@ public:
      * \brief Calculate a certain diameter (e.g. D10, D50, D90, etc.) from a percentile x of the number based PSD.
      */
     Mdouble getNumberDx(Mdouble x) const;
+
+    /*!
+     * \brief Calculate a certain diameter (e.g. D10, D50, D90, etc.) from a percentile x of the length based PSD.
+     */
+    Mdouble getLengthDx(Mdouble x) const;
+
+    /*!
+     * \brief Calculate a certain diameter (e.g. D10, D50, D90, etc.) from a percentile x of the area based PSD.
+     */
+    Mdouble getAreaDx(Mdouble x) const;
     
     /*!
      * \brief Calculate a certain diameter (e.g. D10, D50, D90, etc.) from a percentile x of the volume based PSD.

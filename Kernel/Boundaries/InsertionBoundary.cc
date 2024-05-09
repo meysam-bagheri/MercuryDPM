@@ -240,7 +240,7 @@ void InsertionBoundary::checkBoundaryBeforeTimeStep(DPMBase* md)
             /* Generate extrinsic properties (position and velocity) for this
              * new particle. */
             placeParticle(p0, md->random);
-            logger(VERBOSE, "attempting to place particle at %, vel %", p0->getPosition(), p0->getVelocity());
+            logger(VERBOSE, "attempting to place particle with radius % at %, vel %", p0->getMaxInteractionRadius(), p0->getPosition(), p0->getVelocity());
 
 #ifdef MERCURYDPM_USE_MPI
             /* Communicate the new particle's properties by setHandler (note

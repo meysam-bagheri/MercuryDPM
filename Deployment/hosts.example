@@ -1,0 +1,2 @@
+[workers]
+localhost ansible_user=your-username

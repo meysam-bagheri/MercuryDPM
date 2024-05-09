@@ -96,7 +96,8 @@ include_directories(${OOMPH_DIR}/src ${OOMPH_DIR}/src/poisson ${OOMPH_DIR}/src/g
 
 # link some essential external libraries to generic as a minimal oomph library (adding daxpy.f just serves as a dummy source file)
 add_library(oomphBase STATIC ${CMAKE_SOURCE_DIR}/Kernel/Math/daxpy.f)
-target_link_libraries(oomphBase generic oomph_superlu_4.3 oomph_flapack oomph_arpack oomph_blas  oomph_lapack  ${MPI_CXX_LIBRARIES} ${MUMPS_LIBRARIES})
+# note libraries need to be ordered such that the left-most can depend on the right most, but not the other way round, i.e. simplest libraries rightmost/last.
+target_link_libraries(oomphBase generic ${MPI_CXX_LIBRARIES} ${MUMPS_LIBRARIES} oomph_superlu_4.3 oomph_flapack oomph_arpack oomph_blas oomph_lapack)
 
 # build a smaller library for solid problems
 add_library(oomphSolid STATIC ${CMAKE_SOURCE_DIR}/Kernel/Math/daxpy.f)

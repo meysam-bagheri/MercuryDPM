@@ -1,4 +1,4 @@
-//Copyright (c) 2013-2023, The MercuryDPM Developers Team. All rights reserved.
+//Copyright (c) 2013-2024, The MercuryDPM Developers Team. All rights reserved.
 //For the list of developers, see <http://www.MercuryDPM.org/Team>.
 //
 //Redistribution and use in source and binary forms, with or without
@@ -23,8 +23,8 @@
 //(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 //SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-// Extra feature: a body with changing tensor of inertia featuring a controlled
-// Dzhanibekov effect and other kinds of maneuvering
+// A body with changing tensor of inertia featuring a controlled
+// angular maneuver
 
 #include "Mercury3D.h"
 #include "Walls/InfiniteWall.h"
@@ -105,10 +105,15 @@ public:
         p0.addPebble(Vec3D(0,0,-1),2);
 
         // Extra direction markers (for Paraview arrow glyphs)
-        //p0.addPebble(Vec3D(10e-8,10e-8,10e-8),2); // Marker of point 4
-        //p0.addPebble(Vec3D(10e-8,0,10e-8),2); // marker of point 3
-        //p0.addPebble(Vec3D(0,10e-8,10e-8),2); // marker of point 2
+        p0.addPebble(Vec3D(10e-8,10e-8,10e-8),2); // Marker of point 4
+        p0.addPebble(Vec3D(10e-8,0,10e-8),2); // marker of point 3
+        p0.addPebble(Vec3D(0,10e-8,10e-8),2); // marker of point 2
         p0.addPebble(Vec3D(10e-8,10e-8,0),2); // marker of point 1
+        p0.addPebble(Vec3D(10e-8,0,0),2); // marker of point 6
+        p0.addPebble(Vec3D(0,10e-8,0),2); // marker of point 7
+        p0.addPebble(Vec3D(0,0,10e-8),2); // marker of point 5
+        p0.addPebble(Vec3D(0,0,-10e-8),2); // marker of point 8
+
 
         p0.setPrincipalDirections(Matrix3D(1,0,0, 0,1,0, 0,0,1));
         
@@ -122,10 +127,6 @@ public:
         p0.setInitInertia(cInertia);
                                                                           
         p0.setClumpMass(5);
-
-        // Mdouble th = 0.1;
-        // Mdouble ph = 0.9;
-        // Vec3D angVelVec = Vec3D( sin(th) * cos(ph), sin(th)*sin(ph), cos(th) );
 
         p0.setAngularVelocity(baseAngVel * init_orientation);
         particleHandler.copyAndAddObject(p0);
@@ -150,7 +151,7 @@ public:
             Matrix3D Qt = transpose(Q);
 
 
-            
+            // Prescribe particle TOI (specified in inertia_profiles array) for every moment of simulation
             int ind = (int) floor(inertia_profiles.size()*(getTime()/progDuration));
 
 
@@ -187,11 +188,11 @@ public:
                 static_cast<ClumpParticle *>(*it)->setTorque(-TorqueDueToRate);
 
                 // Store angular momentum (for validation purposes)
-
                 angularMomentumLog.push_back((rotatedCInertia * angVel).getLength());
             }
 
             if (ind == inertia_profiles.size()-1){ // The last step of control program
+
                 // Ensure no torques and static TOI at the final part of the simulation
                 static_cast<ClumpParticle*>(*it)->setTorque(Vec3D(0,0,0));
                 MatrixSymmetric3D rotatedFInertia = MtoS(Q * (StoM(fInertia) * Qt));
@@ -222,9 +223,6 @@ public:
                 e_phi = e_phi / e_phi.getLength();
                 Mdouble f_phi = atan2(Vec3D::dot(e2, e_phi), Vec3D::dot(e1, e_phi));
 
-                //std::cout<<"RESTORED FINAL ORIENTATION: theta = "<<f_theta<<", phi = "<<f_phi<<std::endl;
-                //functional = (f_phi - c_phi) * (f_phi - c_phi) + (f_theta - c_theta) * (f_theta - c_theta);
-                
                 Vec3D k1 = Vec3D(sin(c_theta) * cos(c_phi), sin(c_theta) * sin(c_phi), cos(c_theta));
                 Vec3D k2 = Vec3D(sin(f_theta) * cos(f_phi), sin(f_theta) * sin(f_phi), cos(f_theta));
                 

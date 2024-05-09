@@ -1,0 +1,10 @@
+- name: Run a MercuryDPM driver on a worker
+  hosts: "{{ host }}"
+  vars_files: defaults.yml
+
+  roles:
+    - role: build
+      target: "{{ driver | basename }}"
+
+    - role: run
+      driver: "{{ driver }}"

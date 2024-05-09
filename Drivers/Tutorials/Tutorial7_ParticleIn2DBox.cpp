@@ -77,7 +77,7 @@ public:
 int main(int argc, char* argv[])
 {
     // Problem setup
-    Tutorial7 problem; // instantiate an object of class Tutorial 5
+    Tutorial7 problem; // instantiate an object of class Tutorial 7
     
     problem.setName("Tutorial7");
     problem.setSystemDimensions(2);
@@ -89,7 +89,7 @@ int main(int argc, char* argv[])
 
     //! [T7:speciesProp]
     // The normal spring stiffness and normal dissipation is computed and set as
-    // For collision time tc=0.005 and restitution coefficeint rc=1.0,
+    // For collision time tc=0.005 and restitution coefficient rc=1.0,
     LinearViscoelasticSpecies species;
     species.setDensity(2500.0); //sets the species type_0 density
     species.setStiffness(258.5);//sets the spring stiffness.

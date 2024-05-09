@@ -1,0 +1,9 @@
+- name: Provision a MercuryDPM worker
+  hosts: workers
+  vars_files: defaults.yml
+
+  roles:
+    - role: provision
+    - role: build
+      target: MercuryBase
+

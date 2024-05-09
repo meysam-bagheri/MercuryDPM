@@ -372,66 +372,9 @@ BaseWall::getInteractionWith(BaseParticle* p, unsigned timeStamp, InteractionHan
 
     if (getDistanceNormalOverlap(*p, distance, normal, overlap))
     {
+        #ifdef MERCURYDPM_TRIANGLE_WALL_CORRECTION
         // look for an existing interaction, or create a new one
         BaseInteraction *c = nullptr;
-
-        #ifndef MERCURYDPM_TRIANGLE_WALL_CORRECTION
-        // This if-statement deals with groups of walls. If a particle has multiple contacts with a group of walls, and if the contact areas of these contacts overlap, then we keep only the biggest of the overlapping contacts.
-        if (getGroupId() > 0 && p->getInteractions().size() > 0) {
-            // if there is a contact with a group of walls, and if p had at least one previously detected contact (in the last timestep or the current)
-            for (const auto i : p->getInteractions()) {
-                if (i->getI() == (BaseInteractable *) this) {
-                    // if there is an existing interaction with this wall, keep it
-                    i->setTimeStamp(timeStamp);
-                    c = i;
-                    break;
-                }
-                if (i->getI()->getGroupId() == getGroupId()) {
-                    // update contact, otherwise the distance comparison iis not correct
-                    // (note this is costly and we should replace this with a quicker algorithm if possible)
-                    if (i->getTimeStamp() < timeStamp) {
-                        double distance, overlap;
-                        Vec3D normal;
-                        static_cast<BaseWall*>(i->getI())->getDistanceNormalOverlap(*p, distance, normal, overlap);
-                        i->setNormal(-normal);
-                        i->setDistance(distance);
-                        i->setOverlap(overlap);
-                    }
-                    // if another interaction with a wall of the same group is found
-                    double proj = Vec3D::dot(-normal, i->getNormal());
-                    // if the two contacts share a contact area, keep only the contact with the minimum distance
-                    if (distance >= i->getDistance()) {
-                        // if that other contact is closer to the particle than this one
-                        if (proj * distance > (1.0-1e-12) * i->getDistance()) {
-                            //if one contact point is in the contact area of the other point
-                            //(I take the vector a=radius*n, project it onto the other normal ni: b=(a.ni)ni, and check that |a|>(r-delta_i), which is equivalent to checking whether position+a is a distance less than the contact radius from the normal vector ni )
-                            //logger(INFO,"Ignoring contact with % because contact with % is closer",getId(),i->getI()->getId());
-                            return nullptr;
-                        }
-                        //else, continue to compute this contact
-                    } else {
-                        // if this contact is closer to the particle than the other one
-                        if (proj * i->getDistance() >= (1.0-1e-12) * distance) {
-                            //if the other contact point is in the contact area of this point, replace the other contact with this one
-                            i->setI(this);
-                            c = i;
-                            // if the contact force has already been computed (with the other wall), undo the force/torque computation
-                            if (i->getTimeStamp() == timeStamp) {
-                                p->addForce(-i->getForce());
-                                this->addForce(i->getForce());
-                                if (getHandler()->getDPMBase()->getRotation()) {
-                                    p->addTorque(-i->getTorque() + Vec3D::cross(p->getPosition() - i->getContactPoint(), i->getForce()));
-                                    this->addTorque(i->getTorque() - Vec3D::cross(this->getPosition() - i->getContactPoint(), i->getForce()));
-                                }
-                            }
-                            i->setTimeStamp(timeStamp);
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-        #else
         // This if-statement deals with groups of walls. If a particle has multiple contacts with a group of walls, and if the contact areas of these contacts overlap, then we keep only the biggest of the overlapping contacts.
         if (getGroupId() > 0) {
             // if there is a contact with a group of walls, and if p had at least one previously detected contact (in the last timestep or the current)
@@ -460,12 +403,13 @@ BaseWall::getInteractionWith(BaseParticle* p, unsigned timeStamp, InteractionHan
                 }
             }
         }
-        #endif
-
         if (c == nullptr) {
             // look for an existing interaction, or create a new one
             c = interactionHandler->getInteraction(p, this, timeStamp);
         }
+        #else
+        BaseInteraction* c = interactionHandler->getInteraction(p, this, timeStamp);
+        #endif
 
         c->setNormal(-normal);
         c->setDistance(distance);

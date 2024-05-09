@@ -266,7 +266,9 @@ public:
         auto t1 = std::chrono::system_clock::now();
         BaseCoupling<M,O>::solveMercury(nStepsMercury);
         auto t2 = std::chrono::system_clock::now();
-        updateTractionOnFiniteElems();
+        if (solidFeelsParticles_) {
+            updateTractionOnFiniteElems();
+        }
         auto t3 = std::chrono::system_clock::now();
         BaseCoupling<M,O>::solveOomph();
         auto t4 = std::chrono::system_clock::now();
@@ -389,6 +391,7 @@ public:
                 // assign nodal coupling force to the element to be used by element::fill_in_contribution_to_residuals(...)
                 sCoupledElement.bulk_elem_pt->set_nodal_coupling_residual(elemIsCoupled, nodalCouplingForces);
             }
+            logger(VERBOSE, "Update nodal_coupling_residual");
         }
         else
         {
@@ -715,7 +718,15 @@ public:
     void disableLogSurfaceCoupling() {
         logSurfaceCoupling = false;
     }
-    
+
+    void setSolidFeelsParticles(bool val) {
+        solidFeelsParticles_ = val;
+    }
+
+    bool getSolidFeelsParticles() const {
+        return solidFeelsParticles_;
+    }
+
 private:
     
     /// List of surface-coupled elements
@@ -729,8 +740,13 @@ private:
      * Needs to be set before solveSurfaceCoupling is called.
      */
     std::vector<unsigned> coupledBoundaries_;
-    
+
     bool logSurfaceCoupling = true;
+
+    /**
+     * Set false for one-way coupling (solid does not feel particles), true for two-way coupling
+     */
+    bool solidFeelsParticles_ = true;
 };
 
 #endif //SURFACE_COUPLING_H

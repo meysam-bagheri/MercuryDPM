@@ -37,29 +37,25 @@ The first tutorial is setup to simulate a particle moving with a constant veloci
 The detailed description of this tutorial is presented below.\n
 
 ###Headers:
-The headers are necessary to set up the simulations. They come from the kernel and standard libraries (see \ref DevelopersGuideKernel). Headers files usually have a <EM> .h </EM> or <EM> .hpp </EM> extensions. For example:
+First, include all headers that are necessary to setup the simulations. They come from the MercuryDPM kernel and the C++ standard libraries (see \ref DevelopersGuideKernel). Headers files usually have a <EM> .h </EM> or <EM> .hpp </EM> extensions. For example:
 \snippet Drivers/Tutorials/Tutorial1_ParticleInOuterSpace.cpp T1:headers
 
 ###Before main function:
-
-A class is the guide for objects to connect with handlers. \n
-
-You can find in the code:
+Before the main function, a new class (named Tutorial1) is derived from \ref Mercury3D (or \ref Mercury2D).
 
 \code class Tutorial1 : public Mercury3D \endcode
 
-Here is defined the class Tutorial1, which is inherited from the main class  \ref Mercury3D. Then, you can call the function to fit the initial conditions of the problem:
+Next, we override (modify) some of the functions of the inherited class. Most importantly, we override \ref setupInitialConditions:
 
-\code void setupInitialConditions()\endcode
+\code void setupInitialConditions() override \endcode
 
-It creates the problems’ initial conditions to define the radius, position, velocity of particles. In order to create a particle, the following structure must be used:
+In setupInitialConditions, we define the initial state of the system (particle and wall positions). In this case, we only create a single particle. An object of type #SphericalParticle is created, and the particle properties (positions, radius and velocities) are set. Then the defined information is sent to the \ref ParticleHandler, using the function \ref ParticleHandler::copyAndAddObject
 
 \snippet Drivers/Tutorials/Tutorial1_ParticleInOuterSpace.cpp T1:createParticle
 
-The particle data members as positions, radius and velocities are pointed by using an object (P0) to their class member. For the case of the mentioned data members, the class member is called \ref BaseParticle. Then, the defined information is sent to its corresponding handler: \b  particleHandler by using the function \ref copyAndAddObject
-
 ###Main function:
 In the main function, the global parameters of the problem are defined. It includes gravity, spatial dimensions (x,y,z), total run time, the type of contact law, etc. \n
+
 The object 'problem' is an instance of the defined class \ref Tutorial1. Global parameters and species will point to the object 'problem'.
 
 \code
@@ -88,23 +84,30 @@ Thereby, data members and member functions are pointed to the object 'problem'.\
 
 For [XBalls](http://docs.mercurydpm.org/Trunk/dd/da6/xballs.html) users, additional display options can be set as below
 
-\snippet Drivers/Tutorials/Tutorial1_ParticleInOuterSpace.cpp T1:visualOutput
+\snippet Drivers/Tutorials/Tutorial1_ParticleInOuterSpace.cpp T1:xballsOutput
+
+For Paraview users, additional display options can be set as below
+
+\snippet Drivers/Tutorials/Tutorial1_ParticleInOuterSpace.cpp T1:paraviewOutput
 
 After all the simulation parameters are set, we reach a point where we put all the above bits of code in action by the following statements
 
-\snippet Drivers/Tutorials/Tutorial1_ParticleInOuterSpace.cpp T1:solve \n
+\snippet Drivers/Tutorials/Tutorial1_ParticleInOuterSpace.cpp T1:solve
 
 \n\n<b>To run this problem</b> goto the corresponding folder  (like: MercuryDPM/MercuryBuild/Drivers/Tutorials) and start
 \code
 ./Tutorial1_ParticleInOuterSpace
 \endcode
 The program runs until tmax is reached. Now all data is generated like Tutorial1.data, .restart and .xballs\n
-You can visualize it using \code ./Tutorial1.xballs \endcode which uses the generated Tutorial1.data.\n
-Note that xballs by default shows borders which are not used in the first 2 tutorials.\n
-If you get a message ...xballs: No such file or directory the you probably did not include xballs in de code and have to recompile (Assuming you are in MercuryDPM/MercuryBuild) using:
+
+You can visualize the information in the .data file using
+\code ./Tutorial1.xballs \endcode
+
+Alternatively, you can use ParaView to visualize the vtu fiels
 \code
-cmake ../MercurySource/ -D MercuryDPM_INCLUDE_XBALLS_SUPPORT=ON
+paraview --script=Tutorial1.py
 \endcode
+
 
 \n
 \section T2 T2: Particle motion on earth
@@ -259,9 +262,11 @@ It is defined the object 'w0' as an instance of the class  InfiniteWall. For thi
 
 ### Main function:
 
+This simulation contains particles and walls made from three different species (particle-0 and the wall belongs to species-0, particle-1 belongs to species-1, particle-2 belongs to species-2)
+Hence, three species, and the  interactions between the three species, need to be defined.
+
 \snippet Drivers/Tutorials/Tutorial9_InclinedPlane.cpp T9:main
 
-The main function of \ref Tutorial9_InclinedPlane.cpp presents how the elastic features of particles are defined. Also, a new function is added to combine features of different indexes: getMixedObject.
 
 \n
 \section T10 T10: How to load restart and data files

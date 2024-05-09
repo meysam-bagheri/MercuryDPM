@@ -71,7 +71,6 @@ int main(int argc, char* argv[])
     Tutorial4 problem;
     
     problem.setName("Tutorial4");
-    problem.setSystemDimensions(3);
     problem.setGravity(Vec3D(0.0, 0.0, -9.81));
     problem.setXMax(1.0);
     problem.setYMax(1.0);
@@ -93,9 +92,7 @@ int main(int argc, char* argv[])
     problem.restartFile.setFileType(FileType::ONE_FILE);
     problem.fStatFile.setFileType(FileType::NO_FILE);
     problem.eneFile.setFileType(FileType::NO_FILE);
-    
-    problem.setXBallsAdditionalArguments("-solidf -v0");
-    
+
     //![T4: time]
     //time integration parameters
     problem.setTimeStep(0.005 / 50.0); // (collision time)/50.0

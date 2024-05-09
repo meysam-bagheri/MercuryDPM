@@ -47,15 +47,17 @@ class Tutorial3 : public Mercury3D
 {
 public:
 
-    // add particles and walls
+    //! Use setupInitialConditions to define your particle and wall positions
     void setupInitialConditions() override {
         // add a particle of 1cm diameter at height zMax
+        //! [T3:createParticle]
         SphericalParticle p0;
         p0.setSpecies(speciesHandler.getObject(0));
         p0.setRadius(0.005);
         p0.setPosition(Vec3D(0.5 * getXMax(), 0.5 * getYMax(), getZMax()));
         p0.setVelocity(Vec3D(0.0, 0.0, 0.0));
         particleHandler.copyAndAddObject(p0);
+        //! [T3:createParticle]
 
         // add a bottom wall at zMin
         //! [T3:infiniteWall]
@@ -92,45 +94,31 @@ int main(int argc, char* argv[])
     // Sets a linear spring-damper contact law.
     // The normal spring stiffness and normal dissipation is computed and set as
     // For collision time tc=0.005 and restitution coefficient rc=1.0,
-    LinearViscoelasticSpecies s;
-    s.setDensity(2500.0); //sets the species type_0 density
-    s.setStiffness(258.5);//sets the spring stiffness.
-    s.setDissipation(0.0); //sets the dissipation.
-    auto species = problem.speciesHandler.copyAndAddObject(s);
+    auto species = problem.speciesHandler.copyAndAddObject(LinearViscoelasticSpecies());
+    species->setDensity(2500.0);
+    double mass = species->getMassFromRadius(0.005);
+    double collisionTime = 0.005;
+    double restitution = 1.0;
+    species->setCollisionTimeAndRestitutionCoefficient(collisionTime,restitution,mass);
+    logger(INFO, "Stiffness %, dissipation %", species->getStiffness(), species->getDissipation());
     //! [T3:speciesProp]
 
-//! [T3:output]
-    problem.setSaveCount(10);
-    problem.dataFile.setFileType(FileType::ONE_FILE);
-    problem.restartFile.setFileType(FileType::ONE_FILE);
-    problem.fStatFile.setFileType(FileType::NO_FILE);
-    problem.eneFile.setFileType(FileType::NO_FILE);
-//! [T3:output]
+    //! [T3:output]
+    problem.setSaveCount(25);
+    //! [T3:output]
 
-//! [T3:visualOutput]
-    problem.setXBallsAdditionalArguments("-solidf -v0");
     // Output vtk files for ParaView visualisation
+    //! [T3:visualOutput]
     problem.wallHandler.setWriteVTK(FileType::ONE_FILE);
     problem.setParticlesWriteVTK(true);
-//! [T3:visualOutput]
-
-//! [T3:solve]
-    // Output every 100th time step
-    problem.setSaveCount(100); // (collision time)/50.0
     //! [T3:visualOutput]
 
     //! [T3:solve]
-    double mass = species->getMassFromRadius(0.005);
-    double collisionTime = species->getCollisionTime(mass);
-    double restitution = species->getRestitutionCoefficient(mass);
-    logger(INFO, "Collision Time %, Restitution %", collisionTime, restitution );
-
     // Sets time step to 1/50th of the collision time
     problem.setTimeStep(0.005 / 50.0);
-
-    problem.setTimeStep(0.005 / 50.0); // (collision time)/50.0
+    // Start the solver (calls setupInitialConditions and initiates time loop)
     problem.solve(argc, argv);
-//! [T3:solve]
+    //! [T3:solve]
     return 0;
 }
 //! [T3:main]

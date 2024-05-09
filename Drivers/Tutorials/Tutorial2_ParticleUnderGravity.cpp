@@ -44,14 +44,14 @@ class Tutorial2 : public Mercury3D
 public:
     
     void setupInitialConditions() override {
-//! [T2:createParticle]
+        //! [T2:createParticle]
         SphericalParticle p0;
         p0.setSpecies(speciesHandler.getObject(0));
         p0.setRadius(0.05);
         p0.setPosition(Vec3D(0.5 * getXMax(), 0.5 * getYMax(), getZMax()));
         p0.setVelocity(Vec3D(0.0, 0.0, 0.0));
         particleHandler.copyAndAddObject(p0);
-//! [T2:createParticle]
+        //! [T2:createParticle]
     }
     
 };
@@ -63,17 +63,16 @@ int main(int argc, char* argv[])
     // Problem setup
     Tutorial2 problem;
 
-//! [T2:problemSetup]
+    //! [T2:problemSetup]
     problem.setName("Tutorial2");
-    problem.setSystemDimensions(3);
     problem.setGravity(Vec3D(0.0, 0.0, -9.81));
     problem.setXMax(1.0);
     problem.setYMax(1.0);
     problem.setZMax(5.0);
     problem.setTimeMax(1.5);
-//! [T2:problemSetup]
+    //! [T2:problemSetup]
 
-//! [T2:speciesProp]
+    //! [T2:speciesProp]
     // The normal spring stiffness and normal dissipation is computed and set as
     // For collision time tc=0.005 and restitution coefficient rc=1.0,
     LinearViscoelasticSpecies species;
@@ -81,24 +80,28 @@ int main(int argc, char* argv[])
     species.setStiffness(258.5);//sets the spring stiffness.
     species.setDissipation(0.0); //sets the dissipation.
     problem.speciesHandler.copyAndAddObject(species);
-//! [T2:speciesProp]
+    //! [T2:speciesProp]
 
-//! [T2:output]
+    //! [T2:output]
     problem.setSaveCount(10);
     problem.dataFile.setFileType(FileType::ONE_FILE);
     problem.restartFile.setFileType(FileType::ONE_FILE);
     problem.fStatFile.setFileType(FileType::NO_FILE);
     problem.eneFile.setFileType(FileType::NO_FILE);
-//! [T2:output]
+    //! [T2:output]
 
-//! [T2:visualOutput] 	
-    problem.setXBallsAdditionalArguments("-solidf -v0");
-//! [T2:visualOutput] 	
+    //! [T1:paraviewOutput]
+    // whether the wall geometry is written into a vtu file (either once initially or for several time steps)
+    problem.wallHandler.setWriteVTK(FileType::ONE_FILE);
+    // whether the particle positions are written into a vtu file
+    problem.setParticlesWriteVTK(true);
+    //! [T1:paraviewOutput]
 
-//! [T2:solve]
+
+    //! [T2:solve]
     problem.setTimeStep(.005 / 50.0);// (collision time)/50.0
     problem.solve(argc, argv);
-//! [T2:solve]
+    //! [T2:solve]
     
     return 0;
 }

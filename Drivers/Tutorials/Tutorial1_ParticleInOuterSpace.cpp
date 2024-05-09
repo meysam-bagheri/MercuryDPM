@@ -23,8 +23,6 @@
 //(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 //SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-// Tutorial 1
-
 /*
 ** This file is annotated with DoxyFile comments in order to show the code on
 ** the documentation - This is not needed for your real drivers.
@@ -39,21 +37,27 @@
 #include <Species/LinearViscoelasticSpecies.h>
 //! [T1:headers]
 
+//! Tutorial1: Simulates a single particle moving at constant velocity
 //! [T1:class]
-class Tutorial1 : public Mercury3D
+class Tutorial1 : public Mercury3D 
 {
 
 public:
-    
+
+    //! Use setupInitialConditions to define your particle and wall positions
     void setupInitialConditions() override {
-//! [T1:createParticle]
+        //! [T1:createParticle]
+        // create a new particle
         SphericalParticle p0;
+        // set species (material type)
         p0.setSpecies(speciesHandler.getObject(0));
-        p0.setRadius(0.05); // sets particle radius
-        p0.setPosition(Vec3D(0.1 * getXMax(), 0.1 * getYMax(), 0.1 * getZMax())); // sets particle position
-        p0.setVelocity(Vec3D(0.5, 0.1, 0.1));// sets particle velocity
+        // set particle radius, position, velocity
+        p0.setRadius(0.05);
+        p0.setPosition(Vec3D(0.1 * getXMax(), 0.1 * getYMax(), 0.1 * getZMax()));
+        p0.setVelocity(Vec3D(0.5, 0.1, 0.1));
+        // pass particle to the particle handler (which contains all particles in the simulation)
         particleHandler.copyAndAddObject(p0);
-//! [T1:createParticle]
+        //! [T1:createParticle]
     }
 };
 //! [T1:class]
@@ -61,47 +65,64 @@ public:
 //! [T1:main]
 int main(int argc, char* argv[])
 {
-    // Problem setup
+    // Instantiate an object of class Tutorial1
     Tutorial1 problem;
 
-//! [T1:problemSetup]
+    // Problem setup: set file name, gravity, domain size, simulation time
+    //! [T1:problemSetup]
     problem.setName("Tutorial1");
-    problem.setSystemDimensions(3);
     problem.setGravity(Vec3D(0.0, 0.0, 0.0));
     problem.setXMax(1.0);
     problem.setYMax(1.0);
     problem.setZMax(1.0);
     problem.setTimeMax(2.3);
-//! [T1:problemSetup]
+    //! [T1:problemSetup]
 
-//! [T1:speciesProp]
-    //Set the species of particles and walls
-    //The normal spring stiffness and normal dissipation is computed and set as
-    //For collision time tc=0.005 and restitution coefficient rc=1.0
+    // Set the species (material properties such as density and stiffness) of particles and walls
+    // (in this case, both are assumed to consist of the same material)
+    //! [T1:speciesProp]
     LinearViscoelasticSpecies species;
     species.setDensity(2500.0); //sets the species type_0 density in kg/m3
+    // The normal spring stiffness and normal dissipation is computed such that
+    // collision time tc=0.005 and restitution coefficient rc=1.0
     species.setStiffness(258.5);//sets the spring stiffness in kN/m.
     species.setDissipation(0.0); //sets the dissipation.
     problem.speciesHandler.copyAndAddObject(species);
-//! [T1:speciesProp]
+    //! [T1:speciesProp]
 
-//! [T1:output]
-    problem.setSaveCount(10); // number of time steps skipped between saves
-    problem.dataFile.setFileType(FileType::ONE_FILE); //create file with particle positions, velocities, radii for multiple time steps
-    problem.restartFile.setFileType(FileType::ONE_FILE); //create file with all parameters of the last saved time step
+    // Define what output gets written
+    //! [T1:output]
+    // number of time steps skipped between saves (i.e. every 10-th time step is written to file)
+    problem.setSaveCount(10);
+    // creates file with particle positions, velocities, radii for multiple time steps (for plotting)
+    problem.dataFile.setFileType(FileType::ONE_FILE);
+    // file with contact forces, overlaps for multiple time steps (for plotting)
     problem.fStatFile.setFileType(FileType::NO_FILE);
+    // file with all parameters of the last saved time step (for restarting)
+    problem.restartFile.setFileType(FileType::ONE_FILE);
+    // writes global properties like kinetic/potential energy and center of mass (for quick analysis)
     problem.eneFile.setFileType(FileType::NO_FILE);
-    logger(INFO, "run number: %", problem.dataFile.getCounter());
-//! [T1:output]
+    //! [T1:output]
 
-//! [T1:visualOutput] 	
+    //! [T1:xballsOutput]
+    // additional arguments passed into the .xballs file
     problem.setXBallsAdditionalArguments("-solidf -v0");
-//! [T1:visualOutput]
+    //! [T1:xballsOutput]
 
-//! [T1:solve]
-    problem.setTimeStep(0.005 / 50.0); // (collision time)/50.0
+    //! [T1:paraviewOutput]
+    // whether the wall geometry is written into a vtu file (either once initially or for several time steps)
+    problem.wallHandler.setWriteVTK(FileType::ONE_FILE);
+    // whether the particle positions are written into a vtu file
+    problem.setParticlesWriteVTK(true);
+    //! [T1:paraviewOutput]
+
+    //! [T1:solve]
+    // set a time step 1/50th of collision time
+    problem.setTimeStep(0.005 / 50.0);
+    // start the solver (calls setupInitialConditions and initiates time loop)
     problem.solve(argc, argv);
-//! [T1:solve]
+    //! [T1:solve]
+
     return 0;
 }
 //! [T1:main]

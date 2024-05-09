@@ -80,7 +80,6 @@ int main(int argc, char* argv[])
     Tutorial7 problem; // instantiate an object of class Tutorial 7
     
     problem.setName("Tutorial7");
-    problem.setSystemDimensions(2);
     problem.setGravity(Vec3D(0.0, 0.0, 0.0));
     problem.setXMax(1);
     problem.setYMax(0.5);
@@ -105,9 +104,7 @@ int main(int argc, char* argv[])
 
     problem.wallHandler.setWriteVTK(FileType::ONE_FILE);
     problem.setParticlesWriteVTK(true);
-    
-    problem.setXBallsAdditionalArguments("-solidf -v0 -s .85");
-    
+
     problem.setTimeStep(0.005 / 50.0);// (collision time)/50.0
     problem.solve(argc, argv);
     

@@ -121,7 +121,6 @@ int main(int argc, char* argv[])
     Tutorial12 problem; // instantiate an object of class Tutorial 12
     
     problem.setName("Tutorial12");
-    problem.setSystemDimensions(2);
     problem.setGravity(Vec3D(0.0, 0.0, 0.0));
     problem.setXMax(0.5);
     problem.setYMax(0.5);
@@ -143,9 +142,7 @@ int main(int argc, char* argv[])
     problem.restartFile.setFileType(FileType::ONE_FILE);
     problem.fStatFile.setFileType(FileType::NO_FILE);
     problem.eneFile.setFileType(FileType::NO_FILE);
-    
-    problem.setXBallsAdditionalArguments("-solidf -v0 -s .85");
-    
+
     problem.setTimeStep(.005 / 50.0); // (collision time)/50.0
     //! [T12: constructor]
     

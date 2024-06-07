@@ -32,3 +32,7 @@ foreach(CPPFILE ${CPPFILES})
                 ${CMAKE_CURRENT_SOURCE_DIR}/Scripts/ ${CMAKE_CURRENT_BINARY_DIR}/Scripts/)
 
 endforeach()
+
+# copy all restart files to the build directory
+file(GLOB EIGENDEMOFILES "FlowShields005.txt" "GenerateSmallK0Bed.restart")
+file(COPY ${EIGENDEMOFILES}  DESTINATION .)

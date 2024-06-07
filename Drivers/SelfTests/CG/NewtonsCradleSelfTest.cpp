@@ -79,6 +79,7 @@ int main(int argc UNUSED, char *argv[] UNUSED)
 	problem.setName("NewtonsCradleSelfTest");
     auto species=problem.speciesHandler.copyAndAddObject(LinearViscoelasticSpecies());
     problem.N=5;	//set the number of particles
+    problem.removeOldFiles();
     problem.setSystemDimensions(3);
 	problem.setParticleDimensions(3);
 	species->setDensity(6./pi);
@@ -91,12 +92,20 @@ int main(int argc UNUSED, char *argv[] UNUSED)
 
 	Mdouble w=0.46/3.;
 
-	logger(INFO,"Test new cg handler");
-	Mercury3D cg;
-	auto c0 = cg.cgHandler.copyAndAddObject(TimeAveragedCG<CGCoordinates::Z,CGFunctions::Gauss>());
-	c0->setNZ(400);
-	c0->setWidth(w);
-	cg.cgHandler.restartAndEvaluateDataFiles("NewtonsCradleSelfTest");
+	logger(INFO,"\nTesting CGHandler::restartAndEvaluateDataFiles");
+
+    Mercury3D cg;
+    auto c0 = cg.cgHandler.copyAndAddObject(TimeAveragedCG<CGCoordinates::Z,CGFunctions::Gauss>());
+    c0->setNZ(400);
+    c0->setWidth(w);
+    c0->setTimeMin(8+1e-12);
+    c0->statFile.setName(problem.getName()+".fromData.stat");
+    cg.cgHandler.restartAndEvaluateDataFiles("NewtonsCradleSelfTest");
+
+    logger(INFO,"\nTesting CGHandler::restartAndEvaluateRestartFiles");
+
+    c0->statFile.setName(problem.getName()+".fromRestart.stat");
+    cg.cgHandler.restartAndEvaluateRestartFiles("NewtonsCradleSelfTest");
 
     ///\todo TW the output of the old and new stat doesn't compare perfectly, check.
     helpers::writeToFile("NewtonsCradleSelfTest.gnu",
@@ -147,6 +156,7 @@ int main(int argc UNUSED, char *argv[] UNUSED)
 		stats2.setTimeMaxStat(1e20);
         logger(INFO,"Creating %",stats2.statFile.getName());
 		stats2.statistics_from_fstat_and_data();
+
 	}
 
 	return(0);

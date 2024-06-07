@@ -1,4 +1,4 @@
-MercuryDPM 1.0 name OSMindlinSelfTest revision 7622ee90 repository https://bitbucket.org/mercurydpm/mercurydpm.git
+MercuryDPM 1.0 name OSMindlinSelfTest revision 8a6674c8 repository https://bitbucket.org/mercurydpm/mercurydpm.git
 dataFile    fileType ONE_FILE saveCount 10 counter 1002 lastSavedTimeStep 10001
 fStatFile   fileType ONE_FILE saveCount 10 counter 1002 lastSavedTimeStep 10001
 eneFile     fileType ONE_FILE saveCount 10 counter 1002 lastSavedTimeStep 10001
@@ -21,5 +21,5 @@ Boundaries 0
 Particles 1
 BaseParticle id 0 indSpecies 2 position 5.00201149456655e-05 0 0.000999977169022224 orientation 0.999878083650835 0 0.0156146672950057 0 velocity 0.0200031141978808 0 -1.56159850224486e-13 angularVelocity 0 12.4983210042401 0 force 0.000120637157898342 0 -2.47059859549703e-15 torque 0 3.0158945190934e-08 0 radius 0.001 invMass 33157.2798108115 timeStamp 0
 Interactions 1
-HertzianViscoelasticMindlinInteraction particleWallIds 0 0 timeStamp 10001 contactPoint 5.00201149456655e-05 0 -1.14154888881512e-08 force -3.01592894739679e-05 -0 0.000150796447369839 torque 0 0 0 slidingSpring 5.13697000095919e-09 0 1.45878839632055e-35
+HertzianViscoelasticMindlinInteraction particleWallIds 0 0 timeStamp 10001 contactPoint 5.00201149456655e-05 0 -1.14154888881512e-08 normal -0 -0 1 distance 0.000999977169022225 overlap 2.2830977775435e-08 force -3.01592894739679e-05 -0 0.000150796447369839 torque 0 0 0 slidingSpring 5.13697000095919e-09 0 1.45878839632055e-35
 hGrid method TOPDOWN distribution EXPONENTIAL cellOverSizeRatio 1 numberOfBuckets 10 cellSizes 0.002 gridNeedsUpdate 0 updateEachTimeStep 1 currentMaxRelativeDisplacement 0 totalCurrentMaxRelativeDisplacement 0

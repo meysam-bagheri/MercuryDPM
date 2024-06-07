@@ -33,7 +33,6 @@ template<class Coordinates, template<class> class BaseFunction, class Fields>
 TimeAveragedCG<Coordinates, BaseFunction, Fields>::TimeAveragedCG()
         : CG<Coordinates, BaseFunction, Fields>()
 {
-    nTime_ = 0;
 #ifdef DEBUG_CONSTRUCTOR
     std::cerr << "TimeAveragedCG::TimeAveragedCG() finished" << std::endl;
 #endif
@@ -63,6 +62,8 @@ std::string TimeAveragedCG<Coordinates, BaseFunction, Fields>::getName() const
 template<class Coordinates, template<class> class BaseFunction, class Fields>
 void TimeAveragedCG<Coordinates, BaseFunction, Fields>::initialise()
 {
+    nTime_ = 0;
+
     CG<Coordinates, BaseFunction, Fields>::initialise();
     
     CG<Coordinates, BaseFunction, Fields>::resetVariables();

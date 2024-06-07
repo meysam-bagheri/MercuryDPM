@@ -1,4 +1,4 @@
-MercuryDPM 1.0 name PlasticForceUnitTest1.1 revision 7622ee90 repository https://bitbucket.org/mercurydpm/mercurydpm.git
+MercuryDPM 1.0 name PlasticForceUnitTest1.1 revision 8a6674c8 repository https://bitbucket.org/mercurydpm/mercurydpm.git
 dataFile    fileType ONE_FILE saveCount 1 counter 101 lastSavedTimeStep 100
 fStatFile   fileType ONE_FILE saveCount 1 counter 101 lastSavedTimeStep 100
 eneFile     fileType ONE_FILE saveCount 1 counter 101 lastSavedTimeStep 100
@@ -16,4 +16,4 @@ Particles 2
 BaseParticle id 0 indSpecies 0 position 1.00840467123501 1 1 orientation 1 0 0 0 velocity -0.0204655358555405 0 0 angularVelocity 0 0 0 force -0.95281436606263 0 0 torque 0 0 0 radius 0.5 invMass 1 timeStamp 0
 BaseParticle id 1 indSpecies 0 position 1.99159532876499 1 1 orientation 1 0 0 0 velocity 0.0204655358555405 0 0 angularVelocity 0 0 0 force 0.95281436606263 0 0 torque 0 0 0 radius 0.5 invMass 1 timeStamp 0
 Interactions 1
-LinearPlasticViscoelasticInteraction particleIds 0 1 timeStamp 100 contactPoint 1.5 1 1 force -0.95281436606263 0 0 torque 0 0 0 maxOverlap 0.0196972734270182
+LinearPlasticViscoelasticInteraction particleIds 0 1 timeStamp 100 contactPoint 1.5 1 1 normal -1 0 0 distance 0.983190657529982 overlap 0.0168093424700184 force -0.95281436606263 0 0 torque 0 0 0 maxOverlap 0.0196972734270182

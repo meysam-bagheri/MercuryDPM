@@ -1,4 +1,4 @@
-MercuryDPM 1.0 name NewtonsCradleSelfTest revision 7622ee90 repository https://bitbucket.org/mercurydpm/mercurydpm.git
+MercuryDPM 1.0 name NewtonsCradleSelfTest revision 8a6674c8 repository https://bitbucket.org/mercurydpm/mercurydpm.git
 dataFile    fileType ONE_FILE saveCount 1000 counter 82 lastSavedTimeStep 80001
 fStatFile   fileType ONE_FILE saveCount 1000 counter 82 lastSavedTimeStep 80001
 eneFile     fileType ONE_FILE saveCount 1000 counter 82 lastSavedTimeStep 80001
@@ -20,8 +20,8 @@ BaseParticle id 2 indSpecies 0 position 0.5 0.5 2.29992524141896 orientation 1 0
 BaseParticle id 3 indSpecies 0 position 0.5 0.5 3.04991787233999 orientation 1 0 0 0 velocity 0 0 1.13912270945575e-12 angularVelocity 0 0 0 force 0 0 -2.77555756156289e-17 torque 0 0 0 radius 0.35 invMass 2.91545189504373 timeStamp 0
 BaseParticle id 4 indSpecies 0 position 0.5 0.5 3.69991502489624 orientation 1 0 0 0 velocity 0 0 1.5728134004057e-12 angularVelocity 0 0 0 force 0 0 0 torque 0 0 0 radius 0.3 invMass 4.62962962962963 timeStamp 0
 Interactions 5
-LinearViscoelasticInteraction particleIds 1 2 timeStamp 80001 contactPoint 0.5 0.5 1.89993230070659 force 0 0 -1.071 torque 0 0 0
-LinearViscoelasticInteraction particleWallIds 0 0 timeStamp 80001 contactPoint 0.5 0.5 -1.84556539338243e-05 force -0 -0 2.8 torque 0 0 0
-LinearViscoelasticInteraction particleIds 0 1 timeStamp 80001 contactPoint 0.5 0.5 0.999951224343174 force 0 0 -1.8 torque 0 0 0
-LinearViscoelasticInteraction particleIds 2 3 timeStamp 80001 contactPoint 0.5 0.5 2.69992155687948 force 0 0 -0.559 torque 0 0 0
-LinearViscoelasticInteraction particleIds 3 4 timeStamp 80001 contactPoint 0.5 0.5 3.39991644861812 force 0 0 -0.216 torque 0 0 0
+LinearViscoelasticInteraction particleIds 1 2 timeStamp 80001 contactPoint 0.5 0.5 1.89993230070659 normal 0 0 -1 distance 0.849985881424741 overlap 1.41185752593476e-05 force 0 0 -1.071 torque 0 0 0
+LinearViscoelasticInteraction particleWallIds 0 0 timeStamp 80001 contactPoint 0.5 0.5 -1.84556539338243e-05 normal -0 -0 1 distance 0.499963088692133 overlap 3.69113078672045e-05 force -0 -0 2.8 torque 0 0 0
+LinearViscoelasticInteraction particleIds 0 1 timeStamp 80001 contactPoint 0.5 0.5 0.999951224343174 normal 0 0 -1 distance 0.949976271302083 overlap 2.37286979165585e-05 force 0 0 -1.8 torque 0 0 0
+LinearViscoelasticInteraction particleIds 2 3 timeStamp 80001 contactPoint 0.5 0.5 2.69992155687948 normal 0 0 -1 distance 0.749992630921037 overlap 7.36907896303762e-06 force 0 0 -0.559 torque 0 0 0
+LinearViscoelasticInteraction particleIds 3 4 timeStamp 80001 contactPoint 0.5 0.5 3.39991644861812 normal 0 0 -1 distance 0.649997152556249 overlap 2.84744375100843e-06 force 0 0 -0.216 torque 0 0 0

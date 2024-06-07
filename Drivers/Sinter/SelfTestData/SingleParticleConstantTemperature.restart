@@ -1,4 +1,4 @@
-MercuryDPM 1.0 name SingleParticleConstantTemperature revision 7622ee90 repository https://bitbucket.org/mercurydpm/mercurydpm.git
+MercuryDPM 1.0 name SingleParticleConstantTemperature revision 8a6674c8 repository https://bitbucket.org/mercurydpm/mercurydpm.git
 dataFile    fileType ONE_FILE saveCount 10 counter 1553 lastSavedTimeStep 15514
 fStatFile   fileType ONE_FILE saveCount 10 counter 1553 lastSavedTimeStep 15514
 eneFile     fileType ONE_FILE saveCount 10 counter 1553 lastSavedTimeStep 15514
@@ -16,5 +16,5 @@ Particles 2
 BaseParticle id 0 indSpecies 0 position 0 0 -1.8354606999996e-07 orientation 1 0 0 0 velocity 0 0 -1.83078760800482e-07 angularVelocity 0 0 0 force 0 0 5.42001824569246e-20 torque 0 0 0 radius 1e-06 invMass 238.732414637843 timeStamp 0
 BaseParticle id 1 indSpecies 0 position 0 0 -2e-06 orientation 1 0 0 0 velocity 0 0 0 angularVelocity 0 0 0 force 0 0 -2.05250720035075e-08 torque 0 0 0 radius 1e-06 invMass 0 timeStamp 0
 Interactions 1
-SinterInteraction particleIds 0 1 timeStamp 15514 contactPoint 0 0 -1.09177303499998e-06 force 0 0 2.05250720035075e-08 torque 0 0 0 plasticOverlap 1.82974156150252e-07
+SinterInteraction particleIds 0 1 timeStamp 15514 contactPoint 0 0 -1.09177303499998e-06 normal 0 0 1 distance 1.81645393000004e-06 overlap 1.83546069999961e-07 force 0 0 2.05250720035075e-08 torque 0 0 0 plasticOverlap 1.82974156150252e-07
 hGrid method TOPDOWN distribution EXPONENTIAL cellOverSizeRatio 1 numberOfBuckets 10 cellSizes 2e-06 gridNeedsUpdate 0 updateEachTimeStep 1 currentMaxRelativeDisplacement 0 totalCurrentMaxRelativeDisplacement 0

@@ -1,4 +1,4 @@
-MercuryDPM 1.0 name MembraneSelfTest revision 7622ee90 repository https://bitbucket.org/mercurydpm/mercurydpm.git
+MercuryDPM 1.0 name MembraneSelfTest revision 8a6674c8 repository https://bitbucket.org/mercurydpm/mercurydpm.git
 dataFile    fileType NO_FILE saveCount 99999 counter 0
 fStatFile   fileType NO_FILE saveCount 99999 counter 0
 eneFile     fileType NO_FILE saveCount 99999 counter 0
@@ -84,7 +84,7 @@ BaseParticle id 26 indSpecies 2 position 0.01 0.0519615 0 orientation 1 0 0 0 ve
 BaseParticle id 27 indSpecies 2 position 0.03 0.0519615 0 orientation 1 0 0 0 velocity 0 0 0 angularVelocity 0 0 0 force -0.00879429574995054 -0.0450456960987166 -0.00839207288227045 torque 0 0 0 radius 0.0008 invMass 0 timeStamp 0
 BaseParticle id 28 indSpecies 0 position 0.00204914368852586 -0.00262392627539421 -0.00119947644475942 orientation 0.678811613177471 0.734097399552361 0.00136737548984564 0.0177181282908353 velocity -0.00344179711325625 -0.0513711401037717 -0.105812698794015 angularVelocity 12.6666974617299 -0.689857520667086 -0.0194483964204196 force -4.59462011521887e-05 0.000263492391918204 0.00414633796615147 torque -4.044843130943e-07 -1.08167443885149e-07 1.05429050022561e-09 radius 0.004 invMass 1865.09698935815 timeStamp 0
 Interactions 1
-HertzianViscoelasticMindlinInteraction particleWallIds 28 15 timeStamp 20000 contactPoint 0.00208013388344012 -0.00277870272927747 -0.00518957754754741 force -4.59462011521887e-05 0.000263492391918204 0.00940611805049765 torque 0 0 0 slidingSpring -1.46599282856229e-08 5.513252412315e-08 -2.2524568628437e-09
+HertzianViscoelasticMindlinInteraction particleWallIds 28 15 timeStamp 20000 contactPoint 0.00208013388344012 -0.00277870272927747 -0.00518957754754741 normal -0.00776069898713828 0.038759790708259 0.999218419653823 distance 0.00398644425344031 overlap 1.35557465596884e-05 force -4.59462011521887e-05 0.000263492391918204 0.00940611805049765 torque 0 0 0 slidingSpring -1.46599282856229e-08 5.513252412315e-08 -2.2524568628437e-09
 hGrid method TOPDOWN distribution EXPONENTIAL cellOverSizeRatio 1 numberOfBuckets 290 cellSizes 0.00273596151468272 0.00467842838114059 0.008 gridNeedsUpdate 0 updateEachTimeStep 1 currentMaxRelativeDisplacement 0 totalCurrentMaxRelativeDisplacement 0
  membrane  vertexParticle 28 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 vertexInitId_ 0
  face 36 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35

@@ -29,10 +29,10 @@
 #include "DPMBase.h"
 
 /*!
- * \details This is the constructor which creates a new interactions between two 
- * BaseInteractable objects. The timeStamp is time the interactions is created 
+ * \details This is the constructor which creates a new interactions between two
+ * BaseInteractable objects. The timeStamp is time the interactions is created
  * and is used to check if the interations is current or has ended.
- * It adds 
+ * It adds
  * \param[in] P         BaseInteractable pointer which is the first object involved in the interaction normally a particle.
  * \param[in] I         BaseInteractable pointer which is the second object involved in the interaction often a wall or particle.
  * \param[in] timeStamp Mdouble which is the time the interaction starts.
@@ -120,7 +120,7 @@ BaseInteraction::BaseInteraction(const BaseInteraction& p)
 
 /*!
  * \details Destructor for BaseInteraction. Also removes the interaction from the
- *          list of interactions for both objects involved in the interaction. 
+ *          list of interactions for both objects involved in the interaction.
  */
 BaseInteraction::~BaseInteraction()
 {
@@ -149,8 +149,8 @@ BaseInteraction::~BaseInteraction()
 
 
 /*!
- * \details BaseInteaction write function. Writes out all the information 
- *          required to recreate this interaction. 
+ * \details BaseInteaction write function. Writes out all the information
+ *          required to recreate this interaction.
  *          To write this interaction to the screen call write(std::cout).
  *          See also BaseInteraction::read
  * \param[in] os     std::ostream to which the information is written. Note, is
@@ -170,12 +170,11 @@ void BaseInteraction::write(std::ostream& os) const
     }
     os << " timeStamp " << timeStamp_;
     os << " contactPoint " << contactPoint_;
-    //\todo tw we need to store normal and distance as well
-    // os << " normal " << normal_*distance_;
+    os << " normal " << normal_;
+    os << " distance " << distance_;
+    os << " overlap " << overlap_;
     os << " force " << force_;
     os << " torque " << torque_;
-    //\todo add information that can recreate the contact information (necessary for CG)
-    //	os <<" timeStamp "<<timeStamp_<< " contactPoint " << contactPoint_ << " overlap " << overlap_ << " force " << force_ << " torque " << torque_;
 }
 
 /*!
@@ -189,7 +188,10 @@ void BaseInteraction::read(std::istream& is)
 {
     //the rest gets read by the interaction handler
     std::string dummy;
-    helpers::readOptionalVariable(is,"contactPoint",contactPoint_);
+    helpers::readOptionalVariable(is, "contactPoint", contactPoint_);
+    helpers::readOptionalVariable(is, "normal", normal_);
+    helpers::readOptionalVariable(is, "distance", distance_);
+    helpers::readOptionalVariable(is, "overlap", overlap_);
     is >> dummy >> force_;
     is >> dummy >> torque_;
 }
@@ -197,7 +199,7 @@ void BaseInteraction::read(std::istream& is)
 /*!
  * \details Functions which returns the name of the Interaction here is called
  *          BaseInteraction; but, it should be later overridden by the actual
- *          interaction classes. 
+ *          interaction classes.
  */
 std::string BaseInteraction::getName() const
 {
@@ -205,7 +207,7 @@ std::string BaseInteraction::getName() const
 }
 
 /*!
- * \details sets the normal of the interaction, in direction from I to P.       
+ * \details sets the normal of the interaction, in direction from I to P.
  * Must be a unit normal vector. This is not checked by the class.
  * \param[in] normal Vec3D which is the normal of the interaction.
  */
@@ -224,7 +226,7 @@ void BaseInteraction::setDistance(Mdouble distance)
 }
 
 /*!
- * \details set the overlap between the two interactable object involved in the 
+ * \details set the overlap between the two interactable object involved in the
  *          interactions.
  * \param[in] overlap   Mdouble which is the overlap to set.
  */
@@ -245,7 +247,7 @@ void BaseInteraction::setContactPoint(Vec3D contactPoint)
 /*!
  * \details Updated the time stamp of the interaction. The time stamp being old
  *          is how ended interactions are detected.
- * \param[in] timeStamp The new timeStamp for the interactions should be the 
+ * \param[in] timeStamp The new timeStamp for the interactions should be the
  *                      current time step.
  */
 void BaseInteraction::setTimeStamp(unsigned timeStamp)
@@ -279,40 +281,41 @@ Mdouble BaseInteraction::getOverlapVolume() const
     //logger(WARN,"This function is only tested for spheres and (may) give the wrong answer for other objects");
     //First get overlap and radii of each object
     Mdouble delta = getOverlap();
-    Mdouble curvatureParticle=getP()->getCurvature(getP()->getPosition());
-    Mdouble curvatureInteractable=getI()->getCurvature(getI()->getPosition());
-
+    Mdouble curvatureParticle = getP()->getCurvature(getP()->getPosition());
+    Mdouble curvatureInteractable = getI()->getCurvature(getI()->getPosition());
+    
     if (curvatureInteractable == 0)
     {
-        logger(WARN,"This function is not implemented for walls yet and will return 0");
+        logger(WARN, "This function is not implemented for walls yet and will return 0");
         return 0;
     }
     else
     {
-        Mdouble r1=1.0/curvatureInteractable;
-        Mdouble r2=1.0/curvatureParticle;
-
+        Mdouble r1 = 1.0 / curvatureInteractable;
+        Mdouble r2 = 1.0 / curvatureParticle;
+        
         if (delta > 2.0 * r1 || delta > 2.0 * r2)
-            logger(WARN, "Warning in BaseInteraction::getOverlapVolume: One of the particles is fully inside the other. The calculations are undefined for this case and will return nonsensical values.");
-
+            logger(WARN,
+                   "Warning in BaseInteraction::getOverlapVolume: One of the particles is fully inside the other. The calculations are undefined for this case and will return nonsensical values.");
+        
         //Eq (2.1) - see doc
 //        logger(WARN,"Radius of first object % and second object %",r1,r2);
-        Mdouble t1=(r2-delta/2.0)/(r1+r2-delta)*delta;
+        Mdouble t1 = (r2 - delta / 2.0) / (r1 + r2 - delta) * delta;
         //Eq (2.2) - see doc
-        Mdouble t2=(r1-delta/2.0)/(r1+r2-delta)*delta;
-
+        Mdouble t2 = (r1 - delta / 2.0) / (r1 + r2 - delta) * delta;
+        
         //Eq (2.3) - see doc
-        Mdouble V=constants::pi*(
-                std::pow(t1,2.0)*r1
-                -std::pow(t1,3.0)/3.0
-                +std::pow(t2,2.0)*r2
-                -std::pow(t2,3.0)/3.0
-                );
-
+        Mdouble V = constants::pi * (
+                std::pow(t1, 2.0) * r1
+                - std::pow(t1, 3.0) / 3.0
+                + std::pow(t2, 2.0) * r2
+                - std::pow(t2, 3.0) / 3.0
+        );
+        
         return V;
     }
-
-return 0;
+    
+    return 0;
 }
 
 /*!
@@ -326,17 +329,17 @@ void BaseInteraction::removeFromHandler()
 
 /*!
  * \details This functions copies the interactions of a real original particle.
- *          It first works out which of P and I is not the original particle. 
- *          Then it create a new interactions between the new ghost copy and 
- *          which every object is not the original particle from the P and I of 
+ *          It first works out which of P and I is not the original particle.
+ *          Then it create a new interactions between the new ghost copy and
+ *          which every object is not the original particle from the P and I of
  *          the interaction.
- *          Note, at the end the ghost will be I in the new interaction and 
+ *          Note, at the end the ghost will be I in the new interaction and
  *          original item being interacted with will be P.
  * \todo    Can this be simpler if we replace the particle with the ghost.
  * \param[in] original  BaseInteractable* to the original particles who periodic
  *                      image is being created from.
- * \param[in] ghost     BaseInteractble* to the new ghost (periodic partcles) 
- *                      that has just been created. 
+ * \param[in] ghost     BaseInteractble* to the new ghost (periodic partcles)
+ *                      that has just been created.
  */
 void BaseInteraction::copySwitchPointer(const BaseInteractable* original, BaseInteractable* ghost) const
 {
@@ -348,10 +351,10 @@ void BaseInteraction::copySwitchPointer(const BaseInteractable* original, BaseIn
     {
         //Reverse some force history
         C->reverseHistory();
-        //Set the P to the original particle 
+        //Set the P to the original particle
         C->P_ = C->getI();
     }
-    //The new ghost particle is set to I in the interaction. 
+    //The new ghost particle is set to I in the interaction.
     C->I_ = ghost;
     
     //Add the the interaction to both original and the ghost
@@ -365,11 +368,11 @@ void BaseInteraction::copySwitchPointer(const BaseInteractable* original, BaseIn
  */
 Mdouble BaseInteraction::getContactRadius() const
 {
-    return getOverlap()<0.0?0.0:sqrt(2.0 * getEffectiveRadius() * getOverlap());
+    return getOverlap() < 0.0 ? 0.0 : sqrt(2.0 * getEffectiveRadius() * getOverlap());
 }
 
 /*!
- * \details Various variables in the force law need to be integrated. This is 
+ * \details Various variables in the force law need to be integrated. This is
  *          the place where this code goes.
  *          Note, it is empty at this point; it can be overriden in subclasses.
  *          For usage, see e.g. MindlinInteraction.cc.
@@ -381,8 +384,8 @@ void BaseInteraction::integrate(Mdouble timeStep UNUSED)
 }
 
 /*!
- * \details Sets the species for the interactions. 
- *          Note, this can be either a normal Species or a MixedSpecies; 
+ * \details Sets the species for the interactions.
+ *          Note, this can be either a normal Species or a MixedSpecies;
  *          depending on if this interaction is between interactables of the
  *          same or different types.
  * \param[in] BaseSpecies* pointer to the actually species of the interaction.
@@ -393,7 +396,7 @@ void BaseInteraction::setSpecies(const BaseSpecies* const species)
 }
 
 /*!
- * \details Changes the first object involved in the interaction; normally a 
+ * \details Changes the first object involved in the interaction; normally a
  *          particle.
  *          Note, set is slightly misleading as it removed the interaction from
  *          old particle and adds it to the new particle.
@@ -416,7 +419,7 @@ void BaseInteraction::setP(BaseInteractable* P)
  *          overloaded with warnings.
  * \param[in] P     BaseInteractable* The particle involved in the interaction.
  */
-void BaseInteraction::importP(BaseInteractable *P)
+void BaseInteraction::importP(BaseInteractable* P)
 {
     P_->removeInteraction(this);
     P_ = P;
@@ -448,7 +451,7 @@ void BaseInteraction::setI(BaseInteractable* I)
  *          overloaded with warnings.
  * \param[in] I     BaseInteractable* The particle involved in the interaction.
  */
-void BaseInteraction::importI(BaseInteractable *I)
+void BaseInteraction::importI(BaseInteractable* I)
 {
     I_->removeInteraction(this);
     I_ = I;
@@ -478,9 +481,9 @@ Vec3D BaseInteraction::getCP() const
 /*!
  * \details Writes the FStat information that is required for the coarse-
  *          graining package MercuryCG if you want stress and force information.
- *          Note, it takes a general ostream but is normally a file i.e. 
+ *          Note, it takes a general ostream but is normally a file i.e.
  *          ofstream
- * \param[in] os    This is the ostream that the FStat information will be 
+ * \param[in] os    This is the ostream that the FStat information will be
  *                  written to. Normally, a file but could be a gerneral
  *                  ostream.
  */
@@ -489,10 +492,10 @@ void BaseInteraction::writeToFStat(std::ostream& os, Mdouble time) const
     ///\todo MX The documentation mentions that the first variable is the time - this is incorrect, is is the timeStamp the interaction started
     auto* IParticle = dynamic_cast<BaseParticle*>(I_);
     auto* PParticle = dynamic_cast<BaseParticle*>(P_);
-
+    
     // do not write fstat output if the force is an internal bond
     if (isBonded()) return;
-
+    
     Vec3D tangentialForce = getTangentialForce();
     Mdouble tangentialOverlap = getTangentialOverlap();
     
@@ -544,7 +547,7 @@ Mdouble BaseInteraction::getDistance() const
 /*!
  * \details Returns tangential overlap.
  *          Note, at this level there cannot be a tangential overlap
- *          hence by default it returns 0. This function will be overridden by 
+ *          hence by default it returns 0. This function will be overridden by
  *          interactions that have tangential components.
  * \return  Positive Mdouble that is the tangential overlap.
  */
@@ -590,7 +593,7 @@ Mdouble BaseInteraction::getNormalRelativeVelocity() const
  * \details Returns the absolute normal force. This is the magnitude of the normal
  *          force.
  *          \todo Ant: Check this comment.
- * \return  Mdouble that contains the absolute norm (length) of the normal 
+ * \return  Mdouble that contains the absolute norm (length) of the normal
  *          force.
  */
 Mdouble BaseInteraction::getAbsoluteNormalForce() const
@@ -619,7 +622,7 @@ void BaseInteraction::addTorque(Vec3D torque)
 }
 
 /*!
- * \details set the absolute values of the force. This is used by the normal 
+ * \details set the absolute values of the force. This is used by the normal
  *          forces as these are always called first and then the tangential and
  *          non-contact (e.g. adhesive forces) forces are added.
  *          See also BaseInteraction::addForce.
@@ -630,7 +633,7 @@ void BaseInteraction::setForce(Vec3D force)
 }
 
 /*!
- * \details set the absolute values of the torque. This is used by the normal 
+ * \details set the absolute values of the torque. This is used by the normal
  *          forces as these are always called first and then the tangential and
  *          non-contact (e.g. adhesive forces) forces/torques are added.
  *          See also BaseInteraction::addTorque.
@@ -643,7 +646,7 @@ void BaseInteraction::setTorque(Vec3D torque)
 /*!
  * \details set the relative velocity between the two particles involved in the
  *          interaction.
- * \param[in] relativeVelocity  This is Vec3D that contains the relative 
+ * \param[in] relativeVelocity  This is Vec3D that contains the relative
  *                              velocity between the two interactable objects.
  */
 void BaseInteraction::setRelativeVelocity(Vec3D relativeVelocity)
@@ -654,7 +657,7 @@ void BaseInteraction::setRelativeVelocity(Vec3D relativeVelocity)
 /*!
  * \details set the norm (length) of the normal relative velocity.
  * \param[in] normalRelativeVelocity    Mdouble containing the normal (length)
- *                                      of the normal velocity between the 
+ *                                      of the normal velocity between the
  *                                      interactable objects.
  */
 void BaseInteraction::setNormalRelativeVelocity(Mdouble normalRelativeVelocity)
@@ -676,7 +679,7 @@ void BaseInteraction::setAbsoluteNormalForce(Mdouble absoluteNormalForce)
  * \details Returns a BaseSpecies pointer to the current species.
  *          Note, this will be either a Species or a MixedSpecies done of which
  *          are derived from BaseSpecies.
- * \return  A BaseSpecies pointer to the species associated with this 
+ * \return  A BaseSpecies pointer to the species associated with this
  *          interaction.
  */
 const BaseSpecies* BaseInteraction::getBaseSpecies() const
@@ -793,8 +796,9 @@ void BaseInteraction::rotateHistory(Matrix3D& rotationMatrix)
 Mdouble BaseInteraction::getEffectiveRadius() const
 {
     Mdouble invEffectiveRadius = getP()->getCurvature(contactPoint_) + getI()->getCurvature(contactPoint_);
-    logger.assert_debug(invEffectiveRadius>0,
-                  "getEffectiveRadius(): interaction % at % has infinite effective radius",getId(), getContactPoint());
+    logger.assert_debug(invEffectiveRadius > 0,
+                        "getEffectiveRadius(): interaction % at % has infinite effective radius", getId(),
+                        getContactPoint());
     return 1.0 / invEffectiveRadius;
 }
 
@@ -810,8 +814,9 @@ Mdouble BaseInteraction::getEffectiveRadius() const
 Mdouble BaseInteraction::getEffectiveMass() const
 {
     Mdouble invEffectiveMass = getP()->getInvMass() + getI()->getInvMass();
-    logger.assert_debug(invEffectiveMass>0,
-            "getEffectiveMass(): interaction % at % has infinite effective mass",getId(), getContactPoint());
+    logger.assert_debug(invEffectiveMass > 0,
+                        "getEffectiveMass(): interaction % at % has infinite effective mass", getId(),
+                        getContactPoint());
     return 1.0 / invEffectiveMass;
 }
 

@@ -310,8 +310,12 @@ bool CGHandler::evaluateRestartFiles()
         dpm->wallHandler.clear();
 
         //continue if the next restart file can be read and the max time has not been reached
+        if (dpm->restartFile.getFileType()==FileType::ONE_FILE) {
+            logger(INFO,"Note: the evaluation is based on a single restart file. Please switch output to FileType::MULTIPLE_FILES if you want to coarse grain over multiple time steps");
+            break;
+        }
     }
-    cgLogger(INFO, "Finished reading from %", dpm->dataFile.getFullName());
+    cgLogger(INFO, "Finished reading from %", dpm->restartFile.getFullName());
     
     finish();
     dpm->dataFile.close();

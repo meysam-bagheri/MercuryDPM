@@ -1,4 +1,4 @@
-MercuryDPM 1.0 name CubicPackingSelfTest revision 7622ee90 repository https://bitbucket.org/mercurydpm/mercurydpm.git
+MercuryDPM 1.0 name CubicPackingSelfTest revision 8a6674c8 repository https://bitbucket.org/mercurydpm/mercurydpm.git
 dataFile    fileType ONE_FILE saveCount 1000 counter 2 lastSavedTimeStep 1000
 fStatFile   fileType ONE_FILE saveCount 1000 counter 2 lastSavedTimeStep 1000
 eneFile     fileType ONE_FILE saveCount 1000 counter 2 lastSavedTimeStep 1000
@@ -145,129 +145,129 @@ BaseParticle id 122 indSpecies 0 position 4.5 4.5 2.49981836718401 orientation 1
 BaseParticle id 123 indSpecies 0 position 4.5 4.5 3.49978722890879 orientation 1 0 0 0 velocity 0 -8.42187577866814e-16 -0.000287178013207875 angularVelocity 0 0 0 force 0 0 0.179084376363547 torque 0 0 0 radius 0.5 invMass 1.00000000895498 timeStamp 0
 BaseParticle id 124 indSpecies 0 position 4.5 4.5 4.4997715590188 orientation 1 0 0 0 velocity 0 -8.42187577866814e-16 -0.000312494530746674 angularVelocity 0 0 0 force 0 0 0.194871747540781 torque 0 0 0 radius 0.5 invMass 1.00000000895498 timeStamp 0
 Interactions 125
-LinearViscoelasticInteraction particleIds 120 121 timeStamp 1000 contactPoint 4.5 4.5 0.999894967728947 force 0 0 -4.62918369484511 torque 0 0 0
-LinearViscoelasticInteraction particleIds 115 116 timeStamp 1000 contactPoint 4.5 3.5 0.999894967728947 force 0 0 -4.62918369484511 torque 0 0 0
-LinearViscoelasticInteraction particleIds 110 111 timeStamp 1000 contactPoint 4.5 2.5 0.999894967728947 force 0 0 -4.62918369484511 torque 0 0 0
-LinearViscoelasticInteraction particleIds 105 106 timeStamp 1000 contactPoint 4.5 1.5 0.999894967728947 force 0 0 -4.62918369484511 torque 0 0 0
-LinearViscoelasticInteraction particleIds 100 101 timeStamp 1000 contactPoint 4.5 0.5 0.999894967728947 force 0 0 -4.62918369484511 torque 0 0 0
-LinearViscoelasticInteraction particleIds 95 96 timeStamp 1000 contactPoint 3.5 4.5 0.999894967728947 force 0 0 -4.62918369484511 torque 0 0 0
-LinearViscoelasticInteraction particleIds 90 91 timeStamp 1000 contactPoint 3.5 3.5 0.999894967728947 force 0 0 -4.62918369484511 torque 0 0 0
-LinearViscoelasticInteraction particleIds 85 86 timeStamp 1000 contactPoint 3.5 2.5 0.999894967728947 force 0 0 -4.62918369484511 torque 0 0 0
-LinearViscoelasticInteraction particleIds 80 81 timeStamp 1000 contactPoint 3.5 1.5 0.999894967728947 force 0 0 -4.62918369484511 torque 0 0 0
-LinearViscoelasticInteraction particleIds 75 76 timeStamp 1000 contactPoint 3.5 0.5 0.999894967728947 force 0 0 -4.62918369484511 torque 0 0 0
-LinearViscoelasticInteraction particleIds 70 71 timeStamp 1000 contactPoint 2.5 4.5 0.999894967728947 force 0 0 -4.62918369484511 torque 0 0 0
-LinearViscoelasticInteraction particleIds 65 66 timeStamp 1000 contactPoint 2.5 3.5 0.999894967728947 force 0 0 -4.62918369484511 torque 0 0 0
-LinearViscoelasticInteraction particleIds 60 61 timeStamp 1000 contactPoint 2.5 2.5 0.999894967728947 force 0 0 -4.62918369484511 torque 0 0 0
-LinearViscoelasticInteraction particleIds 55 56 timeStamp 1000 contactPoint 2.5 1.5 0.999894967728947 force 0 0 -4.62918369484511 torque 0 0 0
-LinearViscoelasticInteraction particleIds 50 51 timeStamp 1000 contactPoint 2.5 0.5 0.999894967728947 force 0 0 -4.62918369484511 torque 0 0 0
-LinearViscoelasticInteraction particleIds 45 46 timeStamp 1000 contactPoint 1.5 4.5 0.999894967728947 force 0 0 -4.62918369484511 torque 0 0 0
-LinearViscoelasticInteraction particleIds 40 41 timeStamp 1000 contactPoint 1.5 3.5 0.999894967728947 force 0 0 -4.62918369484511 torque 0 0 0
-LinearViscoelasticInteraction particleIds 35 36 timeStamp 1000 contactPoint 1.5 2.5 0.999894967728947 force 0 0 -4.62918369484511 torque 0 0 0
-LinearViscoelasticInteraction particleIds 30 31 timeStamp 1000 contactPoint 1.5 1.5 0.999894967728947 force 0 0 -4.62918369484511 torque 0 0 0
-LinearViscoelasticInteraction particleIds 25 26 timeStamp 1000 contactPoint 1.5 0.5 0.999894967728947 force 0 0 -4.62918369484511 torque 0 0 0
-LinearViscoelasticInteraction particleIds 20 21 timeStamp 1000 contactPoint 0.5 4.5 0.999894967728947 force 0 0 -4.62918369484511 torque 0 0 0
-LinearViscoelasticInteraction particleIds 15 16 timeStamp 1000 contactPoint 0.5 3.5 0.999894967728947 force 0 0 -4.62918369484511 torque 0 0 0
-LinearViscoelasticInteraction particleIds 10 11 timeStamp 1000 contactPoint 0.5 2.5 0.999894967728947 force 0 0 -4.62918369484511 torque 0 0 0
-LinearViscoelasticInteraction particleIds 5 6 timeStamp 1000 contactPoint 0.5 1.5 0.999894967728947 force 0 0 -4.62918369484511 torque 0 0 0
-LinearViscoelasticInteraction particleIds 0 1 timeStamp 1000 contactPoint 0.5 0.5 0.999894967728947 force 0 0 -4.62918369484511 torque 0 0 0
-LinearViscoelasticInteraction particleWallIds 120 4 timeStamp 1000 contactPoint 4.5 4.5 -3.73258509085428e-05 force -0 -0 5.68464992942301 torque 0 0 0
-LinearViscoelasticInteraction particleWallIds 115 4 timeStamp 1000 contactPoint 4.5 3.5 -3.73258509085428e-05 force -0 -0 5.68464992942301 torque 0 0 0
-LinearViscoelasticInteraction particleWallIds 110 4 timeStamp 1000 contactPoint 4.5 2.5 -3.73258509085428e-05 force -0 -0 5.68464992942301 torque 0 0 0
-LinearViscoelasticInteraction particleWallIds 105 4 timeStamp 1000 contactPoint 4.5 1.5 -3.73258509085428e-05 force -0 -0 5.68464992942301 torque 0 0 0
-LinearViscoelasticInteraction particleWallIds 100 4 timeStamp 1000 contactPoint 4.5 0.5 -3.73258509085428e-05 force -0 -0 5.68464992942301 torque 0 0 0
-LinearViscoelasticInteraction particleWallIds 95 4 timeStamp 1000 contactPoint 3.5 4.5 -3.73258509085428e-05 force -0 -0 5.68464992942301 torque 0 0 0
-LinearViscoelasticInteraction particleWallIds 90 4 timeStamp 1000 contactPoint 3.5 3.5 -3.73258509085428e-05 force -0 -0 5.68464992942301 torque 0 0 0
-LinearViscoelasticInteraction particleWallIds 85 4 timeStamp 1000 contactPoint 3.5 2.5 -3.73258509085428e-05 force -0 -0 5.68464992942301 torque 0 0 0
-LinearViscoelasticInteraction particleWallIds 80 4 timeStamp 1000 contactPoint 3.5 1.5 -3.73258509085428e-05 force -0 -0 5.68464992942301 torque 0 0 0
-LinearViscoelasticInteraction particleWallIds 75 4 timeStamp 1000 contactPoint 3.5 0.5 -3.73258509085428e-05 force -0 -0 5.68464992942301 torque 0 0 0
-LinearViscoelasticInteraction particleWallIds 70 4 timeStamp 1000 contactPoint 2.5 4.5 -3.73258509085428e-05 force -0 -0 5.68464992942301 torque 0 0 0
-LinearViscoelasticInteraction particleWallIds 65 4 timeStamp 1000 contactPoint 2.5 3.5 -3.73258509085428e-05 force -0 -0 5.68464992942301 torque 0 0 0
-LinearViscoelasticInteraction particleWallIds 60 4 timeStamp 1000 contactPoint 2.5 2.5 -3.73258509085428e-05 force -0 -0 5.68464992942301 torque 0 0 0
-LinearViscoelasticInteraction particleWallIds 55 4 timeStamp 1000 contactPoint 2.5 1.5 -3.73258509085428e-05 force -0 -0 5.68464992942301 torque 0 0 0
-LinearViscoelasticInteraction particleWallIds 50 4 timeStamp 1000 contactPoint 2.5 0.5 -3.73258509085428e-05 force -0 -0 5.68464992942301 torque 0 0 0
-LinearViscoelasticInteraction particleWallIds 45 4 timeStamp 1000 contactPoint 1.5 4.5 -3.73258509085428e-05 force -0 -0 5.68464992942301 torque 0 0 0
-LinearViscoelasticInteraction particleWallIds 40 4 timeStamp 1000 contactPoint 1.5 3.5 -3.73258509085428e-05 force -0 -0 5.68464992942301 torque 0 0 0
-LinearViscoelasticInteraction particleWallIds 35 4 timeStamp 1000 contactPoint 1.5 2.5 -3.73258509085428e-05 force -0 -0 5.68464992942301 torque 0 0 0
-LinearViscoelasticInteraction particleWallIds 30 4 timeStamp 1000 contactPoint 1.5 1.5 -3.73258509085428e-05 force -0 -0 5.68464992942301 torque 0 0 0
-LinearViscoelasticInteraction particleWallIds 25 4 timeStamp 1000 contactPoint 1.5 0.5 -3.73258509085428e-05 force -0 -0 5.68464992942301 torque 0 0 0
-LinearViscoelasticInteraction particleWallIds 20 4 timeStamp 1000 contactPoint 0.5 4.5 -3.73258509085428e-05 force -0 -0 5.68464992942301 torque 0 0 0
-LinearViscoelasticInteraction particleWallIds 15 4 timeStamp 1000 contactPoint 0.5 3.5 -3.73258509085428e-05 force -0 -0 5.68464992942301 torque 0 0 0
-LinearViscoelasticInteraction particleWallIds 10 4 timeStamp 1000 contactPoint 0.5 2.5 -3.73258509085428e-05 force -0 -0 5.68464992942301 torque 0 0 0
-LinearViscoelasticInteraction particleWallIds 5 4 timeStamp 1000 contactPoint 0.5 1.5 -3.73258509085428e-05 force -0 -0 5.68464992942301 torque 0 0 0
-LinearViscoelasticInteraction particleWallIds 0 4 timeStamp 1000 contactPoint 0.5 0.5 -3.73258509085428e-05 force -0 -0 5.68464992942301 torque 0 0 0
-LinearViscoelasticInteraction particleIds 1 2 timeStamp 1000 contactPoint 0.5 0.5 1.99984147717186 force 0 0 -3.52274474423967 torque 0 0 0
-LinearViscoelasticInteraction particleIds 6 7 timeStamp 1000 contactPoint 0.5 1.5 1.99984147717186 force 0 0 -3.52274474423967 torque 0 0 0
-LinearViscoelasticInteraction particleIds 11 12 timeStamp 1000 contactPoint 0.5 2.5 1.99984147717186 force 0 0 -3.52274474423967 torque 0 0 0
-LinearViscoelasticInteraction particleIds 16 17 timeStamp 1000 contactPoint 0.5 3.5 1.99984147717186 force 0 0 -3.52274474423967 torque 0 0 0
-LinearViscoelasticInteraction particleIds 21 22 timeStamp 1000 contactPoint 0.5 4.5 1.99984147717186 force 0 0 -3.52274474423967 torque 0 0 0
-LinearViscoelasticInteraction particleIds 26 27 timeStamp 1000 contactPoint 1.5 0.5 1.99984147717186 force 0 0 -3.52274474423967 torque 0 0 0
-LinearViscoelasticInteraction particleIds 31 32 timeStamp 1000 contactPoint 1.5 1.5 1.99984147717186 force 0 0 -3.52274474423967 torque 0 0 0
-LinearViscoelasticInteraction particleIds 36 37 timeStamp 1000 contactPoint 1.5 2.5 1.99984147717186 force 0 0 -3.52274474423967 torque 0 0 0
-LinearViscoelasticInteraction particleIds 41 42 timeStamp 1000 contactPoint 1.5 3.5 1.99984147717186 force 0 0 -3.52274474423967 torque 0 0 0
-LinearViscoelasticInteraction particleIds 46 47 timeStamp 1000 contactPoint 1.5 4.5 1.99984147717186 force 0 0 -3.52274474423967 torque 0 0 0
-LinearViscoelasticInteraction particleIds 51 52 timeStamp 1000 contactPoint 2.5 0.5 1.99984147717186 force 0 0 -3.52274474423967 torque 0 0 0
-LinearViscoelasticInteraction particleIds 56 57 timeStamp 1000 contactPoint 2.5 1.5 1.99984147717186 force 0 0 -3.52274474423967 torque 0 0 0
-LinearViscoelasticInteraction particleIds 61 62 timeStamp 1000 contactPoint 2.5 2.5 1.99984147717186 force 0 0 -3.52274474423967 torque 0 0 0
-LinearViscoelasticInteraction particleIds 66 67 timeStamp 1000 contactPoint 2.5 3.5 1.99984147717186 force 0 0 -3.52274474423967 torque 0 0 0
-LinearViscoelasticInteraction particleIds 71 72 timeStamp 1000 contactPoint 2.5 4.5 1.99984147717186 force 0 0 -3.52274474423967 torque 0 0 0
-LinearViscoelasticInteraction particleIds 76 77 timeStamp 1000 contactPoint 3.5 0.5 1.99984147717186 force 0 0 -3.52274474423967 torque 0 0 0
-LinearViscoelasticInteraction particleIds 81 82 timeStamp 1000 contactPoint 3.5 1.5 1.99984147717186 force 0 0 -3.52274474423967 torque 0 0 0
-LinearViscoelasticInteraction particleIds 86 87 timeStamp 1000 contactPoint 3.5 2.5 1.99984147717186 force 0 0 -3.52274474423967 torque 0 0 0
-LinearViscoelasticInteraction particleIds 91 92 timeStamp 1000 contactPoint 3.5 3.5 1.99984147717186 force 0 0 -3.52274474423967 torque 0 0 0
-LinearViscoelasticInteraction particleIds 96 97 timeStamp 1000 contactPoint 3.5 4.5 1.99984147717186 force 0 0 -3.52274474423967 torque 0 0 0
-LinearViscoelasticInteraction particleIds 101 102 timeStamp 1000 contactPoint 4.5 0.5 1.99984147717186 force 0 0 -3.52274474423967 torque 0 0 0
-LinearViscoelasticInteraction particleIds 106 107 timeStamp 1000 contactPoint 4.5 1.5 1.99984147717186 force 0 0 -3.52274474423967 torque 0 0 0
-LinearViscoelasticInteraction particleIds 111 112 timeStamp 1000 contactPoint 4.5 2.5 1.99984147717186 force 0 0 -3.52274474423967 torque 0 0 0
-LinearViscoelasticInteraction particleIds 116 117 timeStamp 1000 contactPoint 4.5 3.5 1.99984147717186 force 0 0 -3.52274474423967 torque 0 0 0
-LinearViscoelasticInteraction particleIds 121 122 timeStamp 1000 contactPoint 4.5 4.5 1.99984147717186 force 0 0 -3.52274474423967 torque 0 0 0
-LinearViscoelasticInteraction particleIds 2 3 timeStamp 1000 contactPoint 0.5 0.5 2.9998027980464 force 0 0 -2.37395610599438 torque 0 0 0
-LinearViscoelasticInteraction particleIds 7 8 timeStamp 1000 contactPoint 0.5 1.5 2.9998027980464 force 0 0 -2.37395610599438 torque 0 0 0
-LinearViscoelasticInteraction particleIds 12 13 timeStamp 1000 contactPoint 0.5 2.5 2.9998027980464 force 0 0 -2.37395610599438 torque 0 0 0
-LinearViscoelasticInteraction particleIds 17 18 timeStamp 1000 contactPoint 0.5 3.5 2.9998027980464 force 0 0 -2.37395610599438 torque 0 0 0
-LinearViscoelasticInteraction particleIds 22 23 timeStamp 1000 contactPoint 0.5 4.5 2.9998027980464 force 0 0 -2.37395610599438 torque 0 0 0
-LinearViscoelasticInteraction particleIds 27 28 timeStamp 1000 contactPoint 1.5 0.5 2.9998027980464 force 0 0 -2.37395610599438 torque 0 0 0
-LinearViscoelasticInteraction particleIds 32 33 timeStamp 1000 contactPoint 1.5 1.5 2.9998027980464 force 0 0 -2.37395610599438 torque 0 0 0
-LinearViscoelasticInteraction particleIds 37 38 timeStamp 1000 contactPoint 1.5 2.5 2.9998027980464 force 0 0 -2.37395610599438 torque 0 0 0
-LinearViscoelasticInteraction particleIds 42 43 timeStamp 1000 contactPoint 1.5 3.5 2.9998027980464 force 0 0 -2.37395610599438 torque 0 0 0
-LinearViscoelasticInteraction particleIds 47 48 timeStamp 1000 contactPoint 1.5 4.5 2.9998027980464 force 0 0 -2.37395610599438 torque 0 0 0
-LinearViscoelasticInteraction particleIds 52 53 timeStamp 1000 contactPoint 2.5 0.5 2.9998027980464 force 0 0 -2.37395610599438 torque 0 0 0
-LinearViscoelasticInteraction particleIds 57 58 timeStamp 1000 contactPoint 2.5 1.5 2.9998027980464 force 0 0 -2.37395610599438 torque 0 0 0
-LinearViscoelasticInteraction particleIds 62 63 timeStamp 1000 contactPoint 2.5 2.5 2.9998027980464 force 0 0 -2.37395610599438 torque 0 0 0
-LinearViscoelasticInteraction particleIds 67 68 timeStamp 1000 contactPoint 2.5 3.5 2.9998027980464 force 0 0 -2.37395610599438 torque 0 0 0
-LinearViscoelasticInteraction particleIds 72 73 timeStamp 1000 contactPoint 2.5 4.5 2.9998027980464 force 0 0 -2.37395610599438 torque 0 0 0
-LinearViscoelasticInteraction particleIds 77 78 timeStamp 1000 contactPoint 3.5 0.5 2.9998027980464 force 0 0 -2.37395610599438 torque 0 0 0
-LinearViscoelasticInteraction particleIds 82 83 timeStamp 1000 contactPoint 3.5 1.5 2.9998027980464 force 0 0 -2.37395610599438 torque 0 0 0
-LinearViscoelasticInteraction particleIds 87 88 timeStamp 1000 contactPoint 3.5 2.5 2.9998027980464 force 0 0 -2.37395610599438 torque 0 0 0
-LinearViscoelasticInteraction particleIds 92 93 timeStamp 1000 contactPoint 3.5 3.5 2.9998027980464 force 0 0 -2.37395610599438 torque 0 0 0
-LinearViscoelasticInteraction particleIds 97 98 timeStamp 1000 contactPoint 3.5 4.5 2.9998027980464 force 0 0 -2.37395610599438 torque 0 0 0
-LinearViscoelasticInteraction particleIds 102 103 timeStamp 1000 contactPoint 4.5 0.5 2.9998027980464 force 0 0 -2.37395610599438 torque 0 0 0
-LinearViscoelasticInteraction particleIds 107 108 timeStamp 1000 contactPoint 4.5 1.5 2.9998027980464 force 0 0 -2.37395610599438 torque 0 0 0
-LinearViscoelasticInteraction particleIds 112 113 timeStamp 1000 contactPoint 4.5 2.5 2.9998027980464 force 0 0 -2.37395610599438 torque 0 0 0
-LinearViscoelasticInteraction particleIds 117 118 timeStamp 1000 contactPoint 4.5 3.5 2.9998027980464 force 0 0 -2.37395610599438 torque 0 0 0
-LinearViscoelasticInteraction particleIds 122 123 timeStamp 1000 contactPoint 4.5 4.5 2.9998027980464 force 0 0 -2.37395610599438 torque 0 0 0
-LinearViscoelasticInteraction particleIds 3 4 timeStamp 1000 contactPoint 0.5 0.5 3.9997793939638 force 0 0 -1.1948717385858 torque 0 0 0
-LinearViscoelasticInteraction particleIds 8 9 timeStamp 1000 contactPoint 0.5 1.5 3.9997793939638 force 0 0 -1.1948717385858 torque 0 0 0
-LinearViscoelasticInteraction particleIds 13 14 timeStamp 1000 contactPoint 0.5 2.5 3.9997793939638 force 0 0 -1.1948717385858 torque 0 0 0
-LinearViscoelasticInteraction particleIds 18 19 timeStamp 1000 contactPoint 0.5 3.5 3.9997793939638 force 0 0 -1.1948717385858 torque 0 0 0
-LinearViscoelasticInteraction particleIds 23 24 timeStamp 1000 contactPoint 0.5 4.5 3.9997793939638 force 0 0 -1.1948717385858 torque 0 0 0
-LinearViscoelasticInteraction particleIds 28 29 timeStamp 1000 contactPoint 1.5 0.5 3.9997793939638 force 0 0 -1.1948717385858 torque 0 0 0
-LinearViscoelasticInteraction particleIds 33 34 timeStamp 1000 contactPoint 1.5 1.5 3.9997793939638 force 0 0 -1.1948717385858 torque 0 0 0
-LinearViscoelasticInteraction particleIds 38 39 timeStamp 1000 contactPoint 1.5 2.5 3.9997793939638 force 0 0 -1.1948717385858 torque 0 0 0
-LinearViscoelasticInteraction particleIds 43 44 timeStamp 1000 contactPoint 1.5 3.5 3.9997793939638 force 0 0 -1.1948717385858 torque 0 0 0
-LinearViscoelasticInteraction particleIds 48 49 timeStamp 1000 contactPoint 1.5 4.5 3.9997793939638 force 0 0 -1.1948717385858 torque 0 0 0
-LinearViscoelasticInteraction particleIds 53 54 timeStamp 1000 contactPoint 2.5 0.5 3.9997793939638 force 0 0 -1.1948717385858 torque 0 0 0
-LinearViscoelasticInteraction particleIds 58 59 timeStamp 1000 contactPoint 2.5 1.5 3.9997793939638 force 0 0 -1.1948717385858 torque 0 0 0
-LinearViscoelasticInteraction particleIds 63 64 timeStamp 1000 contactPoint 2.5 2.5 3.9997793939638 force 0 0 -1.1948717385858 torque 0 0 0
-LinearViscoelasticInteraction particleIds 68 69 timeStamp 1000 contactPoint 2.5 3.5 3.9997793939638 force 0 0 -1.1948717385858 torque 0 0 0
-LinearViscoelasticInteraction particleIds 73 74 timeStamp 1000 contactPoint 2.5 4.5 3.9997793939638 force 0 0 -1.1948717385858 torque 0 0 0
-LinearViscoelasticInteraction particleIds 78 79 timeStamp 1000 contactPoint 3.5 0.5 3.9997793939638 force 0 0 -1.1948717385858 torque 0 0 0
-LinearViscoelasticInteraction particleIds 83 84 timeStamp 1000 contactPoint 3.5 1.5 3.9997793939638 force 0 0 -1.1948717385858 torque 0 0 0
-LinearViscoelasticInteraction particleIds 88 89 timeStamp 1000 contactPoint 3.5 2.5 3.9997793939638 force 0 0 -1.1948717385858 torque 0 0 0
-LinearViscoelasticInteraction particleIds 93 94 timeStamp 1000 contactPoint 3.5 3.5 3.9997793939638 force 0 0 -1.1948717385858 torque 0 0 0
-LinearViscoelasticInteraction particleIds 98 99 timeStamp 1000 contactPoint 3.5 4.5 3.9997793939638 force 0 0 -1.1948717385858 torque 0 0 0
-LinearViscoelasticInteraction particleIds 103 104 timeStamp 1000 contactPoint 4.5 0.5 3.9997793939638 force 0 0 -1.1948717385858 torque 0 0 0
-LinearViscoelasticInteraction particleIds 108 109 timeStamp 1000 contactPoint 4.5 1.5 3.9997793939638 force 0 0 -1.1948717385858 torque 0 0 0
-LinearViscoelasticInteraction particleIds 113 114 timeStamp 1000 contactPoint 4.5 2.5 3.9997793939638 force 0 0 -1.1948717385858 torque 0 0 0
-LinearViscoelasticInteraction particleIds 118 119 timeStamp 1000 contactPoint 4.5 3.5 3.9997793939638 force 0 0 -1.1948717385858 torque 0 0 0
-LinearViscoelasticInteraction particleIds 123 124 timeStamp 1000 contactPoint 4.5 4.5 3.9997793939638 force 0 0 -1.1948717385858 torque 0 0 0
+LinearViscoelasticInteraction particleIds 120 121 timeStamp 1000 contactPoint 4.5 4.5 0.999894967728947 normal 0 0 -1 distance 0.999939238861527 overlap 6.07611384734197e-05 force 0 0 -4.62918369484511 torque 0 0 0
+LinearViscoelasticInteraction particleIds 115 116 timeStamp 1000 contactPoint 4.5 3.5 0.999894967728947 normal 0 0 -1 distance 0.999939238861527 overlap 6.07611384734197e-05 force 0 0 -4.62918369484511 torque 0 0 0
+LinearViscoelasticInteraction particleIds 110 111 timeStamp 1000 contactPoint 4.5 2.5 0.999894967728947 normal 0 0 -1 distance 0.999939238861527 overlap 6.07611384734197e-05 force 0 0 -4.62918369484511 torque 0 0 0
+LinearViscoelasticInteraction particleIds 105 106 timeStamp 1000 contactPoint 4.5 1.5 0.999894967728947 normal 0 0 -1 distance 0.999939238861527 overlap 6.07611384734197e-05 force 0 0 -4.62918369484511 torque 0 0 0
+LinearViscoelasticInteraction particleIds 100 101 timeStamp 1000 contactPoint 4.5 0.5 0.999894967728947 normal 0 0 -1 distance 0.999939238861527 overlap 6.07611384734197e-05 force 0 0 -4.62918369484511 torque 0 0 0
+LinearViscoelasticInteraction particleIds 95 96 timeStamp 1000 contactPoint 3.5 4.5 0.999894967728947 normal 0 0 -1 distance 0.999939238861527 overlap 6.07611384734197e-05 force 0 0 -4.62918369484511 torque 0 0 0
+LinearViscoelasticInteraction particleIds 90 91 timeStamp 1000 contactPoint 3.5 3.5 0.999894967728947 normal 0 0 -1 distance 0.999939238861527 overlap 6.07611384734197e-05 force 0 0 -4.62918369484511 torque 0 0 0
+LinearViscoelasticInteraction particleIds 85 86 timeStamp 1000 contactPoint 3.5 2.5 0.999894967728947 normal 0 0 -1 distance 0.999939238861527 overlap 6.07611384734197e-05 force 0 0 -4.62918369484511 torque 0 0 0
+LinearViscoelasticInteraction particleIds 80 81 timeStamp 1000 contactPoint 3.5 1.5 0.999894967728947 normal 0 0 -1 distance 0.999939238861527 overlap 6.07611384734197e-05 force 0 0 -4.62918369484511 torque 0 0 0
+LinearViscoelasticInteraction particleIds 75 76 timeStamp 1000 contactPoint 3.5 0.5 0.999894967728947 normal 0 0 -1 distance 0.999939238861527 overlap 6.07611384734197e-05 force 0 0 -4.62918369484511 torque 0 0 0
+LinearViscoelasticInteraction particleIds 70 71 timeStamp 1000 contactPoint 2.5 4.5 0.999894967728947 normal 0 0 -1 distance 0.999939238861527 overlap 6.07611384734197e-05 force 0 0 -4.62918369484511 torque 0 0 0
+LinearViscoelasticInteraction particleIds 65 66 timeStamp 1000 contactPoint 2.5 3.5 0.999894967728947 normal 0 0 -1 distance 0.999939238861527 overlap 6.07611384734197e-05 force 0 0 -4.62918369484511 torque 0 0 0
+LinearViscoelasticInteraction particleIds 60 61 timeStamp 1000 contactPoint 2.5 2.5 0.999894967728947 normal 0 0 -1 distance 0.999939238861527 overlap 6.07611384734197e-05 force 0 0 -4.62918369484511 torque 0 0 0
+LinearViscoelasticInteraction particleIds 55 56 timeStamp 1000 contactPoint 2.5 1.5 0.999894967728947 normal 0 0 -1 distance 0.999939238861527 overlap 6.07611384734197e-05 force 0 0 -4.62918369484511 torque 0 0 0
+LinearViscoelasticInteraction particleIds 50 51 timeStamp 1000 contactPoint 2.5 0.5 0.999894967728947 normal 0 0 -1 distance 0.999939238861527 overlap 6.07611384734197e-05 force 0 0 -4.62918369484511 torque 0 0 0
+LinearViscoelasticInteraction particleIds 45 46 timeStamp 1000 contactPoint 1.5 4.5 0.999894967728947 normal 0 0 -1 distance 0.999939238861527 overlap 6.07611384734197e-05 force 0 0 -4.62918369484511 torque 0 0 0
+LinearViscoelasticInteraction particleIds 40 41 timeStamp 1000 contactPoint 1.5 3.5 0.999894967728947 normal 0 0 -1 distance 0.999939238861527 overlap 6.07611384734197e-05 force 0 0 -4.62918369484511 torque 0 0 0
+LinearViscoelasticInteraction particleIds 35 36 timeStamp 1000 contactPoint 1.5 2.5 0.999894967728947 normal 0 0 -1 distance 0.999939238861527 overlap 6.07611384734197e-05 force 0 0 -4.62918369484511 torque 0 0 0
+LinearViscoelasticInteraction particleIds 30 31 timeStamp 1000 contactPoint 1.5 1.5 0.999894967728947 normal 0 0 -1 distance 0.999939238861527 overlap 6.07611384734197e-05 force 0 0 -4.62918369484511 torque 0 0 0
+LinearViscoelasticInteraction particleIds 25 26 timeStamp 1000 contactPoint 1.5 0.5 0.999894967728947 normal 0 0 -1 distance 0.999939238861527 overlap 6.07611384734197e-05 force 0 0 -4.62918369484511 torque 0 0 0
+LinearViscoelasticInteraction particleIds 20 21 timeStamp 1000 contactPoint 0.5 4.5 0.999894967728947 normal 0 0 -1 distance 0.999939238861527 overlap 6.07611384734197e-05 force 0 0 -4.62918369484511 torque 0 0 0
+LinearViscoelasticInteraction particleIds 15 16 timeStamp 1000 contactPoint 0.5 3.5 0.999894967728947 normal 0 0 -1 distance 0.999939238861527 overlap 6.07611384734197e-05 force 0 0 -4.62918369484511 torque 0 0 0
+LinearViscoelasticInteraction particleIds 10 11 timeStamp 1000 contactPoint 0.5 2.5 0.999894967728947 normal 0 0 -1 distance 0.999939238861527 overlap 6.07611384734197e-05 force 0 0 -4.62918369484511 torque 0 0 0
+LinearViscoelasticInteraction particleIds 5 6 timeStamp 1000 contactPoint 0.5 1.5 0.999894967728947 normal 0 0 -1 distance 0.999939238861527 overlap 6.07611384734197e-05 force 0 0 -4.62918369484511 torque 0 0 0
+LinearViscoelasticInteraction particleIds 0 1 timeStamp 1000 contactPoint 0.5 0.5 0.999894967728947 normal 0 0 -1 distance 0.999939238861527 overlap 6.07611384734197e-05 force 0 0 -4.62918369484511 torque 0 0 0
+LinearViscoelasticInteraction particleWallIds 120 4 timeStamp 1000 contactPoint 4.5 4.5 -3.73258509085428e-05 normal -0 -0 1 distance 0.499925348298183 overlap 7.46517018166415e-05 force -0 -0 5.68464992942301 torque 0 0 0
+LinearViscoelasticInteraction particleWallIds 115 4 timeStamp 1000 contactPoint 4.5 3.5 -3.73258509085428e-05 normal -0 -0 1 distance 0.499925348298183 overlap 7.46517018166415e-05 force -0 -0 5.68464992942301 torque 0 0 0
+LinearViscoelasticInteraction particleWallIds 110 4 timeStamp 1000 contactPoint 4.5 2.5 -3.73258509085428e-05 normal -0 -0 1 distance 0.499925348298183 overlap 7.46517018166415e-05 force -0 -0 5.68464992942301 torque 0 0 0
+LinearViscoelasticInteraction particleWallIds 105 4 timeStamp 1000 contactPoint 4.5 1.5 -3.73258509085428e-05 normal -0 -0 1 distance 0.499925348298183 overlap 7.46517018166415e-05 force -0 -0 5.68464992942301 torque 0 0 0
+LinearViscoelasticInteraction particleWallIds 100 4 timeStamp 1000 contactPoint 4.5 0.5 -3.73258509085428e-05 normal -0 -0 1 distance 0.499925348298183 overlap 7.46517018166415e-05 force -0 -0 5.68464992942301 torque 0 0 0
+LinearViscoelasticInteraction particleWallIds 95 4 timeStamp 1000 contactPoint 3.5 4.5 -3.73258509085428e-05 normal -0 -0 1 distance 0.499925348298183 overlap 7.46517018166415e-05 force -0 -0 5.68464992942301 torque 0 0 0
+LinearViscoelasticInteraction particleWallIds 90 4 timeStamp 1000 contactPoint 3.5 3.5 -3.73258509085428e-05 normal -0 -0 1 distance 0.499925348298183 overlap 7.46517018166415e-05 force -0 -0 5.68464992942301 torque 0 0 0
+LinearViscoelasticInteraction particleWallIds 85 4 timeStamp 1000 contactPoint 3.5 2.5 -3.73258509085428e-05 normal -0 -0 1 distance 0.499925348298183 overlap 7.46517018166415e-05 force -0 -0 5.68464992942301 torque 0 0 0
+LinearViscoelasticInteraction particleWallIds 80 4 timeStamp 1000 contactPoint 3.5 1.5 -3.73258509085428e-05 normal -0 -0 1 distance 0.499925348298183 overlap 7.46517018166415e-05 force -0 -0 5.68464992942301 torque 0 0 0
+LinearViscoelasticInteraction particleWallIds 75 4 timeStamp 1000 contactPoint 3.5 0.5 -3.73258509085428e-05 normal -0 -0 1 distance 0.499925348298183 overlap 7.46517018166415e-05 force -0 -0 5.68464992942301 torque 0 0 0
+LinearViscoelasticInteraction particleWallIds 70 4 timeStamp 1000 contactPoint 2.5 4.5 -3.73258509085428e-05 normal -0 -0 1 distance 0.499925348298183 overlap 7.46517018166415e-05 force -0 -0 5.68464992942301 torque 0 0 0
+LinearViscoelasticInteraction particleWallIds 65 4 timeStamp 1000 contactPoint 2.5 3.5 -3.73258509085428e-05 normal -0 -0 1 distance 0.499925348298183 overlap 7.46517018166415e-05 force -0 -0 5.68464992942301 torque 0 0 0
+LinearViscoelasticInteraction particleWallIds 60 4 timeStamp 1000 contactPoint 2.5 2.5 -3.73258509085428e-05 normal -0 -0 1 distance 0.499925348298183 overlap 7.46517018166415e-05 force -0 -0 5.68464992942301 torque 0 0 0
+LinearViscoelasticInteraction particleWallIds 55 4 timeStamp 1000 contactPoint 2.5 1.5 -3.73258509085428e-05 normal -0 -0 1 distance 0.499925348298183 overlap 7.46517018166415e-05 force -0 -0 5.68464992942301 torque 0 0 0
+LinearViscoelasticInteraction particleWallIds 50 4 timeStamp 1000 contactPoint 2.5 0.5 -3.73258509085428e-05 normal -0 -0 1 distance 0.499925348298183 overlap 7.46517018166415e-05 force -0 -0 5.68464992942301 torque 0 0 0
+LinearViscoelasticInteraction particleWallIds 45 4 timeStamp 1000 contactPoint 1.5 4.5 -3.73258509085428e-05 normal -0 -0 1 distance 0.499925348298183 overlap 7.46517018166415e-05 force -0 -0 5.68464992942301 torque 0 0 0
+LinearViscoelasticInteraction particleWallIds 40 4 timeStamp 1000 contactPoint 1.5 3.5 -3.73258509085428e-05 normal -0 -0 1 distance 0.499925348298183 overlap 7.46517018166415e-05 force -0 -0 5.68464992942301 torque 0 0 0
+LinearViscoelasticInteraction particleWallIds 35 4 timeStamp 1000 contactPoint 1.5 2.5 -3.73258509085428e-05 normal -0 -0 1 distance 0.499925348298183 overlap 7.46517018166415e-05 force -0 -0 5.68464992942301 torque 0 0 0
+LinearViscoelasticInteraction particleWallIds 30 4 timeStamp 1000 contactPoint 1.5 1.5 -3.73258509085428e-05 normal -0 -0 1 distance 0.499925348298183 overlap 7.46517018166415e-05 force -0 -0 5.68464992942301 torque 0 0 0
+LinearViscoelasticInteraction particleWallIds 25 4 timeStamp 1000 contactPoint 1.5 0.5 -3.73258509085428e-05 normal -0 -0 1 distance 0.499925348298183 overlap 7.46517018166415e-05 force -0 -0 5.68464992942301 torque 0 0 0
+LinearViscoelasticInteraction particleWallIds 20 4 timeStamp 1000 contactPoint 0.5 4.5 -3.73258509085428e-05 normal -0 -0 1 distance 0.499925348298183 overlap 7.46517018166415e-05 force -0 -0 5.68464992942301 torque 0 0 0
+LinearViscoelasticInteraction particleWallIds 15 4 timeStamp 1000 contactPoint 0.5 3.5 -3.73258509085428e-05 normal -0 -0 1 distance 0.499925348298183 overlap 7.46517018166415e-05 force -0 -0 5.68464992942301 torque 0 0 0
+LinearViscoelasticInteraction particleWallIds 10 4 timeStamp 1000 contactPoint 0.5 2.5 -3.73258509085428e-05 normal -0 -0 1 distance 0.499925348298183 overlap 7.46517018166415e-05 force -0 -0 5.68464992942301 torque 0 0 0
+LinearViscoelasticInteraction particleWallIds 5 4 timeStamp 1000 contactPoint 0.5 1.5 -3.73258509085428e-05 normal -0 -0 1 distance 0.499925348298183 overlap 7.46517018166415e-05 force -0 -0 5.68464992942301 torque 0 0 0
+LinearViscoelasticInteraction particleWallIds 0 4 timeStamp 1000 contactPoint 0.5 0.5 -3.73258509085428e-05 normal -0 -0 1 distance 0.499925348298183 overlap 7.46517018166415e-05 force -0 -0 5.68464992942301 torque 0 0 0
+LinearViscoelasticInteraction particleIds 1 2 timeStamp 1000 contactPoint 0.5 0.5 1.99984147717186 normal 0 0 -1 distance 0.999953780024304 overlap 4.62199756956494e-05 force 0 0 -3.52274474423967 torque 0 0 0
+LinearViscoelasticInteraction particleIds 6 7 timeStamp 1000 contactPoint 0.5 1.5 1.99984147717186 normal 0 0 -1 distance 0.999953780024304 overlap 4.62199756956494e-05 force 0 0 -3.52274474423967 torque 0 0 0
+LinearViscoelasticInteraction particleIds 11 12 timeStamp 1000 contactPoint 0.5 2.5 1.99984147717186 normal 0 0 -1 distance 0.999953780024304 overlap 4.62199756956494e-05 force 0 0 -3.52274474423967 torque 0 0 0
+LinearViscoelasticInteraction particleIds 16 17 timeStamp 1000 contactPoint 0.5 3.5 1.99984147717186 normal 0 0 -1 distance 0.999953780024304 overlap 4.62199756956494e-05 force 0 0 -3.52274474423967 torque 0 0 0
+LinearViscoelasticInteraction particleIds 21 22 timeStamp 1000 contactPoint 0.5 4.5 1.99984147717186 normal 0 0 -1 distance 0.999953780024304 overlap 4.62199756956494e-05 force 0 0 -3.52274474423967 torque 0 0 0
+LinearViscoelasticInteraction particleIds 26 27 timeStamp 1000 contactPoint 1.5 0.5 1.99984147717186 normal 0 0 -1 distance 0.999953780024304 overlap 4.62199756956494e-05 force 0 0 -3.52274474423967 torque 0 0 0
+LinearViscoelasticInteraction particleIds 31 32 timeStamp 1000 contactPoint 1.5 1.5 1.99984147717186 normal 0 0 -1 distance 0.999953780024304 overlap 4.62199756956494e-05 force 0 0 -3.52274474423967 torque 0 0 0
+LinearViscoelasticInteraction particleIds 36 37 timeStamp 1000 contactPoint 1.5 2.5 1.99984147717186 normal 0 0 -1 distance 0.999953780024304 overlap 4.62199756956494e-05 force 0 0 -3.52274474423967 torque 0 0 0
+LinearViscoelasticInteraction particleIds 41 42 timeStamp 1000 contactPoint 1.5 3.5 1.99984147717186 normal 0 0 -1 distance 0.999953780024304 overlap 4.62199756956494e-05 force 0 0 -3.52274474423967 torque 0 0 0
+LinearViscoelasticInteraction particleIds 46 47 timeStamp 1000 contactPoint 1.5 4.5 1.99984147717186 normal 0 0 -1 distance 0.999953780024304 overlap 4.62199756956494e-05 force 0 0 -3.52274474423967 torque 0 0 0
+LinearViscoelasticInteraction particleIds 51 52 timeStamp 1000 contactPoint 2.5 0.5 1.99984147717186 normal 0 0 -1 distance 0.999953780024304 overlap 4.62199756956494e-05 force 0 0 -3.52274474423967 torque 0 0 0
+LinearViscoelasticInteraction particleIds 56 57 timeStamp 1000 contactPoint 2.5 1.5 1.99984147717186 normal 0 0 -1 distance 0.999953780024304 overlap 4.62199756956494e-05 force 0 0 -3.52274474423967 torque 0 0 0
+LinearViscoelasticInteraction particleIds 61 62 timeStamp 1000 contactPoint 2.5 2.5 1.99984147717186 normal 0 0 -1 distance 0.999953780024304 overlap 4.62199756956494e-05 force 0 0 -3.52274474423967 torque 0 0 0
+LinearViscoelasticInteraction particleIds 66 67 timeStamp 1000 contactPoint 2.5 3.5 1.99984147717186 normal 0 0 -1 distance 0.999953780024304 overlap 4.62199756956494e-05 force 0 0 -3.52274474423967 torque 0 0 0
+LinearViscoelasticInteraction particleIds 71 72 timeStamp 1000 contactPoint 2.5 4.5 1.99984147717186 normal 0 0 -1 distance 0.999953780024304 overlap 4.62199756956494e-05 force 0 0 -3.52274474423967 torque 0 0 0
+LinearViscoelasticInteraction particleIds 76 77 timeStamp 1000 contactPoint 3.5 0.5 1.99984147717186 normal 0 0 -1 distance 0.999953780024304 overlap 4.62199756956494e-05 force 0 0 -3.52274474423967 torque 0 0 0
+LinearViscoelasticInteraction particleIds 81 82 timeStamp 1000 contactPoint 3.5 1.5 1.99984147717186 normal 0 0 -1 distance 0.999953780024304 overlap 4.62199756956494e-05 force 0 0 -3.52274474423967 torque 0 0 0
+LinearViscoelasticInteraction particleIds 86 87 timeStamp 1000 contactPoint 3.5 2.5 1.99984147717186 normal 0 0 -1 distance 0.999953780024304 overlap 4.62199756956494e-05 force 0 0 -3.52274474423967 torque 0 0 0
+LinearViscoelasticInteraction particleIds 91 92 timeStamp 1000 contactPoint 3.5 3.5 1.99984147717186 normal 0 0 -1 distance 0.999953780024304 overlap 4.62199756956494e-05 force 0 0 -3.52274474423967 torque 0 0 0
+LinearViscoelasticInteraction particleIds 96 97 timeStamp 1000 contactPoint 3.5 4.5 1.99984147717186 normal 0 0 -1 distance 0.999953780024304 overlap 4.62199756956494e-05 force 0 0 -3.52274474423967 torque 0 0 0
+LinearViscoelasticInteraction particleIds 101 102 timeStamp 1000 contactPoint 4.5 0.5 1.99984147717186 normal 0 0 -1 distance 0.999953780024304 overlap 4.62199756956494e-05 force 0 0 -3.52274474423967 torque 0 0 0
+LinearViscoelasticInteraction particleIds 106 107 timeStamp 1000 contactPoint 4.5 1.5 1.99984147717186 normal 0 0 -1 distance 0.999953780024304 overlap 4.62199756956494e-05 force 0 0 -3.52274474423967 torque 0 0 0
+LinearViscoelasticInteraction particleIds 111 112 timeStamp 1000 contactPoint 4.5 2.5 1.99984147717186 normal 0 0 -1 distance 0.999953780024304 overlap 4.62199756956494e-05 force 0 0 -3.52274474423967 torque 0 0 0
+LinearViscoelasticInteraction particleIds 116 117 timeStamp 1000 contactPoint 4.5 3.5 1.99984147717186 normal 0 0 -1 distance 0.999953780024304 overlap 4.62199756956494e-05 force 0 0 -3.52274474423967 torque 0 0 0
+LinearViscoelasticInteraction particleIds 121 122 timeStamp 1000 contactPoint 4.5 4.5 1.99984147717186 normal 0 0 -1 distance 0.999953780024304 overlap 4.62199756956494e-05 force 0 0 -3.52274474423967 torque 0 0 0
+LinearViscoelasticInteraction particleIds 2 3 timeStamp 1000 contactPoint 0.5 0.5 2.9998027980464 normal 0 0 -1 distance 0.99996886172478 overlap 3.11382752200551e-05 force 0 0 -2.37395610599438 torque 0 0 0
+LinearViscoelasticInteraction particleIds 7 8 timeStamp 1000 contactPoint 0.5 1.5 2.9998027980464 normal 0 0 -1 distance 0.99996886172478 overlap 3.11382752200551e-05 force 0 0 -2.37395610599438 torque 0 0 0
+LinearViscoelasticInteraction particleIds 12 13 timeStamp 1000 contactPoint 0.5 2.5 2.9998027980464 normal 0 0 -1 distance 0.99996886172478 overlap 3.11382752200551e-05 force 0 0 -2.37395610599438 torque 0 0 0
+LinearViscoelasticInteraction particleIds 17 18 timeStamp 1000 contactPoint 0.5 3.5 2.9998027980464 normal 0 0 -1 distance 0.99996886172478 overlap 3.11382752200551e-05 force 0 0 -2.37395610599438 torque 0 0 0
+LinearViscoelasticInteraction particleIds 22 23 timeStamp 1000 contactPoint 0.5 4.5 2.9998027980464 normal 0 0 -1 distance 0.99996886172478 overlap 3.11382752200551e-05 force 0 0 -2.37395610599438 torque 0 0 0
+LinearViscoelasticInteraction particleIds 27 28 timeStamp 1000 contactPoint 1.5 0.5 2.9998027980464 normal 0 0 -1 distance 0.99996886172478 overlap 3.11382752200551e-05 force 0 0 -2.37395610599438 torque 0 0 0
+LinearViscoelasticInteraction particleIds 32 33 timeStamp 1000 contactPoint 1.5 1.5 2.9998027980464 normal 0 0 -1 distance 0.99996886172478 overlap 3.11382752200551e-05 force 0 0 -2.37395610599438 torque 0 0 0
+LinearViscoelasticInteraction particleIds 37 38 timeStamp 1000 contactPoint 1.5 2.5 2.9998027980464 normal 0 0 -1 distance 0.99996886172478 overlap 3.11382752200551e-05 force 0 0 -2.37395610599438 torque 0 0 0
+LinearViscoelasticInteraction particleIds 42 43 timeStamp 1000 contactPoint 1.5 3.5 2.9998027980464 normal 0 0 -1 distance 0.99996886172478 overlap 3.11382752200551e-05 force 0 0 -2.37395610599438 torque 0 0 0
+LinearViscoelasticInteraction particleIds 47 48 timeStamp 1000 contactPoint 1.5 4.5 2.9998027980464 normal 0 0 -1 distance 0.99996886172478 overlap 3.11382752200551e-05 force 0 0 -2.37395610599438 torque 0 0 0
+LinearViscoelasticInteraction particleIds 52 53 timeStamp 1000 contactPoint 2.5 0.5 2.9998027980464 normal 0 0 -1 distance 0.99996886172478 overlap 3.11382752200551e-05 force 0 0 -2.37395610599438 torque 0 0 0
+LinearViscoelasticInteraction particleIds 57 58 timeStamp 1000 contactPoint 2.5 1.5 2.9998027980464 normal 0 0 -1 distance 0.99996886172478 overlap 3.11382752200551e-05 force 0 0 -2.37395610599438 torque 0 0 0
+LinearViscoelasticInteraction particleIds 62 63 timeStamp 1000 contactPoint 2.5 2.5 2.9998027980464 normal 0 0 -1 distance 0.99996886172478 overlap 3.11382752200551e-05 force 0 0 -2.37395610599438 torque 0 0 0
+LinearViscoelasticInteraction particleIds 67 68 timeStamp 1000 contactPoint 2.5 3.5 2.9998027980464 normal 0 0 -1 distance 0.99996886172478 overlap 3.11382752200551e-05 force 0 0 -2.37395610599438 torque 0 0 0
+LinearViscoelasticInteraction particleIds 72 73 timeStamp 1000 contactPoint 2.5 4.5 2.9998027980464 normal 0 0 -1 distance 0.99996886172478 overlap 3.11382752200551e-05 force 0 0 -2.37395610599438 torque 0 0 0
+LinearViscoelasticInteraction particleIds 77 78 timeStamp 1000 contactPoint 3.5 0.5 2.9998027980464 normal 0 0 -1 distance 0.99996886172478 overlap 3.11382752200551e-05 force 0 0 -2.37395610599438 torque 0 0 0
+LinearViscoelasticInteraction particleIds 82 83 timeStamp 1000 contactPoint 3.5 1.5 2.9998027980464 normal 0 0 -1 distance 0.99996886172478 overlap 3.11382752200551e-05 force 0 0 -2.37395610599438 torque 0 0 0
+LinearViscoelasticInteraction particleIds 87 88 timeStamp 1000 contactPoint 3.5 2.5 2.9998027980464 normal 0 0 -1 distance 0.99996886172478 overlap 3.11382752200551e-05 force 0 0 -2.37395610599438 torque 0 0 0
+LinearViscoelasticInteraction particleIds 92 93 timeStamp 1000 contactPoint 3.5 3.5 2.9998027980464 normal 0 0 -1 distance 0.99996886172478 overlap 3.11382752200551e-05 force 0 0 -2.37395610599438 torque 0 0 0
+LinearViscoelasticInteraction particleIds 97 98 timeStamp 1000 contactPoint 3.5 4.5 2.9998027980464 normal 0 0 -1 distance 0.99996886172478 overlap 3.11382752200551e-05 force 0 0 -2.37395610599438 torque 0 0 0
+LinearViscoelasticInteraction particleIds 102 103 timeStamp 1000 contactPoint 4.5 0.5 2.9998027980464 normal 0 0 -1 distance 0.99996886172478 overlap 3.11382752200551e-05 force 0 0 -2.37395610599438 torque 0 0 0
+LinearViscoelasticInteraction particleIds 107 108 timeStamp 1000 contactPoint 4.5 1.5 2.9998027980464 normal 0 0 -1 distance 0.99996886172478 overlap 3.11382752200551e-05 force 0 0 -2.37395610599438 torque 0 0 0
+LinearViscoelasticInteraction particleIds 112 113 timeStamp 1000 contactPoint 4.5 2.5 2.9998027980464 normal 0 0 -1 distance 0.99996886172478 overlap 3.11382752200551e-05 force 0 0 -2.37395610599438 torque 0 0 0
+LinearViscoelasticInteraction particleIds 117 118 timeStamp 1000 contactPoint 4.5 3.5 2.9998027980464 normal 0 0 -1 distance 0.99996886172478 overlap 3.11382752200551e-05 force 0 0 -2.37395610599438 torque 0 0 0
+LinearViscoelasticInteraction particleIds 122 123 timeStamp 1000 contactPoint 4.5 4.5 2.9998027980464 normal 0 0 -1 distance 0.99996886172478 overlap 3.11382752200551e-05 force 0 0 -2.37395610599438 torque 0 0 0
+LinearViscoelasticInteraction particleIds 3 4 timeStamp 1000 contactPoint 0.5 0.5 3.9997793939638 normal 0 0 -1 distance 0.999984330110002 overlap 1.56698899984598e-05 force 0 0 -1.1948717385858 torque 0 0 0
+LinearViscoelasticInteraction particleIds 8 9 timeStamp 1000 contactPoint 0.5 1.5 3.9997793939638 normal 0 0 -1 distance 0.999984330110002 overlap 1.56698899984598e-05 force 0 0 -1.1948717385858 torque 0 0 0
+LinearViscoelasticInteraction particleIds 13 14 timeStamp 1000 contactPoint 0.5 2.5 3.9997793939638 normal 0 0 -1 distance 0.999984330110002 overlap 1.56698899984598e-05 force 0 0 -1.1948717385858 torque 0 0 0
+LinearViscoelasticInteraction particleIds 18 19 timeStamp 1000 contactPoint 0.5 3.5 3.9997793939638 normal 0 0 -1 distance 0.999984330110002 overlap 1.56698899984598e-05 force 0 0 -1.1948717385858 torque 0 0 0
+LinearViscoelasticInteraction particleIds 23 24 timeStamp 1000 contactPoint 0.5 4.5 3.9997793939638 normal 0 0 -1 distance 0.999984330110002 overlap 1.56698899984598e-05 force 0 0 -1.1948717385858 torque 0 0 0
+LinearViscoelasticInteraction particleIds 28 29 timeStamp 1000 contactPoint 1.5 0.5 3.9997793939638 normal 0 0 -1 distance 0.999984330110002 overlap 1.56698899984598e-05 force 0 0 -1.1948717385858 torque 0 0 0
+LinearViscoelasticInteraction particleIds 33 34 timeStamp 1000 contactPoint 1.5 1.5 3.9997793939638 normal 0 0 -1 distance 0.999984330110002 overlap 1.56698899984598e-05 force 0 0 -1.1948717385858 torque 0 0 0
+LinearViscoelasticInteraction particleIds 38 39 timeStamp 1000 contactPoint 1.5 2.5 3.9997793939638 normal 0 0 -1 distance 0.999984330110002 overlap 1.56698899984598e-05 force 0 0 -1.1948717385858 torque 0 0 0
+LinearViscoelasticInteraction particleIds 43 44 timeStamp 1000 contactPoint 1.5 3.5 3.9997793939638 normal 0 0 -1 distance 0.999984330110002 overlap 1.56698899984598e-05 force 0 0 -1.1948717385858 torque 0 0 0
+LinearViscoelasticInteraction particleIds 48 49 timeStamp 1000 contactPoint 1.5 4.5 3.9997793939638 normal 0 0 -1 distance 0.999984330110002 overlap 1.56698899984598e-05 force 0 0 -1.1948717385858 torque 0 0 0
+LinearViscoelasticInteraction particleIds 53 54 timeStamp 1000 contactPoint 2.5 0.5 3.9997793939638 normal 0 0 -1 distance 0.999984330110002 overlap 1.56698899984598e-05 force 0 0 -1.1948717385858 torque 0 0 0
+LinearViscoelasticInteraction particleIds 58 59 timeStamp 1000 contactPoint 2.5 1.5 3.9997793939638 normal 0 0 -1 distance 0.999984330110002 overlap 1.56698899984598e-05 force 0 0 -1.1948717385858 torque 0 0 0
+LinearViscoelasticInteraction particleIds 63 64 timeStamp 1000 contactPoint 2.5 2.5 3.9997793939638 normal 0 0 -1 distance 0.999984330110002 overlap 1.56698899984598e-05 force 0 0 -1.1948717385858 torque 0 0 0
+LinearViscoelasticInteraction particleIds 68 69 timeStamp 1000 contactPoint 2.5 3.5 3.9997793939638 normal 0 0 -1 distance 0.999984330110002 overlap 1.56698899984598e-05 force 0 0 -1.1948717385858 torque 0 0 0
+LinearViscoelasticInteraction particleIds 73 74 timeStamp 1000 contactPoint 2.5 4.5 3.9997793939638 normal 0 0 -1 distance 0.999984330110002 overlap 1.56698899984598e-05 force 0 0 -1.1948717385858 torque 0 0 0
+LinearViscoelasticInteraction particleIds 78 79 timeStamp 1000 contactPoint 3.5 0.5 3.9997793939638 normal 0 0 -1 distance 0.999984330110002 overlap 1.56698899984598e-05 force 0 0 -1.1948717385858 torque 0 0 0
+LinearViscoelasticInteraction particleIds 83 84 timeStamp 1000 contactPoint 3.5 1.5 3.9997793939638 normal 0 0 -1 distance 0.999984330110002 overlap 1.56698899984598e-05 force 0 0 -1.1948717385858 torque 0 0 0
+LinearViscoelasticInteraction particleIds 88 89 timeStamp 1000 contactPoint 3.5 2.5 3.9997793939638 normal 0 0 -1 distance 0.999984330110002 overlap 1.56698899984598e-05 force 0 0 -1.1948717385858 torque 0 0 0
+LinearViscoelasticInteraction particleIds 93 94 timeStamp 1000 contactPoint 3.5 3.5 3.9997793939638 normal 0 0 -1 distance 0.999984330110002 overlap 1.56698899984598e-05 force 0 0 -1.1948717385858 torque 0 0 0
+LinearViscoelasticInteraction particleIds 98 99 timeStamp 1000 contactPoint 3.5 4.5 3.9997793939638 normal 0 0 -1 distance 0.999984330110002 overlap 1.56698899984598e-05 force 0 0 -1.1948717385858 torque 0 0 0
+LinearViscoelasticInteraction particleIds 103 104 timeStamp 1000 contactPoint 4.5 0.5 3.9997793939638 normal 0 0 -1 distance 0.999984330110002 overlap 1.56698899984598e-05 force 0 0 -1.1948717385858 torque 0 0 0
+LinearViscoelasticInteraction particleIds 108 109 timeStamp 1000 contactPoint 4.5 1.5 3.9997793939638 normal 0 0 -1 distance 0.999984330110002 overlap 1.56698899984598e-05 force 0 0 -1.1948717385858 torque 0 0 0
+LinearViscoelasticInteraction particleIds 113 114 timeStamp 1000 contactPoint 4.5 2.5 3.9997793939638 normal 0 0 -1 distance 0.999984330110002 overlap 1.56698899984598e-05 force 0 0 -1.1948717385858 torque 0 0 0
+LinearViscoelasticInteraction particleIds 118 119 timeStamp 1000 contactPoint 4.5 3.5 3.9997793939638 normal 0 0 -1 distance 0.999984330110002 overlap 1.56698899984598e-05 force 0 0 -1.1948717385858 torque 0 0 0
+LinearViscoelasticInteraction particleIds 123 124 timeStamp 1000 contactPoint 4.5 4.5 3.9997793939638 normal 0 0 -1 distance 0.999984330110002 overlap 1.56698899984598e-05 force 0 0 -1.1948717385858 torque 0 0 0
 hGrid method TOPDOWN distribution EXPONENTIAL cellOverSizeRatio 1 numberOfBuckets 1250 cellSizes 1 gridNeedsUpdate 0 updateEachTimeStep 1 currentMaxRelativeDisplacement 0 totalCurrentMaxRelativeDisplacement 0

@@ -282,9 +282,10 @@ public:
 
 
     void printTime() const override {
-        std::cout << "t=" << std::setprecision(3) << std::left << std::setw(6) << getTime() << std::endl;
-        for (int io = 0; io < N_grid-1; io++) {
-            std::cout << z[io+1] << '\t'  << u[io+1] << '\t' << l[io] << '\t' << std::endl;
+        logger(INFO, "t=%3.6", getTime());
+        for (int io = 0; io < N_grid-1; io++)
+        {
+            logger(INFO, "%\t%\t%\t", z[io+1], u[io+1], l[io]);
         }
 
     }

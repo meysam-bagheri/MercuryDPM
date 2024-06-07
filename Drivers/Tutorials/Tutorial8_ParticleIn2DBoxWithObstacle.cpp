@@ -95,6 +95,7 @@ int main(int argc, char* argv[])
     problem.setGravity(Vec3D(0.0, 0.0, 0.0));
     problem.setXMax(0.5);
     problem.setYMax(0.5);
+    problem.setZMax(0.5);
     problem.setTimeMax(5.0);
 
     //! [T8:speciesProp]
@@ -108,11 +109,15 @@ int main(int argc, char* argv[])
 
     //! [T8:speciesProp]
     
-    problem.setSaveCount(10);
+    problem.setSaveCount(50);
     problem.dataFile.setFileType(FileType::ONE_FILE);
     problem.restartFile.setFileType(FileType::ONE_FILE);
     problem.fStatFile.setFileType(FileType::NO_FILE);
     problem.eneFile.setFileType(FileType::NO_FILE);
+
+    //! [T8:visualOutput]
+    problem.wallHandler.setWriteVTK(FileType::ONE_FILE);
+    problem.setParticlesWriteVTK(true);
 
     problem.setTimeStep(.005 / 50.0); // (collision time)/50.0
     problem.solve(argc, argv);

@@ -88,10 +88,8 @@ int main(int argc, char* argv[])
     //! [T4:speciesProp]
     
     problem.setSaveCount(10);
-    problem.dataFile.setFileType(FileType::ONE_FILE);
-    problem.restartFile.setFileType(FileType::ONE_FILE);
+    problem.setFileType(FileType::ONE_FILE);
     problem.fStatFile.setFileType(FileType::NO_FILE);
-    problem.eneFile.setFileType(FileType::NO_FILE);
 
     //![T4: time]
     //time integration parameters

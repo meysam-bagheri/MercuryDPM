@@ -40,6 +40,13 @@ The detailed description of this tutorial is presented below.\n
 First, include all headers that are necessary to setup the simulations. They come from the MercuryDPM kernel and the C++ standard libraries (see \ref DevelopersGuideKernel). Headers files usually have a <EM> .h </EM> or <EM> .hpp </EM> extensions. For example:
 \snippet Drivers/Tutorials/Tutorial1_ParticleInOuterSpace.cpp T1:headers
 
+So here we include three headers. The first \code #include <Mercury3D.h> \endcode means we are going to do a 3D problem. The second two
+\code
+#include <Species/Species.h>
+#include <Species/LinearViscoelasticSpecies.h>
+\endcode
+means we include the linear viscoelastic contact model.
+
 ###Before main function:
 Before the main function, a new class (named Tutorial1) is derived from \ref Mercury3D (or \ref Mercury2D).
 
@@ -52,6 +59,8 @@ Next, we override (modify) some of the functions of the inherited class. Most im
 In setupInitialConditions, we define the initial state of the system (particle and wall positions). In this case, we only create a single particle. An object of type #SphericalParticle is created, and the particle properties (positions, radius and velocities) are set. Then the defined information is sent to the \ref ParticleHandler, using the function \ref ParticleHandler::copyAndAddObject
 
 \snippet Drivers/Tutorials/Tutorial1_ParticleInOuterSpace.cpp T1:createParticle
+
+Note, the species will be defined later. Here we create a particle on radius 0.01 which is initial at position (0.1,0.1,0.1) and has initial velocity (0.1,0.0,0.0) so it is moving in the x-direction.
 
 ###Main function:
 In the main function, the global parameters of the problem are defined. It includes gravity, spatial dimensions (x,y,z), total run time, the type of contact law, etc. \n
@@ -94,19 +103,41 @@ After all the simulation parameters are set, we reach a point where we put all t
 
 \snippet Drivers/Tutorials/Tutorial1_ParticleInOuterSpace.cpp T1:solve
 
-\n\n<b>To run this problem</b> goto the corresponding folder  (like: MercuryDPM/MercuryBuild/Drivers/Tutorials) and start
+\n\n<b>To run this problem</b> go to the corresponding folder  (like: MercuryDPM/MercuryBuild/Drivers/Tutorials) and start
 \code
 ./Tutorial1_ParticleInOuterSpace
 \endcode
 The program runs until tmax is reached. Now all data is generated like Tutorial1.data, .restart and .xballs\n
 
-You can visualize the information in the .data file using
+If you turned on XBalls support in cmake, you can visualize the information in the .data file using
 \code ./Tutorial1.xballs \endcode
 
-Alternatively, you can use ParaView to visualize the vtu fiels
+Alternatively, you can use ParaView to visualize the vtu fields
 \code
 paraview --script=Tutorial1.py
 \endcode
+
+##Exercises
+
+1. Run Tutorial 1
+\code
+cd ~/MercuryDPM/MercuryBuild/Drivers/Tutorials/
+make                             # compile
+./Tutorial1_ParticleInOuterSpace # run
+\endcode
+2. Plot in ParaView \code paraview --script=Tutorial1.py \endcode Confirm the particle is moving in x-direction.
+3. Change the code so that the particle is moving on the y-direction.
+Remove the old output files before re-running the code, to avoid plotting old data.
+\code
+vi ~/MercuryDPM/MercurySource/Drivers/Tutorials/Tutorial1_ParticleInOuterSpace.cpp #edit the source file
+rm Tutorial1*.*                  # remove old output files
+make                             # re-compile
+./Tutorial1_ParticleInOuterSpace # re-run
+paraview --script=Tutorial1.py   # re-plot
+\endcode
+
+4. Change the code so that the particle is moving diagonally in x,y and z.
+
 
 
 \n
@@ -114,14 +145,36 @@ paraview --script=Tutorial1.py
 \image html Tutorials/T2/Tutorial2.jpg Particle falling due to gravity.
 
 #### Problem description:
-In \b Tutorial2_ParticleUnderGravity.cpp, we simulate a particle when dropped under the influence of gravity, \f$ g = 9.81 m/s^2\f$. Basically, this tutorial is an extension of \b Tutorial1_ParticleInOuterSpace.cpp with few minor changes.\n
+In \b Tutorial2_ParticleUnderGravity.cpp, we simulate a particle when dropped under the influence of gravity. Basically, this tutorial is an extension of \b Tutorial1_ParticleInOuterSpace.cpp with few minor changes.\n
 All we need to do is to change the initial particle position and velocity in the inherited class Tutorial2.\n
 
 \snippet Drivers/Tutorials/Tutorial2_ParticleUnderGravity.cpp T2:createParticle
 
-Also, the gravity vector in the main function:
+Also, gravity is turned on in the negative z-direction, using setGravity:
 
 \snippet Drivers/Tutorials/Tutorial2_ParticleUnderGravity.cpp T2:problemSetup
+
+##Exercises
+1. Run the code.
+\code
+cd ~/MercuryDPM/MercuryBuild/Drivers/Tutorials/
+make                             # compile
+./Tutorial2_ParticleUnderGravity # run
+\endcode
+2. Plot the particle falling under gravity in ParaView
+\code
+paraview --script=Tutorial2.py
+\endcode
+3. Give the particle an initial velocity in the x-direction so you can see the parabolic flight.
+\code
+vi ~/MercuryDPM/MercurySource/Drivers/Tutorials/Tutorial2_ParticleUnderGravity.cpp #edit the source file
+rm Tutorial2*.*                  # remove old output files
+make                             # re-compile
+./Tutorial2_ParticleUnderGravity # re-run
+paraview --script=Tutorial2.py   # re-plot
+\endcode
+4. Change the direction of gravity to point in the positive y-direction.
+
 
 \n
 \section T3 T3: Bouncing ball (elastic)
@@ -146,13 +199,18 @@ Where the object "w0" is an instance of the class \b InfiniteWall. Then, the fun
 
 * **Note:** Don’t forget to include the InfiniteWall.h header, as shown in the header section. In some sense, creation and addition of a wall is similar to creation and addition of a particle.\n\n
 
-#### Exercise:
-Change  species.setDissipation from (0.0) to (0.1) to get a less perfect bouncing effect.
+## Exercise:
+1. Run Tutorial3 and visualise the outcome in ParaView.
+2. Visualise the gravitational ($mgh$) and kinetic energy (\f$\frac12mv^2\f$) of the particle over time using gnuplot.
 \code
-vi ~/MercuryDPM/MercurySource/Drivers/Tutorials/./Tutorial3_BouncingBallElastic.cpp
-make; ./Tutorial3_BouncingBallElastic
-./Tutorial3.xballs -p 50  # (-p 50 is to pause between the steps for better viewing.)
+  >gnuplot
+  gnuplot> set xlabel "Time (s)"
+  gnuplot> set ylabel "Kinetic Energy (J)"
+  gnuplot> plot 'Tutorial3.ene' using 1:3 with linespoints
 \endcode
+What collision time/restitution coefficient do you expect/observe?
+3. Increase contact time by a factor 100 and rerun the simulation. What do you observe?
+4. Set restitution to \f$0.5\f$ and rerun the simulation. What do you observe? This idea is expanded in the next exercise
 
 \n
 \section T4 T4: Bouncing ball with dissipation (inelastic)
@@ -163,10 +221,19 @@ In \b Tutorial4_BouncingBallInelastic.cpp, the difference between an elastic and
 \code double rc = 0.88; // restitution coefficient \endcode
 See \ref T4code for more details.
 
-#### Exercise:
-In the .cpp file change 'problem.eneFile.setFileType' from NO_FILE to ONE_FILE to create the .ene file, recompile using make and start the code again.
+### Exercise:
+1. In the .cpp file change 'problem.eneFile.setFileType' from NO_FILE to ONE_FILE to create the .ene file, recompile using make and start the code again.
 Now we can show the energy graph in gnuplot using\n
-\code  gnuplot -e "p 'Tutorial4.ene' u 1:8; pause 10" \endcode
+\code
+  >gnuplot
+  gnuplot> set xlabel "Time (s)"
+  gnuplot> set ylabel "Particle's centre of mass in z-direction (m)"
+  gnuplot> plot 'Tutorial4.ene' using 1:8 with linespoints
+\endcode
+2. Change the coefficient of restitution rc to 1.0 and replot the energy.
+3. Now try 0.2.
+4. Now try 0.0.
+5. Now add the commands to create the vtu files so you can visualise in ParaView.
 
 \n
 \section T5 T5: Elastic collision (2 particles)
@@ -179,8 +246,9 @@ So far, in the above tutorials, we have seen how a particle and a wall interact 
 \snippet Drivers/Tutorials/Tutorial5_ElasticCollision.cpp T5:class
 On comparison between the above class and class Tutorial1, we see how an additional particle is added. Two particles are created, and positioned oppositely apart at a certain distance between them. Both the particles, have a certain velocity directing them towards each other.
 
-#### Exercise:
-Try changing the size of the 1st ball from 0.05 to 0.07 and see the difference using xballs (use xballs parameter -p 10 to slow down 10ms each step)
+### Exercise:
+1. Add the lines to create the particle and wall vtu files so you can plot in ParaView.
+2. Change the size of the 1st ball from 0.05 m to 0.07 m and re-plot to see the difference.
 
 \section T6 T6: Elastic collisions with periodic boundaries
 \image html Tutorials/T6/Tutorial6.jpg (a) Illustrates the idea behind periodic boundaries, particle exiting boundary b2 re-enters through boundary b1 <br> (b) Illustrates the problem setup.
@@ -200,6 +268,10 @@ In the Class Tutorial6\n
 
 Where "b0" is an instance of the class \ref  PeriodicBoundary. Then, the object is copied and added to its corresponding handler:  \ref boundaryHandler.
 
+### Exercise
+1. Add a second periodic wall in the y-direction.
+2. Change the initial velocity of wall of the particles so that it goes through both periodic walls.
+3. Advanced: How do you think the two-periodic walls interact in the corner?
 \n
 \section T7 T7: Motion of a particle in a two dimensional (2D) box
 \image html Tutorials/T7/Tutorial7.jpg Particle motion in a box (blue and black denote the walls).
@@ -220,6 +292,9 @@ As our simulation is two dimensional, we set the system dimensions as 2
 
 The complete code for the above problem description can be found in \ref Tutorial7_ParticleIn2DBox.cpp.
 
+### Exercise
+1. Change the angle of left (x-wall) so it tilts at 45 degrees.
+2. Add a 5th wall and change the positions of each such that you are simulating particles in a pentagon.
 \n
 \section T8 T8: Motion of a particle in a box with an obstacle
 \image html Tutorials/T8/Tutorial8.jpg
@@ -240,8 +315,11 @@ To add intersection walls, we use:
 
 where "w1" is an instance of the class \ref IntersectionOfWalls. This surface (wall) will have the properties of the index 0: "getObject(0)". Then, the object is copied and added to its corresponding handler:  \ref wallHandler.
 \n\n
-* **Note:** the inner box is not visible using ./Tutorial8.xballs
-\n
+
+### Exercise
+1. Change the inner shape to a triangle.
+2. Change the outer wall to a doubly periodic box.
+
 \section T9 T9: Motion of a ball over an inclined plane (Sliding + Rolling)
 \image html Tutorials/T9/Tutorial9.jpg
 
@@ -266,6 +344,13 @@ This simulation contains particles and walls made from three different species (
 Hence, three species, and the  interactions between the three species, need to be defined.
 
 \snippet Drivers/Tutorials/Tutorial9_InclinedPlane.cpp T9:main
+
+### Exercise
+1. Increase the plane angle until all three particles roll.
+2. Set the rolling and sliding friction so that all the particles only roll at a 25 degree inclined plane
+3. What happens when \f$ mu_s < \mu_{ro}\f$ ?
+4. Set \f$ \mu_{ro} = 0\f$; how does the speed of the particle at time tmax depend on \f$\mu_s\f$ ? Can you
+   explain it?
 
 
 \n
@@ -332,7 +417,7 @@ The main function of this tutorial includes the setup parameters and the tests f
 \image html Tutorials/T12/Tutorial12.png
 #### Problem description:
 
-This tutorial explains how to define objects in space with the Prism function. Also, the user will find that you can presecribe the location and motion of the object. The full code
+This tutorial explains how to define objects in space with the Prism function. Also, the user will find that you can prescribe the location and motion of the object. The full code
 can be found in \ref Tutorial12_PrismWalls.cpp
 
 ### Headers:
@@ -355,7 +440,7 @@ After defining the particle that outer walls are generated by using four finite 
 
 \snippet Drivers/Tutorials/Tutorial12_PrismWalls.cpp T12: Defining outer walls
 
-To creat the prism we have to do the following: First one creates an instance of IntersectionOfWalls "w1". Next the species are assigned. This line is followed by defining a 3D vector "Points" with space for four vertices.
+To create the prism we have to do the following: First one creates an instance of IntersectionOfWalls "w1". Next the species are assigned. This line is followed by defining a 3D vector "Points" with space for four vertices.
 After that the location of the four vertices are defined. Then, by using w1.createPrism(Points) the prism is formed centered at the origin.
 
 \snippet Drivers/Tutorials/Tutorial12_PrismWalls.cpp T12: Create object

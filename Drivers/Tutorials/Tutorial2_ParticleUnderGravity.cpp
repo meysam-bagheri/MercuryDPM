@@ -83,7 +83,7 @@ int main(int argc, char* argv[])
     //! [T2:speciesProp]
 
     //! [T2:output]
-    problem.setSaveCount(10);
+    problem.setSaveCount(50);
     problem.dataFile.setFileType(FileType::ONE_FILE);
     problem.restartFile.setFileType(FileType::ONE_FILE);
     problem.fStatFile.setFileType(FileType::NO_FILE);

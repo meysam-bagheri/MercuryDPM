@@ -52,9 +52,9 @@ public:
         // set species (material type)
         p0.setSpecies(speciesHandler.getObject(0));
         // set particle radius, position, velocity
-        p0.setRadius(0.05);
-        p0.setPosition(Vec3D(0.1 * getXMax(), 0.1 * getYMax(), 0.1 * getZMax()));
-        p0.setVelocity(Vec3D(0.5, 0.1, 0.1));
+        p0.setRadius(0.01);
+        p0.setPosition(Vec3D(0.1 , 0.1, 0.1 ));
+        p0.setVelocity(Vec3D(0.1, 0.0, 0.0));
         // pass particle to the particle handler (which contains all particles in the simulation)
         particleHandler.copyAndAddObject(p0);
         //! [T1:createParticle]
@@ -75,7 +75,7 @@ int main(int argc, char* argv[])
     problem.setXMax(1.0);
     problem.setYMax(1.0);
     problem.setZMax(1.0);
-    problem.setTimeMax(2.3);
+    problem.setTimeMax(1.0);
     //! [T1:problemSetup]
 
     // Set the species (material properties such as density and stiffness) of particles and walls
@@ -93,7 +93,7 @@ int main(int argc, char* argv[])
     // Define what output gets written
     //! [T1:output]
     // number of time steps skipped between saves (i.e. every 10-th time step is written to file)
-    problem.setSaveCount(10);
+    problem.setSaveCount(50);
     // creates file with particle positions, velocities, radii for multiple time steps (for plotting)
     problem.dataFile.setFileType(FileType::ONE_FILE);
     // file with contact forces, overlaps for multiple time steps (for plotting)

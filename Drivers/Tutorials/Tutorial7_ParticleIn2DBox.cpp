@@ -96,12 +96,17 @@ int main(int argc, char* argv[])
     problem.speciesHandler.copyAndAddObject(species);
     //! [T7:speciesProp]
     
-    problem.setSaveCount(10);
+    problem.setSaveCount(50);
     problem.dataFile.setFileType(FileType::ONE_FILE);
     problem.restartFile.setFileType(FileType::ONE_FILE);
     problem.fStatFile.setFileType(FileType::NO_FILE);
     problem.eneFile.setFileType(FileType::NO_FILE);
 
+    problem.wallHandler.setWriteVTK(FileType::ONE_FILE);
+    problem.setParticlesWriteVTK(true);
+
+
+    //! [T7:visualOutput]
     problem.wallHandler.setWriteVTK(FileType::ONE_FILE);
     problem.setParticlesWriteVTK(true);
 

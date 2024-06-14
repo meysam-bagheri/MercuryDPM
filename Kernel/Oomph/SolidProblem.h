@@ -604,9 +604,22 @@ public:
 
     void saveSolidMesh()
     {
+        std::string filename = name_;
+#ifdef OOMPH_HAS_MPI
+        // When the problem hasn't been distributed, the whole mesh is stored on every processor.
+        // Prevent writing the same file multiple times, so only write for the first processor.
+        if (!Problem_has_been_distributed && OOMPH_MPI_PROCESSOR_ID != 0)
+            return;
+
+        // When the problem has been distributed, add the processor id to the filename.
+        if (Problem_has_been_distributed)
+            filename += "_" + std::to_string(OOMPH_MPI_PROCESSOR_ID);
+#endif
+        filename += ".mesh";
+
         //if (useTetgen()) logger(ERROR, "Not implemented for Tetgen meshes");
 
-        std::ofstream mesh(name_ + ".mesh");
+        std::ofstream mesh(filename);
         auto solid_cubic_mesh_pt = dynamic_cast<SolidCubicMesh*>(solid_mesh_pt());
         if (solid_cubic_mesh_pt) {
             //logger.assert_always(solid_cubic_mesh_pt, "Mesh is not cubic");
@@ -624,10 +637,10 @@ public:
             mesh << '\n';
         }
         if (solid_cubic_mesh_pt) {
-            logger(INFO, "Saved %x%x% mesh to %.mesh",
-                   solid_cubic_mesh_pt->nx(), solid_cubic_mesh_pt->ny(), solid_cubic_mesh_pt->nz(), name_);
+            logger(INFO, "Saved %x%x% mesh to %",
+                   solid_cubic_mesh_pt->nx(), solid_cubic_mesh_pt->ny(), solid_cubic_mesh_pt->nz(), filename);
         } else {
-            logger(INFO, "Saved mesh to %.mesh (% nodes)",name_, solid_mesh_pt()->nnode());
+            logger(INFO, "Saved mesh to % (% nodes)", filename, solid_mesh_pt()->nnode());
         }
     }
 
@@ -674,6 +687,13 @@ public:
     // stores results in vtk file
     void writeToVTK()
     {
+#ifdef OOMPH_HAS_MPI
+        // When the problem hasn't been distributed, the whole mesh is stored on every processor.
+        // Prevent writing the same file multiple times, so only write for the first processor.
+        if (!Problem_has_been_distributed && OOMPH_MPI_PROCESSOR_ID != 0)
+            return;
+#endif
+
         //set local coordinates list
         std::vector<std::vector<double>> sList0;
         // order of nodes

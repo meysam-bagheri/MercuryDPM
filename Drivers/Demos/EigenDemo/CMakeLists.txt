@@ -1,5 +1,9 @@
-include(${CMAKE_SOURCE_DIR}/Configuration/MasterMake.cmake)
+if(NOT EIGEN)
+	#message(STATUS "eigen is disabled")
+	return()
+endif()
 
+include(${CMAKE_SOURCE_DIR}/Configuration/MasterMake.cmake)
 ###########################
 #Part 1 : All cpp files will be made to exec files
 #########################################

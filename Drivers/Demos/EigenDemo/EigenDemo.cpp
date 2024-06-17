@@ -109,7 +109,7 @@ public:
 
 
 //member functions for updating l
-    double itterateL(double l_down, double u) {
+    double itterateL(double l_down, double u_mid) {
         double l_up = l_down;//initial guess
         int itter_l = 0;
         double res_l = 1;
@@ -117,10 +117,10 @@ public:
         while (fabs(res_l) > 1e-8 && itter_l < 600) {
             itter_l = itter_l + 1;
             res_l = (l_down - l_up) / dz +
-                    kappa * (1 - exp(-sqrt(1.0 / 7.0 * (fabs(u) * 0.5 * (l_up + l_down)) / nu)));//(20)rhs - lhs
-            dresdl = -1 / dz - kappa * exp(-sqrt(1.0 / 7.0 * (fabs(u) * 0.5 * (l_up + l_down)) / nu)) * 0.5 *
-                               pow((1.0 / 7.0 * (fabs(u) * 0.5 * (l_up + l_down)) / nu), -0.5) * 1.0 / 7.0 *
-                               fabs(u) * 0.5 / nu;
+                    kappa * (1 - exp(-sqrt(1.0 / 7.0 * (fabs(u_mid) * 0.5 * (l_up + l_down)) / nu)));//(20)rhs - lhs
+            dresdl = -1 / dz - kappa * exp(-sqrt(1.0 / 7.0 * (fabs(u_mid) * 0.5 * (l_up + l_down)) / nu)) * 0.5 *
+                               pow((1.0 / 7.0 * (fabs(u_mid) * 0.5 * (l_up + l_down)) / nu), -0.5) * 1.0 / 7.0 *
+                               fabs(u_mid) * 0.5 / nu;
             l_up = l_up - 0.8 * res_l / dresdl;
         }
         return l_up;

@@ -151,8 +151,19 @@ public:
         {
             this->unsteady_newton_solve(this->time_pt()->dt(), max_adapt, false);
         }
+        checkResidual();
     }
-    
+
+    // check whether the maximum residual is zero. If so, the computation has failed and the code will exit.
+    void checkResidual(){
+        oomph::DoubleVector residual;
+        O::get_residuals(residual);
+        double residualNorm = residual.max();
+        if (residualNorm == 0) {
+            logger(ERROR, "Maximum residuals %; the computation has failed and the code will exit", residualNorm);
+        }
+    }
+
     /**
      * solve a given number of time steps nt in Mercury
      */

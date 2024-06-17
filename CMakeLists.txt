@@ -120,7 +120,7 @@ option(MercuryDPM_OOMPH_COUPLING "Couple MercuryDPM with oomph-lib" OFF)
 include(CMakeModules/OomphCoupling.cmake)
 
 # Determine whether to couple MercuryDPM with Eigen or not
-option(MercuryDPM_EIGEN "Couple MercuryDPM with Eigen" ON)
+option(MercuryDPM_EIGEN "Couple MercuryDPM with Eigen" OFF)
 # Couple with Eigen if EIGEN is on
 include(CMakeModules/MercuryDPM_Eigen.cmake)
 

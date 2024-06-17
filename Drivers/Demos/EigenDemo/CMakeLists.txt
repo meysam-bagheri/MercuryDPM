@@ -1,4 +1,5 @@
-if(NOT EIGEN)
+#Do nothing if coupling is turned off.
+if(NOT MercuryDPM_EIGEN)
 	#message(STATUS "eigen is disabled")
 	return()
 endif()

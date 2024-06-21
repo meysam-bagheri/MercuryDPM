@@ -482,8 +482,8 @@ public:
             }
             // abort if problem
             if (Max_res.back()==0) {
-                logger(WARN,"Maximum residual is 0; aborting time loop");
-                break;
+                saveSolidMesh();
+                logger(ERROR, "Maximum residual is 0; exiting the code");
             }
         }
         saveSolidMesh();

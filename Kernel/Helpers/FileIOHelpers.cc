@@ -26,19 +26,11 @@
 #include "Helpers/FileIOHelpers.h"
 #include "Logger.h"
 
+#include <errno.h>
 #include <fstream>
-
-/*!
- * \note Is this necessary? Don't we use WSL for Windows?
- */
-#ifdef _WIN32
-#include <direct.h>
-#define GetCurrentDir _getcwd
-#else
-#include <unistd.h>
+#include <string.h>
 #include <sys/stat.h>
-#define GetCurrentDir getcwd
-#endif
+#include <unistd.h>
 
 /*!
  * \details Provides a simple interface for writing a string to a file.
@@ -55,7 +47,7 @@
  * \returns true on success.
  * \todo gmb Make this MPI compatible.
  */
-bool helpers::writeToFile(std::string filename, std::string filecontent)
+bool helpers::writeToFile(const std::string & filename, const std::string & filecontent)
 {
     std::fstream file;
     file.open(filename.c_str(), std::ios::out);
@@ -73,7 +65,7 @@ bool helpers::writeToFile(std::string filename, std::string filecontent)
  * \todo gmb Make this MPI compatible.
  * \note Not used function.
  */
-void helpers::writeCommandLineToFile(const std::string filename, const int argc, char * const argv[])
+void helpers::writeCommandLineToFile(const std::string & filename, const int argc, char * const argv[])
 {
     std::stringstream ss;
     for (int i=0; i<argc; ++i) {
@@ -84,9 +76,8 @@ void helpers::writeCommandLineToFile(const std::string filename, const int argc,
 
 /*!
  * \todo gmb Make this MPI compatible.
- * \note Not used function.
  */
-bool helpers::addToFile(std::string filename, std::string filecontent)
+bool helpers::addToFile(const std::string & filename, const std::string & filecontent)
 {
     std::fstream file;
     file.open(filename.c_str(), std::ios::app);
@@ -104,7 +95,7 @@ bool helpers::addToFile(std::string filename, std::string filecontent)
  * \details This is a FileExist routine, which is used to test if a run have
  * already need preformed, allows me to plug holes in parm studies.
  */
-bool helpers::fileExists(std::string strFilename)
+bool helpers::fileExists(const std::string & strFilename)
 {
     struct stat stFileInfo;
     bool blnReturn;
@@ -142,7 +133,7 @@ bool helpers::fileExists(std::string strFilename)
  * \return true is the file was successfully opened, false else.
  * \todo gmb Make this MPI compatible. Is it used?
  */
-bool helpers::openFile(std::fstream& file, std::string filename, std::fstream::openmode mode)
+bool helpers::openFile(std::fstream& file, const std::string & filename, std::fstream::openmode mode)
 {
     file.open(filename.c_str(), mode);
     if (file.fail())
@@ -155,7 +146,7 @@ bool helpers::openFile(std::fstream& file, std::string filename, std::fstream::o
  * \todo gmb Make this MPI compatible.
  * \note Not used function.
  */
-std::vector<double> helpers::readArrayFromFile(std::string filename, int& n, int& m)
+std::vector<double> helpers::readArrayFromFile(const std::string & filename, int& n, int& m)
 {
     std::fstream file;
     file.open(filename.c_str(), std::ios::in);
@@ -178,7 +169,7 @@ std::vector<double> helpers::readArrayFromFile(std::string filename, int& n, int
 /*!
  * \todo gmb Make this MPI compatible.
  */
-void helpers::more(std::string filename, unsigned nLines)
+void helpers::more(const std::string & filename, unsigned nLines)
 {
     if (nLines != constants::unsignedMax)
         logger(INFO, "First % lines of %:\n", Flusher::NO_FLUSH, nLines, filename);
@@ -198,7 +189,6 @@ void helpers::more(std::string filename, unsigned nLines)
 
 /*!
  * \todo gmb Make this MPI compatible.
- * \note Not used function.
  */
 bool helpers::createDirectory(std::string path) {
     //see https://stackoverflow.com/questions/20358455/cross-platform-way-to-make-a-directory
@@ -223,12 +213,9 @@ bool helpers::createDirectory(std::string path) {
 
 std::string helpers::getPath()
 {
-    char cCurrentPath[FILENAME_MAX];
-    if (GetCurrentDir(cCurrentPath, sizeof(cCurrentPath)) == NULL) {
-        logger(WARN, "Get current dir failed: %", cCurrentPath);
-        /*!
-         * \todo gmb log error using strerror(errno)
-         */
+    char currentPath[FILENAME_MAX];
+    if (getcwd(currentPath, sizeof(currentPath)) == NULL) {
+        logger(WARN, "Get current dir failed: %", strerror(errno));
     }
-    return std::string(cCurrentPath);
+    return std::string(currentPath);
 }

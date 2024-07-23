@@ -38,31 +38,31 @@ namespace helpers
     /*!
      * \brief Writes a string to a file.
      */
-    bool writeToFile(std::string filename, std::string filecontent);
+    bool writeToFile(const std::string & filename, const std::string & filecontent);
 
     /*!
      * \brief Writes a string to a file.
      */
-    void writeCommandLineToFile(const std::string filename, const int argc, char * const argv[]);
+    void writeCommandLineToFile(const std::string & filename, const int argc, char * const argv[]);
 
     /*!
      * \brief Adds a string to an existing file.
      */
-    bool addToFile(std::string filename, std::string filecontent);
+    bool addToFile(const std::string & filename, const std::string & filecontent);
 
     /*!
     * \brief Function to check if a file exists, is used to check if a run has already need done.
     */
-    bool fileExists(std::string strFilename);
+    bool fileExists(const std::string & strFilename);
 
     /*!
      * \brief Provides a simple interface for opening a file.
      */
-    bool openFile(std::fstream& file, std::string filename, std::fstream::openmode mode);
+    bool openFile(std::fstream& file, const std::string & filename, std::fstream::openmode mode);
 
-    std::vector<double> readArrayFromFile(std::string filename, int& n, int& m);
+    std::vector<double> readArrayFromFile(const std::string & filename, int& n, int& m);
 
-    void more(std::string filename, unsigned nLines = constants::unsignedMax);
+    void more(const std::string & filename, unsigned nLines = constants::unsignedMax);
 
     bool createDirectory(std::string);
 
@@ -118,7 +118,7 @@ namespace helpers
      * @return         value of variable
      */
     template<typename T>
-    T readFromFile(const std::string fileName, const std::string varName, const T defaultValue)
+    T readFromFile(const std::string & fileName, const std::string & varName, const T defaultValue)
     {
         //open filestream
         std::ifstream is(fileName.c_str(), std::ios::in);

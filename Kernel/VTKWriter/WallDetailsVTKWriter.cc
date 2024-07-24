@@ -98,7 +98,7 @@ bool WallDetailsVTKWriter::shouldWrite(WallHandler::DetailsVTKOptions type) cons
     return (fileType == FileType::ONE_FILE && fileCounter == 0) || fileType == FileType::MULTIPLE_FILES || fileType == FileType::MULTIPLE_FILES_PADDED;
 }
 
-std::string WallDetailsVTKWriter::generateFileName(std::string identifier) const
+std::string WallDetailsVTKWriter::generateFileName(const std::string& identifier) const
 {
-    return handler_.getDPMBase()->getName() + "WallDetails" + identifier + "_" + std::to_string(fileCounter) + ".vtu";
+    return outputDirectory_ + "/" + handler_.getDPMBase()->getName() + "WallDetails" + identifier + "_" + std::to_string(fileCounter) + ".vtu";
 }

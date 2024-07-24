@@ -508,6 +508,19 @@ eneFile.close();
 interactionFile.close();
 }
 
+void DPMBase::setVTKOutputDirectory(const std::string & dir)
+{
+    if (vtkWriter_)
+        vtkWriter_->setOutputDirectory(dir);
+    else
+        logger(WARN, "Failed to set VTK output directory for particles. Make sure to set particle VTK writing to true, "
+                     "before setting the output directory.");
+    boundaryVTKWriter_.setOutputDirectory(dir);
+    interactionVTKWriter_.setOutputDirectory(dir);
+    wallVTKWriter_.setOutputDirectory(dir);
+    wallDetailsVTKWriter_.setOutputDirectory(dir);
+}
+
 /*!
 * \details Sets the time step when the files will next be saved, except for the interaction file.
 * Note, that the interaction file is independent of time steps, and just writes when an interaction starts or ends.
@@ -2120,6 +2133,41 @@ void DPMBase::writeEneTimeStep(std::ostream& os) const
        << std::endl;
 }
 
+void DPMBase::initialiseVTK() const
+{
+    bool writePythonScript = false;
+
+    if (wallHandler.getWriteVTK() != FileType::NO_FILE) {
+        helpers::createDirectory(wallVTKWriter_.getOutputDirectory(), true);
+        writePythonScript = true;
+    }
+
+    if (vtkWriter_ && (getParticlesWriteVTK() || getSuperquadricParticlesWriteVTK())) {
+        helpers::createDirectory(vtkWriter_->getOutputDirectory(), true);
+        writePythonScript = true;
+    }
+
+    if (interactionHandler.getWriteVTK() != FileType::NO_FILE) {
+        helpers::createDirectory(interactionVTKWriter_.getOutputDirectory(), true);
+        writePythonScript = true;
+    }
+
+    if (boundaryHandler.getWriteVTK()) {
+        helpers::createDirectory(boundaryVTKWriter_.getOutputDirectory(), true);
+        writePythonScript = true;
+    }
+
+    if (wallHandler.getWriteDetailsVTKAny()) {
+        helpers::createDirectory(wallDetailsVTKWriter_.getOutputDirectory(), true);
+        writePythonScript = true;
+    }
+
+    if (writePythonScript && forceWritePythonFileForVTKVisualisation_)
+    {
+        writePythonFileForVTKVisualisation();
+    }
+}
+
 void DPMBase::writeVTKFiles() const
 {
     if (wallHandler.getWriteVTK() == FileType::ONE_FILE && wallVTKWriter_.getFileCounter() == 0)
@@ -2148,18 +2196,6 @@ void DPMBase::writeVTKFiles() const
     if (wallHandler.getWriteDetailsVTKAny())
     {
         wallDetailsVTKWriter_.writeVTK();
-    }
-
-    //only write once
-    bool writePython = getParticlesWriteVTK() || wallHandler.getWriteVTK() != FileType::NO_FILE ||
-                       interactionHandler.getWriteVTK() != FileType::NO_FILE ||
-                       wallHandler.getWriteDetailsVTKAny();
-
-    writePython &= forceWritePythonFileForVTKVisualisation_;
-
-    if (writePython && getTime() == 0)
-    {
-        writePythonFileForVTKVisualisation();
     }
 }
 
@@ -2200,13 +2236,14 @@ void DPMBase::writePythonFileForVTKVisualisation() const
 
     if (getParticlesWriteVTK())
     {
+        const std::string dir = (vtkWriter_ ? vtkWriter_->getOutputDirectory() : ".");
 #ifdef MERCURYDPM_USE_MPI
         if (NUMBER_OF_PROCESSORS > 1)
         {
             script += "# PARTICLES ##########################################################\n"
                       "for processorNumber in range(0, " + std::to_string(NUMBER_OF_PROCESSORS) + "):\n"
                       "\t# Load data in any order and sort it\n"
-                      "\tDataParticles = glob.glob('./' + simName + 'Processor_' + str(processorNumber) + '_Particle_*.vtu')\n"
+                      "\tDataParticles = glob.glob('" + dir + "/' + simName + 'Processor_' + str(processorNumber) + '_Particle_*.vtu')\n"
                       "\tDataParticles.sort(key = natural_keys)"
                       "\t# Load the data and visualise it in paraview\n"
                       "\tparticles = XMLUnstructuredGridReader(FileName = DataParticles, registrationName = simName + 'Processor_' + str(processorNumber) + '_Particle_*')\n"
@@ -2225,7 +2262,7 @@ void DPMBase::writePythonFileForVTKVisualisation() const
 #endif
         script += "# PARTICLES ##########################################################\n"
                   "# Load data in any order and sort it\n"
-                  "DataParticles = glob.glob('./' + simName + 'Particle_*.vtu')\n"
+                  "DataParticles = glob.glob('" + dir + "/' + simName + 'Particle_*.vtu')\n"
                   "DataParticles.sort(key = natural_keys)"
                   "# Load the data and visualise it in paraview\n"
                   "particles = XMLUnstructuredGridReader(FileName = DataParticles, registrationName = simName + 'Particle_*')\n"
@@ -2245,9 +2282,10 @@ void DPMBase::writePythonFileForVTKVisualisation() const
 
     if (wallHandler.getWriteVTK() != FileType::NO_FILE)
     {
+        const std::string dir = wallVTKWriter_.getOutputDirectory();
         script += "# WALLS ##############################################################\n"
                   "# Load data in any order and sort it\n"
-                  "DataWalls = glob.glob('./' + simName + 'Wall_*.vtu')\n"
+                  "DataWalls = glob.glob('" + dir + "/' + simName + 'Wall_*.vtu')\n"
                   "DataWalls.sort(key = natural_keys)"
                   "# Load the data and visualise it in paraview\n"
                   "walls = XMLUnstructuredGridReader(FileName = DataWalls, registrationName = simName + 'Wall_*')\n"
@@ -2258,13 +2296,14 @@ void DPMBase::writePythonFileForVTKVisualisation() const
 
     if (interactionHandler.getWriteVTK() != FileType::NO_FILE)
     {
+        const std::string dir = interactionVTKWriter_.getOutputDirectory();
 #ifdef MERCURYDPM_USE_MPI
         if (NUMBER_OF_PROCESSORS > 1)
         {
             script += "# INTERACTIONS #######################################################\n"
                       "for processorNumber in range(0, " + std::to_string(NUMBER_OF_PROCESSORS) + "):\n"
                       "\t# Load data in any order and sort it\n"
-                      "\tDataInteractions = glob.glob('./' + simName + 'Processor_' + str(processorNumber) + '_Interaction_*.vtu')\n"
+                      "\tDataInteractions = glob.glob('" + dir + "/' + simName + 'Processor_' + str(processorNumber) + '_Interaction_*.vtu')\n"
                       "\tDataInteractions.sort(key = natural_keys)"
                       "\t# Load the data and visualise it in paraview\n"
                       "\tinteractions = XMLUnstructuredGridReader(FileName = DataInteractions, registrationName = simName + 'Processor_' + str(processorNumber) + '_Interaction_*')\n"
@@ -2284,7 +2323,7 @@ void DPMBase::writePythonFileForVTKVisualisation() const
 #endif
         script += "# INTERACTIONS #######################################################\n"
                   "# Load data in any order and sort it\n"
-                  "DataInteractions = glob.glob('./' + simName + 'Interaction_*.vtu')\n"
+                  "DataInteractions = glob.glob('" + dir + "/' + simName + 'Interaction_*.vtu')\n"
                   "DataInteractions.sort(key = natural_keys)"
                   "# Load the data and visualise it in paraview\n"
                   "interactions = XMLUnstructuredGridReader(FileName = DataInteractions, registrationName = simName + 'Interaction_*')\n"
@@ -2305,9 +2344,10 @@ void DPMBase::writePythonFileForVTKVisualisation() const
 
     if (wallHandler.getWriteDetailsVTK(WallHandler::DetailsVTKOptions::BOUNDINGBOX) != FileType::NO_FILE)
     {
+        const std::string dir = wallDetailsVTKWriter_.getOutputDirectory();
         script += "# WALL DETAILS - BOUNDING BOX ########################################\n"
                   "# Load data in any order and sort it\n"
-                  "DataWDBoundingBox = glob.glob('./' + simName + 'WallDetailsBoundingBox_*.vtu')\n"
+                  "DataWDBoundingBox = glob.glob('" + dir + "/' + simName + 'WallDetailsBoundingBox_*.vtu')\n"
                   "DataWDBoundingBox.sort(key = natural_keys)"
                   "# Load the data and visualise it in paraview\n"
                   "wdBoundingBox = XMLUnstructuredGridReader(FileName = DataWDBoundingBox, registrationName = simName + 'WallDetailsBoundingBox_*')\n"
@@ -2318,9 +2358,10 @@ void DPMBase::writePythonFileForVTKVisualisation() const
 
     if (wallHandler.getWriteDetailsVTK(WallHandler::DetailsVTKOptions::NURBSWALL) != FileType::NO_FILE)
     {
+        const std::string dir = wallDetailsVTKWriter_.getOutputDirectory();
         script += "# WALL DETAILS - NURBS WALL ##########################################\n"
                   "# Load data in any order and sort it\n"
-                  "DataWDNurbsWall = glob.glob('./' + simName + 'WallDetailsNurbsWall_*.vtu')\n"
+                  "DataWDNurbsWall = glob.glob('" + dir + "/' + simName + 'WallDetailsNurbsWall_*.vtu')\n"
                   "DataWDNurbsWall.sort(key = natural_keys)"
                   "# Load the data and visualise it in paraview\n"
                   "wdNurbsWall = XMLUnstructuredGridReader(FileName = DataWDNurbsWall, registrationName = simName + 'WallDetailsNurbsWall_*')\n"
@@ -3600,6 +3641,22 @@ void DPMBase::write(std::ostream& os, bool writeAllParticles) const
         os << " " << wallDetailsVTKWriter_.getFileCounter();
     }
 
+    // Only write vtk output directories if any of them are different then the default directory.
+    if ((vtkWriter_ && vtkWriter_->getOutputDirectory() != ".") ||
+        wallVTKWriter_.getOutputDirectory() != "." ||
+        interactionVTKWriter_.getOutputDirectory() != "." ||
+        boundaryVTKWriter_.getOutputDirectory() != "." ||
+        wallDetailsVTKWriter_.getOutputDirectory() != ".")
+    {
+        os << " vtkOutDir " << (vtkWriter_ ? vtkWriter_->getOutputDirectory() : ".")
+            << " " << wallVTKWriter_.getOutputDirectory()
+            << " " << interactionVTKWriter_.getOutputDirectory()
+            << " " << boundaryVTKWriter_.getOutputDirectory()
+            << " " << wallDetailsVTKWriter_.getOutputDirectory();
+    }
+
+vtk_out_dir_done:
+   
     os << " random ";
     random.write(os);
 #ifdef MERCURYDPM_USE_OMP
@@ -3820,6 +3877,17 @@ void DPMBase::read(std::istream& is, ReadOptions opt)
                 line >> fileCounter;
                 wallDetailsVTKWriter_.setFileCounter(fileCounter);
                 line.clear();
+                line >> dummy;
+            }
+
+            if (!dummy.compare("vtkOutDir")){
+                std::string particlesDir, wallsDir, interactionsDir, boundariesDir, wallDetailsDir;
+                line >> particlesDir >> wallsDir >> interactionsDir >> boundariesDir >> wallDetailsDir;
+                if (vtkWriter_) vtkWriter_->setOutputDirectory(particlesDir);
+                wallVTKWriter_.setOutputDirectory(wallsDir);
+                interactionVTKWriter_.setOutputDirectory(interactionsDir);
+                boundaryVTKWriter_.setOutputDirectory(boundariesDir);
+                wallDetailsVTKWriter_.setOutputDirectory(wallDetailsDir);
                 line >> dummy;
             }
 
@@ -4234,6 +4302,8 @@ void DPMBase::initialiseSolve() {
         setOpenMode(std::fstream::out);
     }
 
+    initialiseVTK();
+
     //sets the hgrid, writes headers to the .stat output file
     initialiseStatistics();
 
@@ -4429,6 +4499,9 @@ bool DPMBase::readArguments(int argc, char* argv[])
     return isRead;
 }
 
+/**
+ * \note If setVTKOutputDirectory() is used this function must be called after it.
+ */
 void DPMBase::removeOldFiles() const
 {
     //logger(INFO,"ID %",PROCESSOR_ID);
@@ -4440,7 +4513,7 @@ void DPMBase::removeOldFiles() const
     // add processor id to file extension for mpi jobs
     std::string p = (NUMBER_OF_PROCESSORS > 1)?std::to_string(PROCESSOR_ID):"";
     // all the file extensions that should be deleted
-    std::vector<std::string> ext{".restart"+p, ".stat"+p, ".fstat"+p, ".data"+p, ".ene"+p, ".xballs"};
+    std::vector<std::string> ext{".restart"+p, ".stat"+p, ".fstat"+p, ".data"+p, ".ene"+p, ".xballs", ".py"};
     for (const auto& j : ext)
     {
         // remove files with given extension for FileType::ONE_FILE
@@ -4478,11 +4551,18 @@ void DPMBase::removeOldFiles() const
     std::string q = (NUMBER_OF_PROCESSORS > 1)?("Processor_"+std::to_string(PROCESSOR_ID)+"_"):"";
     // all the file extensions that should be deleted
     ext = {"Wall_", q+"Particle_", q+"Interaction_", q+"Boundary_"};
-    for (const auto& j : ext)
+    // List of VTK output directories, in same order as given extensions!
+    std::vector<std::string> dirs{ wallVTKWriter_.getOutputDirectory(),
+                                   (vtkWriter_ ? vtkWriter_->getOutputDirectory() : "."),
+                                   interactionVTKWriter_.getOutputDirectory(),
+                                   boundaryVTKWriter_.getOutputDirectory() };
+    for (int i = 0; i < ext.size(); i++)
     {
+        const std::string j = ext[i];
+        const std::string VTKDir = dirs[i];
         // remove files with given extension for FileType::ONE_FILE
         filename.str("");
-        filename << getName() << j << ".vtu";
+        filename << VTKDir << "/" << getName() << j << ".vtu";
         if (!remove(filename.str().c_str()))
         {
             logger(INFO,"  File % successfully deleted",filename.str());
@@ -4490,12 +4570,12 @@ void DPMBase::removeOldFiles() const
         // remove files with given extension for FileType::MULTIPLE_FILES
         unsigned k = 0;
         filename.str("");
-        filename << getName() << j << k << ".vtu";
+        filename << VTKDir << "/" << getName() << j << k << ".vtu";
         while (!remove(filename.str().c_str()))
         {
             if (k<3) logger(INFO,"  File % successfully deleted",filename.str());
             filename.str("");
-            filename << getName() << j << ++k << ".vtu";
+            filename << VTKDir << "/" << getName() << j << ++k << ".vtu";
         }
         //std::cout << "  File " << filename.str() << " not found" << std::endl;
     }

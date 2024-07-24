@@ -187,28 +187,41 @@ void helpers::more(const std::string & filename, unsigned nLines)
     file.close();
 }
 
-/*!
- * \todo gmb Make this MPI compatible.
+
+/**
+ * \brief Creates a directory.
+ * 
+ * \param directory Absoulte/relative path of the directory
+ * \param allowExists Won't fail if directory exists
+ * \return true/false
  */
-bool helpers::createDirectory(std::string path) {
-    //see https://stackoverflow.com/questions/20358455/cross-platform-way-to-make-a-directory
-    mode_t nMode = 0733; // UNIX style permissions
-    int nError = 0;
-    /*!
-     * \note Is this necessary? Don't we use WSL for Windows?
-     */
-#if defined(_WIN32)
-    nError = _mkdir(path.c_str()); // can be used on Windows
-#else
-    nError = mkdir(path.c_str(), nMode); // can be used on non-Windows
+bool helpers::createDirectory(const std::string & directory, bool allowExists) 
+{
+#ifdef MERCURYDPM_USE_MPI
+    if (PROCESSOR_ID == 0)
+    {
 #endif
-    if (nError != 0) {
-        // handle your error here
-        /*!
-         * \todo gmb log error using strerror(errno)
-         */
+
+    if (directory == ".") {
+        return true;
     }
-    return false;
+
+    errno = 0;
+    const int err = ::mkdir(directory.c_str(), 0777);
+    if (err == 0) {
+        return true;
+    } else if(errno == EEXIST && allowExists) {
+        return true;
+    } else {
+        logger(ERROR, "Unable to create directory `%`: % (%)", directory, strerror(errno), errno);
+        return false;
+    }
+
+#ifdef MERCURYDPM_USE_MPI
+    } else {
+        return true;
+    }
+#endif
 }
 
 std::string helpers::getPath()

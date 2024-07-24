@@ -493,6 +493,11 @@ public:
     void closeFiles();
 
     /*!
+     * \brief Sets the output directory of the VTK files
+     */
+    void setVTKOutputDirectory(const std::string & dir);
+
+    /*!
      * \brief Sets the next time step for all the files (ene, data, fstat, restart, stat) at which the data is to be written or saved.
      */
     void setLastSavedTimeStep(unsigned int nextSavedTimeStep);
@@ -1534,6 +1539,11 @@ public:
 
 private:
     bool forceWritePythonFileForVTKVisualisation_ { true };
+
+    /**
+     * \brief Generates the python file for vtk visualisation. Creates vtk output directories if needed.
+     */
+    void initialiseVTK() const;
 };
 
 #endif

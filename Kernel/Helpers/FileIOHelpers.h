@@ -64,7 +64,14 @@ namespace helpers
 
     void more(const std::string & filename, unsigned nLines = constants::unsignedMax);
 
-    bool createDirectory(std::string);
+    /**
+     * \brief Creates a directory.
+     * 
+     * \param directory Absoulte/relative path of the directory 
+     * \param allowExists Won't fail if directory exists
+     * \return Directory created
+     */
+    bool createDirectory(const std::string & directory, bool allowExists = false);
 
     std::string getPath();
 

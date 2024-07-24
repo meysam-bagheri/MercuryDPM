@@ -44,11 +44,13 @@ public:
     BaseVTKWriter(H& handler) : handler_(handler)
     {
         fileCounter = 0;
+        outputDirectory_ = ".";
     }
     
     BaseVTKWriter(const BaseVTKWriter& other) : handler_(other.handler_)
     {
         fileCounter = other.fileCounter;
+        outputDirectory_ = other.outputDirectory_;
     }
     
     virtual void writeVTK() const = 0;
@@ -62,6 +64,22 @@ public:
     {
         this->fileCounter = fileCounter;
     }
+
+    void setOutputDirectory(const std::string & dir)
+    {
+        logger.assert_always(!dir.empty(), "Invalid VTK directory");
+
+        if (dir.at(dir.size() - 1) == '/'){
+            outputDirectory_ = dir.substr(0, dir.size() - 1);
+        } else {
+            outputDirectory_ = dir;
+        }
+    }
+
+    const std::string & getOutputDirectory() const
+    {
+        return outputDirectory_;
+    } 
     
 protected:
     std::fstream makeVTKFileWithHeader() const;
@@ -72,7 +90,8 @@ protected:
     H& handler_;
     
     mutable unsigned int fileCounter;
-    
+
+    std::string outputDirectory_;
 };
 
 ///\todo vtw wall files only need to be written by one processor
@@ -103,12 +122,18 @@ std::fstream BaseVTKWriter<T>::makeVTKFileWithHeader() const
                std::to_string(fileCounter++) + ".vtu";
 #endif
 
-    //open output file
+    // open output file
+    char filePath[2048];
+    const int n = snprintf(filePath, sizeof(filePath), "%s/%s", outputDirectory_.c_str(), fileName.c_str());
+    if (n <= 0) {
+        logger(ERROR, "unable to create file path");
+    }
+
     std::fstream file;
-    file.open(fileName.c_str(), std::ios_base::out);
+    file.open(filePath, std::ios_base::out);
     if (file.fail())
     {
-        logger(WARN, "File % could not be opened", fileName);
+        logger(WARN, "File % could not be opened", filePath);
     }
 
     // write output file header

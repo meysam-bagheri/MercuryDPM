@@ -59,7 +59,7 @@ public:
 private:
     bool shouldWrite(WallHandler::DetailsVTKOptions) const;
     
-    std::string generateFileName(std::string identifier) const;
+    std::string generateFileName(const std::string& identifier) const;
 };
 
 

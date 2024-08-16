@@ -364,7 +364,7 @@ void commandLineCG(Mercury3D &dpm, int argc, char **argv)
         }
     }
 
-    if (cg->getEps() == 0.0)
+    if (!std::isnormal(cg->getEps()))
     {
         cg->setEps(cg->getWidth()*0.1);
         logger(INFO, "Set eps to default value % (0.1*width)", cg->getEps());

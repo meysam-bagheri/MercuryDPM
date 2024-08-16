@@ -23,7 +23,6 @@
 //(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 //SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include <DPMBase.h>
 #include "PSD.h"
 
 /*!
@@ -319,8 +318,8 @@ void PSD::setDistributionUniform(Mdouble radMin, Mdouble radMax, int numberOfBin
     {
         particleSizeDistribution_.clear();
     }
-    std::vector<Mdouble> probabilities = linspace(0.0, 1.0, numberOfBins);
-    std::vector<Mdouble> radii = linspace(radMin, radMax, numberOfBins);
+    std::vector<Mdouble> probabilities = helpers::linspace(0.0, 1.0, numberOfBins);
+    std::vector<Mdouble> radii = helpers::linspace(radMin, radMax, numberOfBins);
     // combine radii and probabilities
     for (int i = 0; i < radii.size(); ++i)
     {
@@ -348,7 +347,7 @@ void PSD::setDistributionNormal(Mdouble mean, Mdouble standardDeviation, int num
     }
     Mdouble radMin = mean - 3 * standardDeviation;
     Mdouble radMax = mean + 3 * standardDeviation;
-    std::vector<Mdouble> radii = linspace(radMin, radMax, numberOfBins);
+    std::vector<Mdouble> radii = helpers::linspace(radMin, radMax, numberOfBins);
     std::vector<Mdouble> probabilities;
     for (int i = 0; i < radii.size(); i++)
     {
@@ -381,7 +380,7 @@ void PSD::setDistributionLogNormal(Mdouble mean, Mdouble standardDeviation, int 
     }
     Mdouble radMin = mean - 3 * standardDeviation;
     Mdouble radMax = mean + 3 * standardDeviation;
-    std::vector<Mdouble> radii = linspace(radMin, radMax, numberOfBins);
+    std::vector<Mdouble> radii = helpers::linspace(radMin, radMax, numberOfBins);
     std::vector<Mdouble> probabilities;
     for (int i = 0; i < radii.size(); i++)
     {
@@ -1276,29 +1275,6 @@ int PSD::getInsertedParticleNumber() const
 Mdouble PSD::getRadius(int index) const
 {
     return particleSizeDistribution_[index].internalVariable;
-}
-
-/*!
- * \details creates a vector of doubles containing linearly spaced values between Min and Max.
- * \param[in] Min               A double which is the minimum value of the vector.
- * \param[in] Max               A double which is the maximum value of the vector.
- * \param[in] numberOfBins      An integer which is the number of bins of the vector.
- * \return A vector of doubles containing linearly spaced values between Min and Max.
- */
-std::vector<Mdouble> PSD::linspace(Mdouble Min, Mdouble Max, int numberOfBins)
-{
-    Mdouble dx = (Max - Min) / static_cast<Mdouble>(numberOfBins - 1);
-    Mdouble val;
-    std::vector<Mdouble> linearVector(numberOfBins);
-    typename std::vector<Mdouble>::iterator x;
-    for (x = linearVector.begin(), val = Min; x != linearVector.end(); ++x, val += dx)
-    {
-        *x = val;
-    }
-    // ensure that last value is equal to Max.
-    linearVector.pop_back();
-    linearVector.push_back(Max);
-    return linearVector;
 }
 
 /*!

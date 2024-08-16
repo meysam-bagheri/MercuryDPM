@@ -37,6 +37,7 @@
 #include "ExtendedMath.h"
 #include "RNG.h"
 #include "Math/DistributionElements.h"
+#include "Helpers/Helpers.h"
 
 using mathsFunc::square;
 using mathsFunc::cubic;

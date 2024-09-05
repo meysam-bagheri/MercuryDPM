@@ -1,0 +1,26 @@
+MercuryDPM 1.0 name TwoParticleClassicalWilletCollisionSelfTest revision 8cd50b44 repository https://bitbucket.org/mercurydpm/mercurydpm.git
+dataFile    fileType ONE_FILE saveCount 24891 counter 3 lastSavedTimeStep 24892
+fStatFile   name TwoParticleClassicalWilletCollisionSelfTest.fstat fileType MULTIPLE_FILES_PADDED saveCount 24891 counter 3 lastSavedTimeStep 24892
+eneFile     fileType ONE_FILE saveCount 24891 counter 3 lastSavedTimeStep 24892
+restartFile fileType ONE_FILE saveCount 24891 counter 3 lastSavedTimeStep 24892
+statFile    fileType ONE_FILE saveCount 24891 counter 0
+interactionFile fileType NO_FILE saveCount 0 counter 0
+xMin 0 xMax 0.01 yMin 0 yMax 0.01 zMin 0 zMax 0
+timeStep 1.00435753690858e-05 time 0.250004678087138 ntimeSteps 24892 timeMax 0.25
+systemDimensions 2 particleDimensions 2 gravity 0 -9.8 0 backgroundDrag 0 writeVTK 1 MULTIPLE_FILES NO_FILE 0 3 3 0 0 random  0 1103515245 12345 1073741824 607 273 784607267
+Species 1
+HertzianViscoelasticMindlinLiquidBridgeClassicalWilletSpecies id 0 density 2000 elasticModulus 2849002.84900285 dissipation 0.16 slidingDissipation 0.16 slidingFrictionCoefficient 0.5 slidingFrictionCoefficientStatic 0.5 shearModulus 561167.227833894 liquidBridgeVolume 8e-11 surfaceTension 0.07 contactAngle 0
+Walls 4
+InfiniteWall id 0 indSpecies 0 position 0 0 0 orientation 0 0 1 0 velocity 0 0 0 angularVelocity 0 0 0 force 0 0 0 torque 0 0 0
+InfiniteWall id 1 indSpecies 0 position 0.01 0 0 orientation 1 0 0 0 velocity 0 0 0 angularVelocity 0 0 0 force -0.000804681515933928 0 0 torque 0 0 9.09780456859618e-07
+InfiniteWall id 2 indSpecies 0 position 0 0 0 orientation 0.707106781186548 0 0 -0.707106781186548 velocity 0 0 0 angularVelocity 0 0 0 force -0.00473153467708504 -0.0889679619112742 0 torque 0 0 -0.000730134176677611
+InfiniteWall id 3 indSpecies 0 position 0 0.01 0 orientation 0.707106781186548 0 0 0.707106781186548 velocity 0 0 0 angularVelocity 0 0 0 force 0 0 0 torque 0 0 0
+Boundaries 0
+Particles 2
+BaseParticle id 0 indSpecies 0 position 0.00609078645909538 0.000464076939453069 0 orientation 0.796530599558355 0 0 0.604598216973228 velocity -0.0174866288984792 -0.00597719308977025 0 angularVelocity 0 0 36.5766509540332 force 0.000267792455725501 0.00340251033677274 0 torque 0 0 1.29086265562231e-07 radius 0.0005 invMass 636.619772367581 timeStamp 0
+BaseParticle id 1 indSpecies 0 position 0.00877120860343733 0.00113060936388443 0 orientation -0.482275106686086 0 0 -0.876019817966994 velocity -0.00880859823191175 0.00982629286620424 0 angularVelocity 0 0 3.91409332035794 force 0.00526842373729347 -0.0184966634830069 0 torque 0 0 5.20161970953342e-06 radius 0.0012 invMass 110.524266036038 timeStamp 0
+Interactions 3
+HertzianViscoelasticMindlinLiquidBridgeClassicalWilletInteraction particleWallIds 1 1 timeStamp 24892 contactPoint 0.00998560430171867 0.00113060936388443 0 normal -1 -0 -0 distance 0.00122879139656267 overlap -2.87913965626699e-05 force 0.000804681515933928 0 0 torque 0 0 0 slidingSpring 0 7.36524440915898e-06 0 wasInContact 1
+HertzianViscoelasticMindlinLiquidBridgeClassicalWilletInteraction particleWallIds 1 2 timeStamp 24892 contactPoint 0.00877120860343733 -3.46953180577849e-05 0 normal -0 1 0 distance 0.00113060936388443 overlap 6.93906361155688e-05 force 0.00446374222135954 0.0701716475719114 0 torque 0 0 0 slidingSpring -2.46967905979504e-06 -3.48456519509911e-23 0 wasInContact 1
+HertzianViscoelasticMindlinLiquidBridgeClassicalWilletInteraction particleWallIds 0 2 timeStamp 24892 contactPoint 0.00609078645909538 -1.79615302734656e-05 0 normal -0 1 0 distance 0.000464076939453069 overlap 3.59230605469308e-05 force 0.000267792455725501 0.0187963143393627 0 torque 0 0 0 slidingSpring -7.22802747206152e-07 3.48456519509911e-23 0 wasInContact 1
+hGrid method TOPDOWN distribution EXPONENTIAL cellOverSizeRatio 1 numberOfBuckets 10 cellSizes 0.00179629524794105 0.00225501857069942 0.00283088693800638 gridNeedsUpdate 0 updateEachTimeStep 1 currentMaxRelativeDisplacement 0 totalCurrentMaxRelativeDisplacement 0

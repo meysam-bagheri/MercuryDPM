@@ -43,6 +43,8 @@
 #include "Species/LinearPlasticViscoelasticSlidingFrictionSpecies.h"
 #include "Species/HertzianViscoelasticMindlinSpecies.h"
 #include "Species/HertzianViscoelasticMindlinRollingTorsionSpecies.h"
+#include "Species/HertzianViscoelasticMindlinLiquidBridgeClassicalWilletSpecies.h"
+#include "Species/HertzianViscoelasticMindlinLiquidBridgeBagheriSpecies.h"
 #include "Species/SPHSpecies.h"
 
 #include "Species/LinearViscoelasticBondedSpecies.h"
@@ -54,6 +56,8 @@
 #include "Species/LinearPlasticViscoelasticFrictionIrreversibleAdhesiveSpecies.h"
 #include "Species/LinearPlasticViscoelasticSlidingFrictionIrreversibleAdhesiveSpecies.h"
 #include "Species/HertzianViscoelasticFrictionChargedBondedSpecies.h"
+#include "Species/HertzianViscoelasticMindlinLiquidMigrationWilletSpecies.h"
+
 #include "Species/LinearViscoelasticFrictionChargedBondedSpecies.h"
 #include "Species/LinearPlasticViscoelasticSlidingFrictionLiquidMigrationWilletSpecies.h"
 #include "Species/LinearPlasticViscoelasticFrictionLiquidBridgeWilletSpecies.h"
@@ -370,6 +374,24 @@ void SpeciesHandler::readAndAddObject(std::istream& is)
         is >> species;
         copyAndAddObject(species);
     }
+    else if (type == "HertzianViscoelasticMindlinLiquidMigrationWilletSpecies")
+    {
+        HertzianViscoelasticMindlinLiquidMigrationWilletSpecies species;
+        is >> species;
+        copyAndAddObject(species);
+    }
+    else if (type == "HertzianViscoelasticMindlinLiquidBridgeClassicalWilletSpecies")
+    {
+        HertzianViscoelasticMindlinLiquidBridgeClassicalWilletSpecies species;
+        is >> species;
+        copyAndAddObject(species);
+    }
+    else if (type == "HertzianViscoelasticMindlinLiquidBridgeBagheriSpecies")
+    {
+        HertzianViscoelasticMindlinLiquidBridgeBagheriSpecies species;
+        is >> species;
+        copyAndAddObject(species);
+    }    
     else if (type == "LinearPlasticViscoelasticFrictionLiquidMigrationWilletSpecies")
     {
         LinearPlasticViscoelasticFrictionLiquidMigrationWilletSpecies species;
@@ -642,6 +664,24 @@ void SpeciesHandler::readAndAddObject(std::istream& is)
             is >> species;
             mixedObjects_.push_back(species.copy());
         }
+        else if (type == "HertzianViscoelasticMindlinLiquidMigrationWilletMixedSpecies")
+        {
+            HertzianViscoelasticMindlinLiquidMigrationWilletMixedSpecies species;
+            is >> species;
+            mixedObjects_.push_back(species.copy());
+        }
+        else if (type == "HertzianViscoelasticMindlinLiquidBridgeClassicalWilletMixedSpecies")
+        {
+            HertzianViscoelasticMindlinLiquidBridgeClassicalWilletMixedSpecies species;
+            is >> species;
+            mixedObjects_.push_back(species.copy());
+        }  
+        else if (type == "HertzianViscoelasticMindlinLiquidBridgeBagheriMixedSpecies")
+        {
+            HertzianViscoelasticMindlinLiquidBridgeBagheriMixedSpecies species;
+            is >> species;
+            mixedObjects_.push_back(species.copy());
+        }               
         else if (type == "HeatFluidCoupledLinearViscoelasticFrictionLiquidMigrationWilletMixedSpecies")
         {
             HeatFluidCoupledLinearViscoelasticFrictionLiquidMigrationWilletMixedSpecies species;

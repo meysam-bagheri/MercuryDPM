@@ -1,0 +1,26 @@
+MercuryDPM 1.0 name TwoParticleBagheriCollisionSelfTest revision 8cd50b44 repository https://bitbucket.org/mercurydpm/mercurydpm.git
+dataFile    fileType ONE_FILE saveCount 24891 counter 3 lastSavedTimeStep 24892
+fStatFile   name TwoParticleBagheriCollisionSelfTest.fstat fileType MULTIPLE_FILES_PADDED saveCount 24891 counter 3 lastSavedTimeStep 24892
+eneFile     fileType ONE_FILE saveCount 24891 counter 3 lastSavedTimeStep 24892
+restartFile fileType ONE_FILE saveCount 24891 counter 3 lastSavedTimeStep 24892
+statFile    fileType ONE_FILE saveCount 24891 counter 0
+interactionFile fileType NO_FILE saveCount 0 counter 0
+xMin 0 xMax 0.01 yMin 0 yMax 0.01 zMin 0 zMax 0
+timeStep 1.00435753690858e-05 time 0.250004678087138 ntimeSteps 24892 timeMax 0.25
+systemDimensions 2 particleDimensions 2 gravity 0 -9.8 0 backgroundDrag 0 writeVTK 1 MULTIPLE_FILES NO_FILE 0 3 3 0 0 random  0 1103515245 12345 1073741824 607 273 784607267
+Species 1
+HertzianViscoelasticMindlinLiquidBridgeBagheriSpecies id 0 density 2000 elasticModulus 2849002.84900285 dissipation 0.16 slidingDissipation 0.16 slidingFrictionCoefficient 0.5 slidingFrictionCoefficientStatic 0.5 shearModulus 561167.227833894 liquidBridgeVolume 8e-11 surfaceTension 0.07 contactAngle 0
+Walls 4
+InfiniteWall id 0 indSpecies 0 position 0 0 0 orientation 0 0 1 0 velocity 0 0 0 angularVelocity 0 0 0 force 0 0 0 torque 0 0 0
+InfiniteWall id 1 indSpecies 0 position 0.01 0 0 orientation 1 0 0 0 velocity 0 0 0 angularVelocity 0 0 0 force -0.000794746005158853 0 0 torque 0 0 8.9832207733979e-07
+InfiniteWall id 2 indSpecies 0 position 0 0 0 orientation 0.707106781186548 0 0 -0.707106781186548 velocity 0 0 0 angularVelocity 0 0 0 force -0.00467386540938993 -0.0893872333127446 0 torque 0 0 -0.00073377264143317
+InfiniteWall id 3 indSpecies 0 position 0 0.01 0 orientation 0.707106781186548 0 0 0.707106781186548 velocity 0 0 0 angularVelocity 0 0 0 force 0 0 0 torque 0 0 0
+Boundaries 0
+Particles 2
+BaseParticle id 0 indSpecies 0 position 0.00608873218833566 0.000464090127367137 0 orientation 0.795383362024613 0 0 0.606106679895893 velocity -0.0175274758140043 -0.00598681545664022 0 angularVelocity 0 0 36.6588151432488 force 0.000269389815984133 0.00339031459642096 0 torque 0 0 1.29858031001776e-07 radius 0.0005 invMass 636.619772367581 timeStamp 0
+BaseParticle id 1 indSpecies 0 position 0.00877075892217139 0.00113032600542639 0 orientation -0.481970263142138 0 0 -0.876187574350777 velocity -0.00893335917109994 0.0098576338774921 0 angularVelocity 0 0 3.98935172639369 force 0.00519922159856465 -0.0180651963411847 0 torque 0 0 5.13193200778969e-06 radius 0.0012 invMass 110.524266036038 timeStamp 0
+Interactions 3
+HertzianViscoelasticMindlinLiquidBridgeBagheriInteraction particleWallIds 1 1 timeStamp 24892 contactPoint 0.0099853794610857 0.00113032600542639 0 normal -1 -0 -0 distance 0.00122924107782861 overlap -2.92410778286072e-05 force 0.000794746005158853 0 0 torque 0 0 0 slidingSpring 0 7.31576618710448e-06 0 wasInContact 1
+HertzianViscoelasticMindlinLiquidBridgeBagheriInteraction particleWallIds 1 2 timeStamp 24892 contactPoint 0.00877075892217139 -3.48369972868034e-05 0 normal -0 1 0 distance 0.00113032600542639 overlap 6.96739945736061e-05 force 0.00440447559340579 0.0706031147137336 0 torque 0 0 0 slidingSpring -2.36964496723584e-06 -3.48456519509911e-23 0 wasInContact 1
+HertzianViscoelasticMindlinLiquidBridgeBagheriInteraction particleWallIds 0 2 timeStamp 24892 contactPoint 0.00608873218833566 -1.79549363164318e-05 0 normal -0 1 0 distance 0.000464090127367137 overlap 3.59098726328631e-05 force 0.000269389815984133 0.0187841185990109 0 torque 0 0 0 slidingSpring -7.26520411020993e-07 3.48456519509911e-23 0 wasInContact 1
+hGrid method TOPDOWN distribution EXPONENTIAL cellOverSizeRatio 1 numberOfBuckets 10 cellSizes 0.00179629524794105 0.00225501857069942 0.00283088693800638 gridNeedsUpdate 0 updateEachTimeStep 1 currentMaxRelativeDisplacement 0 totalCurrentMaxRelativeDisplacement 0

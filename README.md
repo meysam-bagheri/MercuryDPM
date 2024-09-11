@@ -14,11 +14,7 @@ Building the code is managed using cmake, the test suite via ctest, for code mai
 **Below you find instructions to download the developer's version of MercuryDPM**, also called the "master". Note, **the developer's version contains the newest features of the code**, whose interface might still be unstable. If you want the most recent stable version of Mercury, please [download the release](https://www.mercurydpm.org/downloads/release-1-0-0-alpha) instead.
 
 Download and installation instructions for various operating systems:
-+ [Linux](https://www.mercurydpm.org/downloads/developers-version/linux)
-   - In the structions, In Step 2 for direct local clone, it is noted to clone MercuryDPM through bitbucket. This step can be done by cloneing the MercuryDPM repository in GitHub by the following comman:
-     ```bash
-     git clone https://github.com/meysam-bagheri/mercurydpm.git MercurySource
-     ```  
++ [Linux](https://www.mercurydpm.org/downloads/developers-version/linux)<sup>*</sup>
 + [Mac](https://www.mercurydpm.org/downloads/developers-version/mac)
 + [Windows](https://www.mercurydpm.org/downloads/developers-version/windows10)
 

@@ -18,6 +18,10 @@ Download and installation instructions for various operating systems:
 + [Mac](https://www.mercurydpm.org/downloads/developers-version/mac)
 + [Windows](https://www.mercurydpm.org/downloads/developers-version/windows10)
 
+<sup>*</sup> In Step 2 for a direct local clone, it is noted that you can clone **MercuryDPM** through Bitbucket. However, this step can also be done by cloning the **MercuryDPM** repository from GitHub using the following command:
+```bash
+git clone https://github.com/meysam-bagheri/mercurydpm.git MercurySource
+```
 
 # For users
 After installing MercuryDPM and successfully running the self-test suite (explained in the Installation), you can proceed to test the newly implemented liquid bridge model under the name "TwoParticleBagheriCollisionSelfTest". In this test two particles are symmetrically placed in a bi-axial box. The particles move toward each other due to an initial velocity. Upon contact, a liquid bridge forms between them. As the particles bounce back and their separation increases, the liquid bridge remains intact until the distance between the particles exceeds a critical threshold, known as the rupture distance. This simulation evaluates the liquid bridge force, wall interactions, and the symmetry of the system.

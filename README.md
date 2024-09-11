@@ -15,6 +15,10 @@ Building the code is managed using cmake, the test suite via ctest, for code mai
 
 Download and installation instructions for various operating systems:
 + [Linux](https://www.mercurydpm.org/downloads/developers-version/linux)
+   - In the structions, In Step 2 for direct local clone, it is noted to clone MercuryDPM through bitbucket. This step can be done by cloneing the MercuryDPM repository in GitHub by the following comman:
+     ```bash
+     git clone https://github.com/meysam-bagheri/mercurydpm.git MercurySource
+     ```  
 + [Mac](https://www.mercurydpm.org/downloads/developers-version/mac)
 + [Windows](https://www.mercurydpm.org/downloads/developers-version/windows10)
 

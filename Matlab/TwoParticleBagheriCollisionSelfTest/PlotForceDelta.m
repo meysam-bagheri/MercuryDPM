@@ -1,5 +1,5 @@
 hold all;
-fstat_path ='full/path/to/MercuryDPM/MercuryBuild/Drivers/SelfTests/Interactions/test5/'; %<-- Change this to the path of saved fstat files
+fstat_path ='full/path/to/MercuryDPM/MercuryBuild/Drivers/SelfTests/Interactions/test/'; %<-- Change this to the path of saved fstat files
 
 % List all files matching the pattern
 file_list = dir([fstat_path '*.fstat.*']);

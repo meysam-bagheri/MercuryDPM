@@ -89,7 +89,7 @@ In `PlotForceDelta.m` the `fstat_path` should be modified to match the path of t
 ```matlab
 fstat_path = 'full/path/to/MercuryDPM/MercuryBuild/Drivers/SelfTests/Interactions/test/'
 ```
-Runing the code will generate the following plot, which is similar to the results of Figure 3 (a) in the article.
+Runing the code will generate the following plot, which is similar to the results of Figure 3 (a) in the [article](https://www.sciencedirect.com/science/article/pii/S2352711024003571?via%3Dihub).
 <img src="./Matlab/TwoParticleBagheriCollisionSelfTest/TwoParticleBagheriCollisionSelfTest-fig3a.png" alt="Force-Separation" width="450">
 
 
